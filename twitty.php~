@@ -3,7 +3,7 @@
 $nameApp = "twitty";
 
 //action par défaut
-$action = "index";
+$action = "login";
 
 if(key_exists("action", $_REQUEST))
 $action =  $_REQUEST['action'];
@@ -30,7 +30,4 @@ elseif($view != context::NONE) {
 }
 
 ?>
-<<<<<<< HEAD
 
-=======
->>>>>>> 6c1f1ede11d9a8c00a5803e6426c43eb612f7632

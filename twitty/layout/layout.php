@@ -3,16 +3,15 @@
   <head>
        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
    
-    <title>
-     Notre super application !
-    </title>
+    <title>Twitty</title>
    
     <link type="text/css" rel="stylesheet" href="../css/style.php" />
   </head>
 
   <body>
-		<br/>
-      <?php include($template_view); ?>
+	
+	<br/>
+      	<?php include($template_view); ?>
   </body>
 
 </html>
