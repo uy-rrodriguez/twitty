@@ -1,1 +1,1 @@
-<a href="TP3/inscription.php">S'inscrire</a>
+<a href="TP3/inscription.php">S'inscrire AAA</a>

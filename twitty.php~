@@ -1,3 +1,14 @@
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="author" content="GARAYT Thomas UAPV1602799 & RODRIGUEZ Ricardo UAPV1601663" />
+	<meta name="description" content="Première page qui permet de voir la liste d'utilisateurs" />
+	<link type="text/css" rel="stylesheet" href="css/style.php" />
+	<title>Accueil</title>
+</head>
+<body>
+
 <?php
 //nom de l'application
 $nameApp = "twitty";
@@ -31,3 +42,5 @@ elseif($view != context::NONE) {
 
 ?>
 
+</body>
+</html>
