@@ -42,7 +42,7 @@ class mainController
 			}
 			else { // Identification réussie
 				context::setSessionAttribute("utilisateur",$returnLogin);
-				context::redirect('twitty.php?action=helloWorld');
+				context::redirect('../twitty.php?action=helloWorld');
 			}
 		}
 		else {
