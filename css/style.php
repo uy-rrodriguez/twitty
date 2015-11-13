@@ -47,6 +47,7 @@ span.texte-petit {
 }
 
 #div-centre {
+  position: relative;
 	margin: 50px auto;
 	width: 900px;
 	min-height: 500px;
@@ -57,32 +58,70 @@ span.texte-petit {
 	border-color: $cSecondaire;
 }
 
+/* ************** TETE ************** */
 #div-tete {
+  display: table;
+  width: 100%;
   height: 200px;
 }
+
+#div-menu {
+  display: table-cell;
+}
+
+#menu {
+  margin: 0px;
+  padding: 0px;
+}
+#menu li {
+  display: inline-block;
+  list-style-type: none;
+  
+  padding: 5px 20px;
+	background-color: $cFond;
+}
+#menu li a {
+  color: $cTexte;
+  text-decoration: none;
+}
+#menu li#item-active {
+	background-color: $cPrincipal;
+}
+#menu li#item-active a {
+  color: $cTexteClair;
+}
+
+#div-petit-profil {
+  display: table-cell;
+  width: 100px;
+  text-align: center;
+}
+#div-petit-profil img {
+  width: 80px;
+  height: 80px;
+}
+#div-petit-profil span {
+  font-weight: bold;
+}
+#div-petit-profil span#status {
+  color: $cPrincipal;
+}
+
+
+/* ************** CORPS ************** */
 
 #div-corps {
   min-height: 400px;
 }
 
+
+/* ************** PIED ************** */
+
 #div-pied {
   height: 30px;
   font-size: 9px;
   color: $cTexteClair;
-  background-color: $cFondClair;
-}
-
-#menu li {
-  display: inline;
-  list-style-type: none;
-  padding-right: 20px;
-	background-color: 1px solid $cFond;
-}
-#menu li#item-active {
-  display: inline;
-  list-style-type: none;
-  padding-right: 20px;
-	background-color: 1px solid $cFond;
+  background-color: $cPrincipal;
 }
 
 

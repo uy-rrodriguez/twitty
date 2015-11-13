@@ -19,7 +19,10 @@
         </div>
         
         <div id="div-petit-profil">
-          Photo, machin...
+          <img src="img/profil.png" />
+          <span>Pierre</span> <br />
+          <span>Dupont</span> <br />
+          <span id="status">Connecté</span>
         </div>
       </div>
       
