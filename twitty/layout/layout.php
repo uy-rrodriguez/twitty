@@ -7,7 +7,7 @@
      Notre super application !
     </title>
    
-    <link type="text/css" rel="stylesheet" href="style.php" />
+    <link type="text/css" rel="stylesheet" href="../css/style.php" />
   </head>
 
   <body>
