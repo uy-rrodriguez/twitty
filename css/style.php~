@@ -72,19 +72,6 @@ span.texte-petit {
   background-color: $cFondClair;
 }
 
-#menu li {
-  display: inline;
-  list-style-type: none;
-  padding-right: 20px;
-	background-color: 1px solid $cFond;
-}
-#menu li#item-active {
-  display: inline;
-  list-style-type: none;
-  padding-right: 20px;
-	background-color: 1px solid $cFond;
-}
-
 
 
 /* ************************************************************************************************
