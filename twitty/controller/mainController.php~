@@ -42,7 +42,11 @@ class mainController
 			}
 			else { // Identification réussie
 				context::setSessionAttribute("utilisateur",$returnLogin);
+<<<<<<< HEAD
 				context::redirect('https://pedago02a.univ-avignon.fr/~uapv1602799/twitty/twitty.php?action=helloWorld');
+=======
+				context::redirect('../twitty.php?action=helloWorld');
+>>>>>>> 30b029b618d263fe42c504f35c5b658564a06cc0
 			}
 		}
 		else {

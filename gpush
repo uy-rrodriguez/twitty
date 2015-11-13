@@ -1,0 +1,2 @@
+git push
+chmod -R +r+x+w *
