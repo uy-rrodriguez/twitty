@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
   <head>
+<<<<<<< HEAD
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Tweety Avignonnais</title>
     <link type="text/css" rel="stylesheet" href="css/style.php" />
@@ -31,6 +32,19 @@
       
       <div id="div-pied">Tweety Avignonnais v0.001</div>
     </div>
+=======
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   
+    <title>Twitty</title>
+   
+    <link type="text/css" rel="stylesheet" href="../css/style.php" />
+  </head>
+
+  <body>
+	
+	<br/>
+      	<?php include($template_view); ?>
+>>>>>>> 8cc75d82058129b887ca927d3755616e09006159
   </body>
 
 </html>
