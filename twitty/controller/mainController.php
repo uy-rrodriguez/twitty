@@ -25,6 +25,11 @@ class mainController
 		$context->paramDeux = $request['paramDeux'];
 		return context::SUCCESS;
 	}
+	
+	public static function listeUtilisateurs($request,$context)
+	{
+		return context::SUCCESS;
+	}
 
 	public static function index($request,$context)
 	{

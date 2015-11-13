@@ -25,6 +25,11 @@ class mainController
 		$context->paramDeux = $request['paramDeux'];
 		return context::SUCCESS;
 	}
+	
+	public static function listeUtilisateurs($request,$context)
+	{
+		return context::SUCCESS;
+	}
 
 	public static function index($request,$context)
 	{
@@ -42,11 +47,7 @@ class mainController
 			}
 			else { // Identification réussie
 				context::setSessionAttribute("utilisateur",$returnLogin);
-<<<<<<< HEAD
-				context::redirect('https://pedago02a.univ-avignon.fr/~uapv1602799/twitty/twitty.php?action=helloWorld');
-=======
-				context::redirect('../twitty.php?action=helloWorld');
->>>>>>> 30b029b618d263fe42c504f35c5b658564a06cc0
+				context::redirect('twitty.php?action=helloWorld');
 			}
 		}
 		else {

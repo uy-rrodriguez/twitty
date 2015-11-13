@@ -5,12 +5,13 @@
    
     <title>Twitty</title>
    
-    <link type="text/css" rel="stylesheet" href="../css/style.php" />
+    <link type="text/css" rel="stylesheet" href="css/style.php" />
   </head>
 
   <body>
+	
 	<br/>
-      <?php include($template_view); ?>
+      	<?php include($template_view); ?>
   </body>
 
 </html>
