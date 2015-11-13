@@ -42,6 +42,10 @@ a.menu:hover {
 	border-color: $cLiens;
 }
 
+span.texte-petit {
+	font-size: 10px;
+}
+
 #div-centre {
 	margin: 50px auto;
 	width: 900px;
@@ -53,12 +57,32 @@ a.menu:hover {
 	border-color: $cSecondaire;
 }
 
-#div-modifier-personne {
-	display: none;
+#div-tete {
+  height: 200px;
 }
 
-span.texte-petit {
-	font-size: 10px;
+#div-corps {
+  min-height: 400px;
+}
+
+#div-pied {
+  height: 30px;
+  font-size: 9px;
+  color: $cTexteClair;
+  background-color: $cFondClair;
+}
+
+#menu li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+	background-color: 1px solid $cFond;
+}
+#menu li#item-active {
+  display: inline;
+  list-style-type: none;
+  padding-right: 20px;
+	background-color: 1px solid $cFond;
 }
 
 
