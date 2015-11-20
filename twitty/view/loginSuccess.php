@@ -1,4 +1,4 @@
-<form method="POST" action="twitty.php?action=login">
+<form method="POST" action="twitty.php?action=myProfil"> <!-- action="twitty.php?action=login" -->
 	<table class="table-horiz">
 		<tr>
 			<th>Identifiant :</th>

@@ -3,7 +3,7 @@
 $nameApp = "twitty";
 
 //action par défaut
-$action = "index";
+$action = "login";
 
 if(key_exists("action", $_REQUEST))
 $action =  $_REQUEST['action'];
