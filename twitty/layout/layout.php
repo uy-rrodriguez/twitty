@@ -18,13 +18,7 @@
             <li><a href="#">Autre...</a></li>
           </ul>
         </div>
-        
-        <div id="div-petit-profil">
-          <img src="img/profil.png" />
-          <span>Pierre</span> <br />
-          <span>Dupont</span> <br />
-          <span id="status">Connecté</span>
-        </div>
+     
       </div>
       
       <div id="div-corps">

@@ -26,6 +26,11 @@ class mainController
 	{
 		return context::SUCCESS;
 	}
+	
+	public static function myProfil($request,$context)
+	{
+		return context::SUCCESS;
+	}
 
 	public static function index($request,$context)
 	{
