@@ -47,7 +47,7 @@ span.texte-petit {
 }
 
 #div-centre {
-  position: relative;
+	position: relative;
 	margin: 50px auto;
 	width: 900px;
 	min-height: 500px;
@@ -91,19 +91,42 @@ span.texte-petit {
   color: $cTexteClair;
 }
 
+/* ************** AFFICHAGE DU GRAND PROFIL ************** */
 #div-petit-profil {
   display: table-cell;
   width: 100px;
   text-align: center;
 }
+
 #div-petit-profil img {
   width: 80px;
   height: 80px;
 }
+
 #div-petit-profil span {
   font-weight: bold;
 }
+
 #div-petit-profil span#status {
+  color: $cPrincipal;
+}
+
+/* ************** AFFICHAGE DU GRAND PROFIL ************** */
+#div-grand-profil {
+  display: table-cell;
+  width: 500px;
+  text-align: center;
+}
+#div-grand-profil img {
+  width: 150px;
+  height: 150px;
+}
+
+#div-grand-profil span {
+  font-weight: bold;
+}
+
+#div-grand-profil span#status {
   color: $cPrincipal;
 }
 
@@ -283,6 +306,37 @@ th {}
 .td-droite {
 	text-align: right;
 }
+
+
+/* ************************************************************************************************
+ *     MESSAGES SUCCES ET ERREUR
+ * ************************************************************************************************ */
+
+.messageErreur {
+	font-weight : bold;
+	color : red;
+}
+
+.messageSucces {
+	font-weight:bold;
+	color : green;
+}
+
+/* ************************************************************************************************
+ *     TWEETS
+ * ************************************************************************************************ */
+.tweet {
+	position: relative;
+	margin: 50px auto;
+	width: 750px;
+	min-height: 30px;
+	//padding: 30px 50px;
+	border: 1px solid $cFond;
+	border-radius: 10px;
+	border-color: $cSecondaire;
+}	
+}
+
 
 
 

@@ -1,1 +1,1 @@
-Identification impossible !
+<span class="messageErreur">Identification impossible !</span>

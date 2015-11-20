@@ -8,12 +8,13 @@
 
   <body>
     <div id="div-centre">
-    
+   
       <div id="div-tete">
         <div id="div-menu">
           <ul id="menu">
-            <li id="item-active"><a href="#">Mon réseau</a></li>
-            <li><a href="#">Paramètres</a></li>
+            <li id="item-active"><a href="twitty.php">Accueil</a></li>
+            <li><a href="twitty.php?action=listeUtilisateurs">Mon réseau</a></li>
+            <li><a href="twitty.php?action=params">Paramètres</a></li>
             <li><a href="#">Autre...</a></li>
           </ul>
         </div>

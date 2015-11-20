@@ -3,8 +3,7 @@
 abstract class basemodel
 {
 
- public function save()
-  {
+ public function save() {
     $connection = new dbconnection() ;
 
     if($this->id)

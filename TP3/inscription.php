@@ -12,7 +12,7 @@
 <body>
 	<form method="POST" action="inserer.php" enctype="multipart/form-data">
 		<div id="div-centre">
-			<h1>Créer personne</h1>
+			<h1>Inscription</h1>
 			<table class="table-horiz">
 				<tr>
 					<th>Prénom:</th>
