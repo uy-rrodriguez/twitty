@@ -25,7 +25,7 @@
 				Fichiers...
 				<input type="text" id="text-file-1" class="input-file-text" disabled />
 				<input type="file" id="input-file-1" name="avatar" accept=".png,.jpg,.bmp" />
-			<label>
+			</label>
 		</td>
 	</tr>
 	<tr class="tr-espace"></tr>

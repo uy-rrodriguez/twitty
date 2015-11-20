@@ -62,7 +62,7 @@ span.texte-petit {
 #div-tete {
   display: table;
   width: 100%;
-  height: 200px;
+  height: 60px;
 }
 
 #div-menu {
@@ -70,6 +70,7 @@ span.texte-petit {
 }
 
 #menu {
+  float: right;
   margin: 0px;
   padding: 0px;
 }
@@ -78,7 +79,7 @@ span.texte-petit {
   list-style-type: none;
   
   padding: 5px 20px;
-	background-color: $cFond;
+  background-color: $cFond;
 }
 #menu li a {
   color: $cTexte;
@@ -91,19 +92,27 @@ span.texte-petit {
   color: $cTexteClair;
 }
 
-/* ************** AFFICHAGE DU GRAND PROFIL ************** */
+/* ************** AFFICHAGE DU PETIT PROFIL ************** */
 #div-petit-profil {
-  display: table-cell;
-  width: 100px;
-  text-align: center;
+  /*width: 300px;*/
 }
 
+#div-petit-profil table {
+  margin: 0px;
+  /*width: 100%;*/
+}
+/*
+#div-petit-profil table tr td:last-child {
+  width: 1%;
+}
+*/
 #div-petit-profil img {
   width: 80px;
   height: 80px;
 }
 
 #div-petit-profil span {
+  margin-left: 30px;
   font-weight: bold;
 }
 
@@ -141,6 +150,7 @@ span.texte-petit {
 /* ************** PIED ************** */
 
 #div-pied {
+  margin-top: 100px;
   height: 30px;
   font-size: 9px;
   color: $cTexteClair;
@@ -168,7 +178,7 @@ input[type="text"], input[type="password"] {
 
 input[type="button"], input[type="submit"] {
 	width: 150px;
-	padding: 7px 15px;
+	padding: 6px 15px;
 	font-family: Verdana, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
@@ -221,6 +231,14 @@ input[type="text"].input-file-text {
 	cursor: pointer;
 }
 
+textarea {
+	min-width: 450px;
+	padding: 10px;
+	font-family: Verdana, sans-serif;
+	font-size: 11px;
+	border: 1px solid $cSecondaire;
+	border-radius: 5px;
+}
 
 
 /* ************************************************************************************************
