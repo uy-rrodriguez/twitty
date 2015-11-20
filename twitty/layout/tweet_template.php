@@ -6,7 +6,6 @@
 				<td><span>NOM Prénom</span></td>
 				<td><span>11/11/11</span></td>
 				<td class="td-droite"><span>10 personnes aiment </span></td>
-
 			</tr>
 		</table>
 		

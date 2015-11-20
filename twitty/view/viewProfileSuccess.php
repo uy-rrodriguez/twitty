@@ -1,14 +1,14 @@
 <h1>Informations sur NOM Prénom</h1>
 
-<div id="div-grand-profil">
+<div id="div-petit-profil">
 	<table>
 		<tr>
-			<td><img width="40px" src="img/profil.png" /></td>
-			<td><span>NOM Prénom</span></td>
-		</tr>
-		<tr>
-			<td colspan="2">Etudiant en L3 Informatique au CERI !</td>
-		</tr>
+			<td><img src="img/profil.png" /></td>
+			<td>
+				<span>Flash Gordon</span> <br />
+				<span id="status">J'aime les aubergines!!!</span>
+			</td>
+		</tr>		
 	</table>
 </div>
 

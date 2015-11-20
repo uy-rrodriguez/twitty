@@ -74,20 +74,33 @@ span.texte-petit {
   margin: 0px;
   padding: 0px;
 }
+
 #menu li {
+border-radius: 5px 5px 5px 5px;
   display: inline-block;
   list-style-type: none;
   
   padding: 5px 20px;
   background-color: $cFond;
 }
+
+#menu li:hover {
+  display: inline-block;
+  list-style-type: none;
+  
+  padding: 5px 20px;
+  background-color: $cPrincipal;
+}
+
 #menu li a {
   color: $cTexte;
   text-decoration: none;
 }
+
 #menu li#item-active {
 	background-color: $cPrincipal;
 }
+
 #menu li#item-active a {
   color: $cTexteClair;
 }
@@ -157,8 +170,7 @@ span.texte-petit {
   background-color: $cPrincipal;
 }
 
-
-
+ 
 /* ************************************************************************************************
  *     CHAMPS DE FORMULAIRES ET BOUTONS
  * ************************************************************************************************ */

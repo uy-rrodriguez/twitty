@@ -36,8 +36,12 @@
 <br />
 <h1>Mes tweets</h1>
 <?php
+	for($boucleTweet = 0 ; $boucleTweet < 5 ; $boucleTweet++) {
+		include($nameApp."/layout/tweet_template.php");
+	}
+	/*
 	$listeTweets = ["Tweet 1", "Tweet 2", "Tweet 3"];
 	foreach ($listeTweets as $tweet)
 		echo $tweet . "<br>";
-
+	*/
 ?>
