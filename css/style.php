@@ -51,7 +51,7 @@ span.texte-petit {
 	margin: 50px auto;
 	width: 900px;
 	min-height: 500px;
-	padding: 30px 50px;
+	padding: 15px 40px 0px 40px;
 	border: 1px solid $cFond;
 	border-radius: 10px;
 	/*background-color: $cFondClair;*/
@@ -151,10 +151,15 @@ span.texte-petit {
 
 #div-pied {
   margin-top: 100px;
-  height: 30px;
+  margin-bottom: -1px;
+  padding: 5px 10px;
+  height: 25px;
+  
   font-size: 9px;
-  color: $cTexteClair;
-  background-color: $cPrincipal;
+  text-align: center;
+  color: $cPrincipal;
+  background-color: $cSecondaire;
+  border-radius: 5px 5px 0px 0px;
 }
 
 
@@ -346,35 +351,54 @@ th {}
 .tweet {
 	position: relative;
 	margin: 50px auto;
+	padding: 10px 15px;
 	width: 750px;
 	min-height: 30px;
-	//padding: 30px 50px;
 	border: 1px solid $cFond;
 	border-radius: 10px;
 	border-color: $cSecondaire;
+}
+.tweet .votes {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-weight: bold;
+	color : $cPrincipal;
 }	
 
 .tweet-image {
-	text-align:center;
-	margin-bottom:5px;
-	margin-top:5px;
+	text-align: center;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+.tweet-image img {
+	max-height: 300px;
 }
 
 .tweet-info {
-	width:100%;
 	margin:0px;
+}
+.tweet-info img {
+	width: 40px;
+}
+.tweet-info .nom {
+	margin-left: 20px;
+	font-weight: bold;
+}
+.tweet-info .date {
+	margin-left: 20px;
+	font-size: 10px;
+}
+
+.tweet-message {
+	margin-left: 70px;
+	margin-bottom: 5px;
+	margin-top: 30px;
 }
 
 .tweet-button {
 	text-align:center;
-	margin-bottom:5px;
 	margin-top:10px;
-}
-
-.tweet-message {
-	margin-left:40px;
-	margin-bottom:5px;
-	margin-top:5px;
 }
 
 FINCSS;
