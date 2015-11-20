@@ -353,10 +353,29 @@ th {}
 	border-radius: 10px;
 	border-color: $cSecondaire;
 }	
+
+.tweet-image {
+	text-align:center;
+	margin-bottom:5px;
+	margin-top:5px;
 }
 
+.tweet-info {
+	width:100%;
+	margin:0px;
+}
 
+.tweet-button {
+	text-align:center;
+	margin-bottom:5px;
+	margin-top:10px;
+}
 
+.tweet-message {
+	margin-left:40px;
+	margin-bottom:5px;
+	margin-top:5px;
+}
 
 FINCSS;
 ?>
