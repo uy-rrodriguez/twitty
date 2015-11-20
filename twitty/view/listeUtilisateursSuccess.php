@@ -25,7 +25,7 @@
 			<td>Nom 4</td>
 			<td>Prénom 4</td>
 		</tr>	
-		<tr onClick="document.location.href='twitty.php?action=viewpProfile&id=5'">
+		<tr onClick="document.location.href='twitty.php?action=viewProfile&id=5'">
 			<td><img width="40px" src="img/profil.png" /></td>
 			<td>Nom 5</td>
 			<td>Prénom 5</td>
