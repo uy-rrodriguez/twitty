@@ -84,7 +84,6 @@ div, span, table, tr, th, td, input, label {
 
 #div-tete.on-scroll #div-petit-profil img {
     width: 40px;
-    height: 40px;
     border-radius: 20px;
 }
 
@@ -101,6 +100,7 @@ div, span, table, tr, th, td, input, label {
 
 #div-menu {
     display: table-cell;
+    vertical-align: bottom;
 }
 
 #menu {
@@ -148,7 +148,6 @@ div, span, table, tr, th, td, input, label {
 
 #menu li.item-image img {
     width: 18px;
-    height: 18px;
     opacity: 0.5;
     margin-bottom: -1px;
 }
@@ -167,17 +166,16 @@ div, span, table, tr, th, td, input, label {
 
 #div-petit-profil img {
     width: 80px;
-    height: 80px;
     border-radius: 40px;
 }
 
-#div-petit-profil-donnees {
-    position: relative;
+#div-petit-profil-image {
 }
 
 #div-petit-profil-donnees {
     margin-left: 30px;
     font-weight: bold;
+    padding-bottom: 2px;
 }
 
 #div-petit-profil-donnees span.nom {
@@ -196,7 +194,6 @@ div, span, table, tr, th, td, input, label {
 
 #div-grand-profil img {
     width: 120px;
-    height: 120px;
     border-radius: 40px;
 }
 
@@ -377,12 +374,10 @@ th {}
 }
 .table-vert input[type="image"] {
     width: 25px;
-    height: 25px;
     opacity: 0.8;
 }
 .table-vert input[type="image"]:hover {
     width: 27px;
-    height: 27px;
     margin: -1px;
     opacity: 1;
 }

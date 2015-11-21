@@ -10,7 +10,7 @@
         <div id="div-tete">
             <div id="div-tete-contenu">
                 <div id="div-petit-profil">
-                    <div>
+                    <div id="div-petit-profil-image">
                         <img src="img/profil.png" />
                     </div>
                     <div id="div-petit-profil-donnees">
@@ -54,6 +54,7 @@
                 centre.className = "";
             }
         }
+        window.onscroll();
     </script>
 
 </html>
