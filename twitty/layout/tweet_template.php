@@ -1,6 +1,6 @@
 
 <div class="tweet">
-    <div class="tweet-createur">Crée par: <a href="twitty.php?action=viewProfile&id=1">Don Omar</a></div>
+    <div class="tweet-createur">Crée par: <a href="twitty.php?action=voirProfil&id=1">Don Omar</a></div>
     
 	<table class="tweet-info">
 		<tr>

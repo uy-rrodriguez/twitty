@@ -13,7 +13,7 @@
     
     foreach ($reseau as $u) {
 ?>
-		<tr class="tr-link" onClick="document.location.href='twitty.php?action=viewProfile&id=1'">
+		<tr class="tr-link" onClick="document.location.href='twitty.php?action=voirProfil&id=1'">
 			<td><img width="40px" src="img/profil.png" /></td>
 			<td><?php echo $u[0]; ?></td>
 			<td><?php echo $u[1]; ?></td>
