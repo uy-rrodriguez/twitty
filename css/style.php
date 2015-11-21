@@ -422,6 +422,7 @@ th {}
 /* ************************************************************************************************
  *         TWEETS
  * ************************************************************************************************ */
+
 .tweet {
     position: relative;
     margin: 50px auto;
@@ -432,6 +433,22 @@ th {}
     border-radius: 10px;
     border-color: $cSecondaire;
 }
+
+.tweet .tweet-createur {
+    position: absolute;
+    top: -15px;
+    font-size: 11px;
+}
+
+.tweet .tweet-createur a {
+    color: $cPrincipal;
+    text-decoration: none;
+}
+
+.tweet .tweet-createur a:visited {
+    color: $cPrincipal;
+}
+
 .tweet .votes {
     position: absolute;
     top: 10px;
