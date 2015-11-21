@@ -1,12 +1,12 @@
-<h1>Informations sur NOM Prénom</h1>
+<h1>Profil de Flash Gordon</h1>
 
-<div id="div-petit-profil">
+<div id="div-grand-profil">
 	<table>
 		<tr>
 			<td><img src="img/profil.png" /></td>
 			<td>
-				<span>Flash Gordon</span> <br />
-				<span id="status">J'aime les aubergines!!!</span>
+				<span class="nom">Flash Gordon</span> <br />
+				<span class="statut">J'aime les aubergines!!!</span>
 			</td>
 		</tr>		
 	</table>

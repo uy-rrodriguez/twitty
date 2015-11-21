@@ -1,17 +1,5 @@
-<div id="div-petit-profil">
-	<table>
-		<tr>
-			<td><img src="img/profil.png" /></td>
-			<td>
-				<span>Pierre Dupont</span> <br />
-				<span id="status">J'aime les aubergines!!!</span>
-			</td>
-		</tr>		
-	</table>
-</div>
-
 <div id="div-tweet-creation">
-	<h1>Nouveau Tweet</h1>
+	<h1>Nouveau tweet</h1>
 	<form>
 		<table>
 			<tr>
