@@ -33,14 +33,11 @@ div, span, table, tr, th, td, input, label {
 #div-centre {
     position: relative;
     margin: 0px auto;
+    margin-bottom: 20px;
     width: 900px;
     min-height: 400px;
     padding: 30px 40px 0px 40px;
     border: 1px solid $cSecondaire;
-    border-radius: 10px;
-    
-    /* Effet de menu statique */
-    /*margin-top: 110px;*/
     border-top: none;
     border-radius: 0px 0px 10px 10px;
 }
@@ -68,6 +65,14 @@ div, span, table, tr, th, td, input, label {
     width: 900px;
     margin-left: -450px;
     padding: 0px 20px 0px 20px;
+}
+
+#div-titre-login {
+    text-align: center;
+}
+
+#div-titre-login h1 {
+    border: none;
 }
 
 

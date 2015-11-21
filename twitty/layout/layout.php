@@ -9,6 +9,10 @@
     <body>
         <div id="div-tete">
             <div id="div-tete-contenu">
+            
+<?php
+            if (key_exists("utilisateur", $_SESSION) && !empty($_SESSION["utilisateur"])) {
+?>
                 <div id="div-petit-profil">
                     <div id="div-petit-profil-image">
                         <img src="img/profil.png" />
@@ -28,6 +32,14 @@
                         <li class="item-image"><a href="twitty.php?action=login"><img src="img/shutdown.png" /></a></li>
                     </ul>
                 </div>
+<?php
+            }
+            else {
+?>
+                <div id="div-titre-login"><h1>Identification</h1></div>
+<?php
+            }
+?>
             </div>
         </div>
             

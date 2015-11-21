@@ -2,7 +2,7 @@
 	<table class="table-horiz">
 		<tr>
 			<th>Identifiant :</th>
-			<td><input type="text" name="identifiant" /></td>
+			<td><input type="text" name="identifiant" placeholder="Cliquez sur le bouton, on ne contrôle rien" /></td>
 		</tr>
 		<tr>
 			<th>Mot de passe :</th>

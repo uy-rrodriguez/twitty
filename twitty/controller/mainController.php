@@ -29,18 +29,22 @@ class mainController
 	
 	public static function myProfil($request,$context)
 	{
+	    // Code pour ouvrir la session (DEBUG)
+	    context::setSessionAttribute("utilisateur", "aubergine");
 		return context::SUCCESS;
 	}
 
 	public static function index($request,$context)
 	{
-		
 		return context::SUCCESS;
 	}
 	
 	
 	public static function login($request,$context)
 	{
+	    // Code pour fermer la session (DEBUG)
+	    context::setSessionAttribute("utilisateur", NULL);
+	    
 		if(key_exists("identifiant",$request)) {
 			$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'],$request['password']);
 			if($returnLogin == false) { // Identification qui a échouée
