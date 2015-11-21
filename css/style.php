@@ -118,12 +118,14 @@ div, span, table, tr, th, td, input, label {
     display: inline-block;
     margin-left: -2px;
     margin-right: -2px;
-    padding: 2px 20px;
     vertical-align: bottom;
     list-style-type: none;
     border-right: 2px solid $cPrincipal;
-    /*border-radius: 5px 5px 5px 5px;*/
-    /*background-color: $cFond;*/
+}
+
+#menu li a {
+    display: block;
+    padding: 2px 18px;
 }
 
 #menu li:hover, #menu li.item-image:hover {
@@ -146,9 +148,12 @@ div, span, table, tr, th, td, input, label {
 }
 
 #menu li.item-image {
-    padding: 0px 10px 0px 10px;
     background: none;
     border-right: none;
+}
+
+#menu li.item-image a {
+    padding: 0px 10px 0px 10px;
 }
 
 #menu li.item-image img {
