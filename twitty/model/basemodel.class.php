@@ -2,7 +2,7 @@
 
 abstract class basemodel
 {
-	$data = null;
+	private $data = null;
 
 	public function save() {
 		$connection = new dbconnection() ;
