@@ -54,7 +54,7 @@ div, span, table, tr, th, td, input, label {
     top: 0px;
     left: 0px;
     padding: 10px 0px;
-    background-color: $cSecondaire;
+    background-color: #C3E4FC;
 }
 
 #div-tete-contenu {
@@ -126,6 +126,12 @@ div, span, table, tr, th, td, input, label {
 #menu li a {
     display: block;
     padding: 2px 18px;
+    color: $cTexte;
+    text-decoration: none;
+}
+
+#menu li a:hover {
+    color: white;
 }
 
 #menu li:hover, #menu li.item-image:hover {
@@ -133,10 +139,6 @@ div, span, table, tr, th, td, input, label {
     cursor: pointer;
 }
 
-#menu li a {
-    color: $cTexte;
-    text-decoration: none;
-}
 
 #menu li#item-active {
     border: none;
