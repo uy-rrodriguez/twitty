@@ -43,6 +43,15 @@ abstract class basemodel
 	
 	public function __set($att, $value) {
 		$this->data[$att] = $value;
+	}	
+	
+	public function __get($att) {
+		if(array_key_exists($att,$this->data)) {
+			return $this->data[$att];
+		}
+		else {
+			return "";
+		}
 	}
 
 }
