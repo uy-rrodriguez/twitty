@@ -12,17 +12,16 @@ class mainController {
 	
 	
 	public static function login($request,$context) {
-	    // Code pour fermer la session (DEBUG)
-	    context::setSessionAttribute("utilisateur", NULL);
-	    
-		if(key_exists("identifiant",$request)) {
-			$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'],$request['password']);
-			if($returnLogin == false) { // Identification qui a échouée
+	
+		if (key_exists("identifiant",$request)) {
+			$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['password']);
+			
+			if (is_null($returnLogin)) { // Identification qui a échouée
 				return context::ERROR;	
 			}
 			else { // Identification réussie
-				context::setSessionAttribute("utilisateur",$returnLogin);
-				context::redirect('twitty.php?action=listeUtilisateurs');
+				context::setSessionAttribute("utilisateur", $returnLogin);
+				context::redirect('twitty.php?action=accueil');
 			}
 		}
 		else {
@@ -33,13 +32,45 @@ class mainController {
 	
 	
 	public static function accueil($request,$context) {
-	    // Code pour ouvrir la session (DEBUG)
-	    context::setSessionAttribute("utilisateur", "aubergine");
 		return context::SUCCESS;
 	}
 	
 	
-	public static function monProfil($request,$context) {
+	public static function creerTweet($request, $context) {
+	    // On crée le post
+	    $dataPost = array(
+			"texte" => $request["texte"],
+			"date" => date("Y/m/d H:i:s"),
+			"image" => ""
+		);
+		$post = new post($dataPost);
+		$post->id = $post->save();
+		
+		if (is_null($post->id))
+		    return context::ERROR;
+		
+		    
+		// On crée le tweet    
+	    $dataTweet = array(
+			"emetteur" => context::getSessionAttribute("utilisateur")->id,
+			"parent" => null,
+			"post" => $post->id,
+			"nbVotes" => 0
+		);
+		
+		$tweet = new tweet($dataTweet);
+		$tweet->id = $tweet->save();
+		
+		if (is_null($tweet->id))
+		    return context::ERROR;
+		    
+		else {
+		    // Rédirection a mesTweets
+		    context::redirect('twitty.php?action=mesTweets');
+		}
+	}
+	
+	public static function mesTweets($request,$context) {
 		return context::SUCCESS;
 	}
 	
@@ -69,41 +100,15 @@ class mainController {
 	public static function test($request, $context) {
 		if (key_exists("nomTest", $request)) {
 			$nomTest = $request["nomTest"];
-			$rep = json_encode(mainController::$nomTest($request, $context));
+			
+			try {
+			    $rep = mainController::$nomTest($request, $context);
+			}
+			catch(PDOException $e) {
+			    $rep = implode("|", $e->errorInfo);
+			}
 			
 			$context->setSessionAttribute("reponse", $rep);
-			
-			/*
-			switch () {
-				case "testUtilisateur":
-					
-					break;
-					
-				case "testTweet":
-					$rep = testTweet($request, $context);
-					break;
-					
-				case "testPost":
-					$rep = testPost($request, $context);
-					break;
-					
-				case "testUtilisateur":
-					$rep = testUtilisateur($request, $context);
-					break;
-					
-				case "testUtilisateur":
-					$rep = testUtilisateur($request, $context);
-					break;
-					
-				case "testUtilisateur":
-					$rep = testUtilisateur($request, $context);
-					break;
-					
-				case "testUtilisateur":
-					$rep = testUtilisateur($request, $context);
-					break;
-			}
-			*/
 		}
 		else {
 			if (key_exists("reponse", $_SESSION)) {
@@ -117,16 +122,20 @@ class mainController {
 	public static function testUtilisateur($request, $context) {
 		$data = array(
 			"identifiant" => $request["identifiant"],
-			"pass" => $request["pass"],
+			"pass" => sha1($request["pass"]),
 			"nom" => $request["nom"],
 			"prenom" => $request["prenom"],
 			"statut" => $request["statut"],
 			"avatar" => ""
 		);
-		$utilisateur = new utilisateur($data);
-		$utilisateur->id = $utilisateur->save();
 		
-		return $utilisateur;
+		$u = new utilisateur($data);
+		$u->id = $u->save();
+		
+		if (is_null($u->id))
+		    return NULL;
+		else
+		    return $u;
 	}
 	
 	public static function testTweet($request, $context) {
@@ -139,7 +148,10 @@ class mainController {
 		$tweet = new tweet($data);
 		$tweet->id = $tweet->save();
 		
-		return $tweet;
+		if (is_null($tweet->id))
+		    return NULL;
+		else
+		    return $tweet;
 	}
 	
 	public static function testPost($request, $context) {
@@ -151,12 +163,16 @@ class mainController {
 		$post = new post($data);
 		$post->id = $post->save();
 		
-		return $post;
+		if (is_null($post->id))
+		    return NULL;
+		else
+		    return $post;
 	}
 	
 	public static function testTweetGetPost($request, $context) {
 		$tweet = tweetTable::getTweetById($request["tweet"]);
-		if ($tweet !== false) {
+		
+		if (! is_null($tweet)) {
 			return $tweet->getPost();
 		}
 		else {
@@ -166,14 +182,19 @@ class mainController {
 	
 	public static function testTweetGetParent($request, $context) {
 		$tweet = tweetTable::getTweetById($request["tweet"]);
-		$utilisateur = $tweet->getParent();
 		
-		return $utilisateur;
+		if (! is_null($tweet)) {
+			return $tweet->getParent();
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public static function testTweetGetLikes($request, $context) {
 		$tweet = tweetTable::getTweetById($request["tweet"]);
-		if ($tweet !== false) {
+		
+		if (! is_null($tweet)) {
 			return $tweet->getLikes();
 		}
 		else {
@@ -183,13 +204,15 @@ class mainController {
 	
 	public static function testTweetGetUtilisateursVotes($request, $context) {
 		$tweet = tweetTable::getTweetById($request["tweet"]);
-		if ($tweet !== false) {
+		
+		if (! is_null($tweet)) {
 			return $tweet->getUsersWhoLikeMe();
 		}
 		else {
 			return null;
 		}
 	}
+	
 }
 
 ?>

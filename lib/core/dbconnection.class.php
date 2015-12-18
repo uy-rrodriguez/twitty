@@ -15,6 +15,7 @@ class dbconnection
     $this->error = null;
     try {
         $this->link = new PDO( "pgsql:host=" . HOST . ";dbname=" . DB . ";user=" . USER . ";password=" . PASS );
+        $this->link->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } 
 	catch( PDOException $e ) {
         $this->error =  $e->getMessage();

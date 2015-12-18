@@ -11,22 +11,24 @@
             <div id="div-tete-contenu">
             
 <?php
-            if (key_exists("utilisateur", $_SESSION) && !empty($_SESSION["utilisateur"])) {
+            if (key_exists("utilisateur", $_SESSION)) {
+                $moi = context::getSessionAttribute("utilisateur");
 ?>
                 <div id="div-petit-profil">
                     <div id="div-petit-profil-image">
                         <img src="img/profil.png" />
                     </div>
                     <div id="div-petit-profil-donnees">
-	                    <span class="nom">Pierre Dupont</span> <br />
-	                    <span class="statut">J'aime les aubergines!!!</span>
+	                    <span class="nom"><?php echo $moi->prenom . " " . $moi->nom; ?></span> <br />
+	                    <span class="statut"><?php echo $moi->statut; ?></span>
                     </div>
                 </div>
                 
                 <div id="div-menu">
                     <ul id="menu">
+                        <li><a href="twitty.php?action=test"><strong>TESTS</strong></a></li>
                         <li><a href="twitty.php?action=accueil">Accueil</a></li>
-                        <li><a href="twitty.php?action=monProfil">Mon profil</a></li>
+                        <li><a href="twitty.php?action=mesTweets">Mes tweets</a></li>
                         <li><a href="twitty.php?action=reseau">Mon réseau</a></li>
                         <li><a href="twitty.php?action=params">Paramètres</a></li>
                         <li class="item-image"><a href="twitty.php?action=login"><img src="img/shutdown.png" /></a></li>

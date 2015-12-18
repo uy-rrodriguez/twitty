@@ -1,8 +1,16 @@
 <?php
 
 	if (key_exists("reponse", $_SESSION)) {
-		var_dump(json_decode($_SESSION["reponse"]));
-		echo "<h1> </h1>";
+	    $rep = context::getSessionAttribute("reponse");
+	    
+	    if (! is_null($rep) && is_array($rep)) {
+	        foreach($rep as $data) {
+	            echo "<h1> " . $data . " </h1>";
+	        }
+	    }
+	    else {
+    		echo "<h1> " . $rep . " </h1>";
+    	}
 	}
 ?>
 
@@ -76,7 +84,7 @@
 </form>
 
 <h1>Test post</h1>
-<form method="POST" action="twitty.php?action=test&nomTest==testPost" enctype="multipart/form-data">
+<form method="POST" action="twitty.php?action=test&nomTest=testPost" enctype="multipart/form-data">
 	<table class="table-horiz">
 		<tr>
 			<th>Texte :</th>

@@ -3,15 +3,15 @@
 class utilisateurTable
 {
 	public static function getUserByLoginAndPass($login,$pass) {
-		$connection = new dbconnection() ;
+		$connection = new dbconnection();
 		$sql = "select * from jabaianb.utilisateur where identifiant='".$login."' and pass='".sha1($pass)."'" ;
 
-		$res = $connection->doQuery($sql);
+		$res = $connection->doQueryObject($sql, "utilisateur");
 
-		if($res === false)
-			return false ;
+		if ($res === false || empty($res))
+			return null;
 
-		return $res ;
+		return $res[0];
 	}
 
 	public static function getUserById($id) {
@@ -20,10 +20,10 @@ class utilisateurTable
 		
 		$res = $connection->doQueryObject($sql,"utilisateur");
 
-		if($res === false)
-			return false;
+		if ($res === false || empty($res))
+			return null;
 
-		return $res;	
+		return $res[0];	
 	}
 
 	public static function getUsers() {
@@ -32,8 +32,8 @@ class utilisateurTable
 		
 		$res = $connection->doQueryObject($sql,"utilisateur");
 
-		if($res === false)
-			return false;
+		if ($res === false)
+			return null;
 
 		return $res;
 	}
@@ -42,12 +42,12 @@ class utilisateurTable
 		$connection = new dbconnection() ;
 		$sql = "SELECT U.* FROM jabaianb.utilisateur U
 					INNER JOIN jabaianb.vote V ON (U.id = V.utilisateur)
-				WHERE V.tweet = " . $tweetId;
+				WHERE V.message = " . $tweetId;
 		
 		$res = $connection->doQueryObject($sql,"utilisateur");
 
-		if($res === false)
-			return false;
+		if ($res === false)
+			return null;
 
 		return $res;				
 	}

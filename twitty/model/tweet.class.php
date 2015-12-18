@@ -7,11 +7,11 @@ class tweet extends basemodel
 	}
 	
 	public function getParent() {
-		return userTable::getUserById($this->parent);
+		return utilisateurTable::getUserById($this->parent);
 	}
 	
 	public function getLikes() {
-		return $this->nbVotes;
+		return $this->nbvotes;
 	}
 	
 	/* Retourne les utilisateurs qui ont voté pour le tweet */
