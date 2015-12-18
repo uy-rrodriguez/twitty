@@ -17,7 +17,7 @@
 		<tr class="tr-espace"></tr>
 		<tr>
 			<td class="td-droite" colspan="2">
-				<a class="menu" href="../twitty/TP3/inscription.php">Creer un compte</a>
+				<a class="menu" href="twitty.php?action=inscription">Creer un compte</a>
 			</td>
 		</tr>
 	</table>

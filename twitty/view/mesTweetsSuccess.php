@@ -1,10 +1,10 @@
 <div id="div-tweet-creation">
 	<h1>Nouveau tweet</h1>
-	<form>
+	<form action="twitty.php?action=creerTweet" method="post">
 		<table>
 			<tr>
 				<td colspan="2">
-					<textarea maxlength="140" placeholder="Voici le texte de mon super tweet"></textarea>
+					<textarea name="texte" maxlength="140" placeholder="Voici le texte de mon super tweet"></textarea>
 				</td>
 			</tr>
 			<tr>
@@ -24,19 +24,15 @@
 <br />
 <h1>Mes tweets</h1>
 <?php
-    $tweet = array(
-        "createur"=> "Don Omar",
-        "image_profil"=> "profil.png",
-        "prenom"=> "Prenom",
-        "nom"=> "Nom",
-        "message"=> "Ceci n'est pas un tweet.\n\tCelle ci est une nouvelle ligne de texte.",
-        "image"=> "tweet_exemple.png",
-        "date"=> "20/11/2015",
-        "heure"=> "15:30",
-        "votes"=> "10"
-    );
+    $tweets = context::getSessionAttribute("mesTweets");
     
-	for($boucleTweet = 0 ; $boucleTweet < 5 ; $boucleTweet++) {
-		include($nameApp."/layout/tweet_template.php");
-	}
+    if (empty($tweets))
+        echo "Tu n'as pas encore créé aucun tweet. Fais-le maintenant! :D";
+        
+    else
+	    foreach ($tweets as $tweet) {
+	        context::setSessionAttribute("userTweetTemplate", $moi); // $moi a été défini dans le layout
+	        context::setSessionAttribute("tweetTemplate", $tweet);
+		    include($nameApp."/layout/tweet_template.php");
+	    }
 ?>

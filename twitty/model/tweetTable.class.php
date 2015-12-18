@@ -4,7 +4,7 @@ class tweetTable
 {	
 	public static function getTweets() {
 		$connection = new dbconnection();
-		$sql = "SELECT * FROM jabaianb.tweet" ;
+		$sql = "SELECT * FROM jabaianb.tweet ORDER BY id DESC" ;
 		$res = $connection->doQueryObject($sql, "tweet");
 
 		if ($res === false)
@@ -15,7 +15,7 @@ class tweetTable
 	
 	public static function getTweetsPostedBy($id) {
 		$connection = new dbconnection();
-		$sql = "SELECT * FROM jabaianb.tweet WHERE emetteur = " . $id;
+		$sql = "SELECT * FROM jabaianb.tweet WHERE emetteur = " . $id . " ORDER BY id DESC";
 		$res = $connection->doQueryObject($sql, "tweet");
 
 		if ($res === false)

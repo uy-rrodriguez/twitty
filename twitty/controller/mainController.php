@@ -31,47 +31,126 @@ class mainController {
 	}
 	
 	
+	public static function inscription($request, $context) {
+		return context::SUCCESS;
+	}
+	
+	
+	public static function finInscription($request, $context) {
+	    // On cherche l'utilisateur par son identifiant
+	    if ( is_null(utilisateurTable::getUserByLogin($request["identifiant"])) ) {
+	    
+	        // Si l'identifiant n'existe pas, on continue
+	        $data = array(
+			    "identifiant" => $request["identifiant"],
+			    "pass" => sha1($request["pass"]),
+			    "nom" => $request["nom"],
+			    "prenom" => $request["prenom"],
+			    "statut" => "",
+			    "avatar" => ""
+		    );
+		
+		    $u = new utilisateur($data);
+		    
+		    try {
+		        $u->id = $u->save();
+		
+		        if (is_null($u->id))
+		            return context::ERROR;
+		        else
+		            context::redirect('twitty.php');
+            }
+            catch(PDOException $e) {
+                echo implode("|", $e->errorInfo);
+                return context::ERROR;
+            }
+		     
+	    }
+	    else {
+	        return context::ERROR;
+	    }
+	}
+	
+	
 	public static function accueil($request,$context) {
 		return context::SUCCESS;
 	}
 	
 	
-	public static function creerTweet($request, $context) {
-	    // On crée le post
-	    $dataPost = array(
-			"texte" => $request["texte"],
-			"date" => date("Y/m/d H:i:s"),
-			"image" => ""
-		);
-		$post = new post($dataPost);
-		$post->id = $post->save();
-		
-		if (is_null($post->id))
-		    return context::ERROR;
-		
-		    
-		// On crée le tweet    
-	    $dataTweet = array(
-			"emetteur" => context::getSessionAttribute("utilisateur")->id,
-			"parent" => null,
-			"post" => $post->id,
-			"nbVotes" => 0
-		);
-		
-		$tweet = new tweet($dataTweet);
-		$tweet->id = $tweet->save();
-		
-		if (is_null($tweet->id))
-		    return context::ERROR;
-		    
-		else {
-		    // Rédirection a mesTweets
-		    context::redirect('twitty.php?action=mesTweets');
-		}
+	/* Fonction auxiliaire pour créer un tweet ayant déjà créé le post associé */
+	private static function creerTweetAux($post, $parent) {
+	    // On crée le tweet
+        $dataTweet = array(
+		    "emetteur" => context::getSessionAttribute("utilisateur")->id,
+		    "parent" => $parent,
+		    "post" => $post->id,
+		    "nbVotes" => 0
+	    );
+	    $tweet = new tweet($dataTweet);
+	
+	    if ( is_null($tweet->save()) )
+	        return false;
+	    else
+	        return true;
 	}
 	
-	public static function mesTweets($request,$context) {
-		return context::SUCCESS;
+	
+	public static function creerTweet($request, $context) {
+	    try {
+	        // On crée le post
+            $dataPost = array(
+		        "texte" => $request["texte"],
+		        "date" => date("Y/m/d H:i:s"),
+		        "image" => ""
+	        );
+	        $post = new post($dataPost);
+	        $post->id = $post->save();
+	
+	        if ( is_null($post->id) )
+	            return context::ERROR;
+
+	            
+	        if (mainController::creerTweetAux($post, 0))
+		        context::redirect('twitty.php?action=mesTweets');
+	        else
+		        return context::ERROR;
+        }
+        catch (PDOException $e) {
+            echo implode("|", $e->errorInfo);
+            return context::ERROR;
+        }
+	}
+	
+	
+	public static function partagerTweet($request, $context) {
+	    try {
+	        $tweet = tweetTable::getTweetById($request["tweetId"]);
+	        $post = $tweet->getPost();
+	        $parent = $tweet->parent;
+	        if ($parent == 0)
+	            $parent = $tweet->emetteur;
+	        
+	        if (mainController::creerTweetAux($post, $parent))
+		        context::redirect('twitty.php?action=mesTweets');
+	        else
+		        return context::ERROR;
+        }
+        catch (PDOException $e) {
+            echo implode("|", $e->errorInfo);
+            return context::ERROR;
+        }
+	}
+	
+	public static function mesTweets($request, $context) {
+	    try {
+	        $tweets = tweetTable::getTweetsPostedBy(context::getSessionAttribute("utilisateur")->id);
+		    context::setSessionAttribute("mesTweets", $tweets);
+		    return context::SUCCESS;
+	    }
+        catch (PDOException $e) {
+            echo implode("|", $e->errorInfo);
+            return context::ERROR;
+        }
 	}
 	
 	
@@ -94,6 +173,7 @@ class mainController {
 		return context::SUCCESS;
 	}
 
+	
 	
 	/* ********************************** TESTS ********************************** */
 

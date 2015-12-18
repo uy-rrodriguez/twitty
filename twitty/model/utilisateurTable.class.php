@@ -13,6 +13,18 @@ class utilisateurTable
 
 		return $res[0];
 	}
+	
+	public static function getUserByLogin($login) {
+		$connection = new dbconnection();
+		$sql = "SELECT * FROM jabaianb.utilisateur WHERE identifiant='".$login."'" ;
+
+		$res = $connection->doQueryObject($sql, "utilisateur");
+
+		if ($res === false || empty($res))
+			return null;
+
+		return $res[0];
+	}
 
 	public static function getUserById($id) {
 		$connection = new dbconnection() ;
