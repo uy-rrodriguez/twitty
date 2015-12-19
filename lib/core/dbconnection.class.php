@@ -1,6 +1,6 @@
 <?php
 
-define ('HOST', 'localhost') ;
+define ('HOST', 'pedago02a.univ-avignon.fr') ;
 define ('USER', 'uapv1602799'  ) ;
 define ('PASS', 'cFHJEJ' ) ;
 define ('DB', 'etd' ) ;

@@ -251,7 +251,7 @@ div, span, table, tr, th, td, input, label {
  *         CHAMPS DE FORMULAIRES ET BOUTONS
  * ************************************************************************************************ */
 
-input {
+input, a.button {
     font-family: Verdana, sans-serif;
 }
 
@@ -264,7 +264,7 @@ input[type="text"], input[type="password"] {
     color: $cTexte;
 }
 
-input[type="button"], input[type="submit"] {
+input[type="button"], input[type="submit"], a.button {
     width: 150px;
     padding: 6px 15px;
     font-family: Verdana, sans-serif;
@@ -272,12 +272,20 @@ input[type="button"], input[type="submit"] {
     font-weight: bold;
     color: $cTexteClair;
     background-color: $cPrincipal;
-    border: none;
+    border: 1px solid $cPrincipal;
     border-radius: 5px;
+    
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    transition-duration: 0.1s;
 }
-input[type="button"]:hover, input[type="submit"]:hover {
+input[type="button"]:hover, input[type="submit"]:hover, a.button:hover {
     opacity: 0.8;
     cursor: pointer;
+}
+
+a.button {
+    display: inline
 }
 
 .btn-secondaire {
@@ -295,7 +303,15 @@ input[type="button"]:hover, input[type="submit"]:hover {
     border: 1px solid $cSecondaire;
     border-radius: 5px 0px 0px 5px;
     background-color: $cSecondaire;
+    
+    text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
+    transition-duration: 0.1s;
 }
+.input-file-container:hover {
+    opacity: 0.85;
+}
+
 input[type="text"].input-file-text {
     position: absolute;
     top: 0px;
@@ -309,6 +325,7 @@ input[type="text"].input-file-text {
     border: none;
     background-color: $cFondClair;
 }
+
 .input-file-container input[type="file"] {
     position: absolute;
     top: 0px;
@@ -416,12 +433,17 @@ th {}
  *         MESSAGES SUCCES ET ERREUR
  * ************************************************************************************************ */
 
-.messageErreur {
+.div-erreur {
+    border: 1px solid #DB2929;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: $cFondClair;
     font-weight : bold;
     color : red;
 }
 
-.messageSucces {
+.div-succes {
     font-weight:bold;
     color : green;
 }
@@ -491,12 +513,12 @@ th {}
 .tweet-message {
     margin-left: 70px;
     margin-bottom: 5px;
-    margin-top: 30px;
+    margin-top: 15px;
 }
 
-.tweet-button {
-    text-align:center;
-    margin-top:10px;
+.tweet-div-buttons {
+    text-align: center;
+    margin-top: 30px;
 }
 
 

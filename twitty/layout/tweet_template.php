@@ -44,12 +44,9 @@
     }
 ?>
 
-    <div class="tweet-button">
-	    <input type="button" value="+1"></input>
-	    
-	    <form action="twitty.php?action=partagerTweet" method="post">
-		    <input type="submit" value="Partager"></input>
-		    <input type="hidden" name="tweetId" value="<?php echo $tweetTemplate->id; ?>"></input>
-    	<form>
+    <div class="tweet-div-buttons">
+        <a class="button" href="twitty.php?action=voterTweet&id=<?php echo $tweetTemplate->id; ?>">+1</a>
+        <a class="button" href="twitty.php?action=partagerTweet&id=<?php echo $tweetTemplate->id; ?>">Partager</a>
+        <input type="button" value="Partager" />
     </div>
 </div>

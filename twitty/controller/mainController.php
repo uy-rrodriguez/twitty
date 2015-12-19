@@ -14,14 +14,20 @@ class mainController {
 	public static function login($request,$context) {
 	
 		if (key_exists("identifiant",$request)) {
-			$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['password']);
+			try {
+				$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['password']);
 			
-			if (is_null($returnLogin)) { // Identification qui a échouée
-				return context::ERROR;	
+				if (is_null($returnLogin)) { // Identification qui a échouée
+					throw new Exception("L'identifiant et le mot de passe ne sont pas corrects !");
+				}
+				else { // Identification réussie
+					context::setSessionAttribute("utilisateur", $returnLogin);
+					context::redirect('twitty.php?action=accueil');
+				}
 			}
-			else { // Identification réussie
-				context::setSessionAttribute("utilisateur", $returnLogin);
-				context::redirect('twitty.php?action=accueil');
+			catch (Exception $e) {
+				context::setSessionAttribute("erreur", $e);
+				return context::ERROR;	
 			}
 		}
 		else {
@@ -37,38 +43,36 @@ class mainController {
 	
 	
 	public static function finInscription($request, $context) {
-	    // On cherche l'utilisateur par son identifiant
-	    if ( is_null(utilisateurTable::getUserByLogin($request["identifiant"])) ) {
-	    
-	        // Si l'identifiant n'existe pas, on continue
-	        $data = array(
-			    "identifiant" => $request["identifiant"],
-			    "pass" => sha1($request["pass"]),
-			    "nom" => $request["nom"],
-			    "prenom" => $request["prenom"],
-			    "statut" => "",
-			    "avatar" => ""
-		    );
+		try {
+	        // On cherche l'utilisateur par son identifiant
+	        if ( is_null(utilisateurTable::getUserByLogin($request["identifiant"])) ) {
+	        
+	            // Si l'identifiant n'existe pas, on continue
+	            $data = array(
+			        "identifiant" => $request["identifiant"],
+			        "pass" => sha1($request["pass"]),
+			        "nom" => $request["nom"],
+			        "prenom" => $request["prenom"],
+			        "statut" => "",
+			        "avatar" => ""
+		        );
 		
-		    $u = new utilisateur($data);
-		    
-		    try {
-		        $u->id = $u->save();
-		
-		        if (is_null($u->id))
-		            return context::ERROR;
-		        else
-		            context::redirect('twitty.php');
-            }
-            catch(PDOException $e) {
-                echo implode("|", $e->errorInfo);
-                return context::ERROR;
-            }
-		     
-	    }
-	    else {
-	        return context::ERROR;
-	    }
+		        $u = new utilisateur($data);
+	            $u->id = $u->save();
+	
+	            if (is_null($u->id))
+	                throw new Exception("Il y a eu une erreur pour inscrire l'utilisateur. Désolé.");
+	            else
+	                context::redirect('twitty.php');
+	        }
+	        else {
+	            throw new Exception("Il existe déjà un utilisateur avec le même identifiant.");
+	        }
+        }
+        catch(Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::ERROR;
+        }
 	}
 	
 	
@@ -88,6 +92,8 @@ class mainController {
 	    );
 	    $tweet = new tweet($dataTweet);
 	
+	    var_dump($tweet);
+	    
 	    if ( is_null($tweet->save()) )
 	        return false;
 	    else
@@ -107,16 +113,16 @@ class mainController {
 	        $post->id = $post->save();
 	
 	        if ( is_null($post->id) )
-	            return context::ERROR;
+	            throw new Exception("Il y a eu une erreur pour créer le tweet.");
 
 	            
 	        if (mainController::creerTweetAux($post, 0))
 		        context::redirect('twitty.php?action=mesTweets');
 	        else
-		        return context::ERROR;
+	            throw new Exception("Il y a eu une erreur pour créer le tweet.");
         }
-        catch (PDOException $e) {
-            echo implode("|", $e->errorInfo);
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
             return context::ERROR;
         }
 	}
@@ -124,7 +130,7 @@ class mainController {
 	
 	public static function partagerTweet($request, $context) {
 	    try {
-	        $tweet = tweetTable::getTweetById($request["tweetId"]);
+	        $tweet = tweetTable::getTweetById($request["id"]);
 	        $post = $tweet->getPost();
 	        $parent = $tweet->parent;
 	        if ($parent == 0)
@@ -133,10 +139,10 @@ class mainController {
 	        if (mainController::creerTweetAux($post, $parent))
 		        context::redirect('twitty.php?action=mesTweets');
 	        else
-		        return context::ERROR;
+	            throw new Exception("Il y a eu une erreur pour partager le tweet.");
         }
-        catch (PDOException $e) {
-            echo implode("|", $e->errorInfo);
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
             return context::ERROR;
         }
 	}
@@ -147,8 +153,8 @@ class mainController {
 		    context::setSessionAttribute("mesTweets", $tweets);
 		    return context::SUCCESS;
 	    }
-        catch (PDOException $e) {
-            echo implode("|", $e->errorInfo);
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
             return context::ERROR;
         }
 	}

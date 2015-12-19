@@ -1,5 +1,6 @@
 <h1>Actualité</h1>
 <?php
+    /*
     $tweet = array(
         "createur"=> "Don Omar",
         "image_profil"=> "profil.png",
@@ -15,4 +16,5 @@
 	for($boucleTweet = 0 ; $boucleTweet < 10 ; $boucleTweet++) {
 		include($nameApp."/layout/tweet_template.php");
 	}
+	*/
 ?>

@@ -1,8 +1,8 @@
-<form method="POST" action="twitty.php?action=login">
+<form method="post" action="twitty.php?action=login">
 	<table class="table-horiz">
 		<tr>
 			<th>Identifiant :</th>
-			<td><input type="text" name="identifiant" placeholder="Identifiant" /></td>
+			<td><input type="text" name="identifiant" /></td>
 		</tr>
 		<tr>
 			<th>Mot de passe :</th>

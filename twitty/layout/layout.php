@@ -47,7 +47,20 @@
             
         <div id="div-centre">
             <div id="div-corps">
-                <?php include($template_view); ?>
+<?php
+            		/* *** Petit morceau de code pour afficher les erreurs *** */
+					if (key_exists("erreur", $_SESSION)
+						&& ! is_null($erreurMsg = context::getSessionAttribute("erreur"))) {
+						
+						echo "<div class='div-erreur'>" . $erreurMsg . "</div>";
+						
+						context::setSessionAttribute("erreur", NULL);
+					}
+					
+					
+					/* *** Et après le code de la page actuelle *** */
+					include($template_view);
+?>
             </div>
             
             <div id="div-pied">Tweety Avignonnais v0.001</div>
