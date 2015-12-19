@@ -1,12 +1,18 @@
-<h1>Profil de Flash Gordon</h1>
+<?php
+    // On récupère l'utilisateur qui devrait être dans la session.
+    $u = context::getSessionAttribute("utilisateurProfil");
+?>
+
+<h1>Profil de <?php echo $u->prenom . " " . $u->nom; ?></h1>
 
 <div id="div-grand-profil">
 	<table>
 		<tr>
-			<td><img src="img/profil.png" /></td>
+			<td><img src="img/profil/<?php echo $u->avatar; ?>" /></td>
 			<td>
-				<span class="nom">Flash Gordon</span> <br />
-				<span class="statut">J'aime les aubergines!!!</span>
+				<span class="nom"><?php echo $u->prenom . " " . $u->nom; ?></span>
+				<br />
+				<span class="statut"><?php echo $u->statut; ?></span>
 			</td>
 		</tr>		
 	</table>
@@ -14,21 +20,19 @@
 
 
 <h1>Tweets</h1>
-	<!-- Liste des tweets de l'utilisateur -->
 <?php
-    $tweet = array(
-        "createur"=> "Don Omar",
-        "image_profil"=> "profil.png",
-        "prenom"=> "Prenom",
-        "nom"=> "Nom",
-        "message"=> "Ceci n'est pas un tweet.\n\tCelle ci est une nouvelle ligne de texte.",
-        "image"=> "tweet_exemple.png",
-        "date"=> "20/11/2015",
-        "heure"=> "15:30",
-        "votes"=> "10"
-    );
+    // On obtient la liste des tweets qui devrait être dans la session.
+    // Pour chaque tweet, on inclut le template et on ajoute l'info nécessaire dans la session
+    $tweets = context::getSessionAttribute("tweetsProfil");
     
-	for($boucleTweet = 0 ; $boucleTweet < 5 ; $boucleTweet++) {
-		include($nameApp."/layout/tweet_template.php");
-	}
+    if (empty($tweets))
+        echo "Cet utilisateur n'as jamais créé un tweet. Dis-lui de le faire maintenant! :D";
+        
+    else {
+	    foreach ($tweets as $tweet) {
+	        context::setSessionAttribute("userTweetTemplate", $u); // $moi a été défini dans le layout
+	        context::setSessionAttribute("tweetTemplate", $tweet);
+		    include($nameApp."/layout/tweet_template.php");
+	    }
+    }
 ?>

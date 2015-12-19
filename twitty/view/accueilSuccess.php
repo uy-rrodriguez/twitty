@@ -1,20 +1,17 @@
 <h1>Actualité</h1>
 <?php
-    /*
-    $tweet = array(
-        "createur"=> "Don Omar",
-        "image_profil"=> "profil.png",
-        "prenom"=> "Prenom",
-        "nom"=> "Nom",
-        "message"=> "Ceci n'est pas un tweet.\n\tCelle ci est une nouvelle ligne de texte.",
-        "image"=> "tweet_exemple.png",
-        "date"=> "20/11/2015",
-        "heure"=> "15:30",
-        "votes"=> "10"
-    );
+    // On obtient la liste des tweets qui devrait être dans la session.
+    // Pour chaque tweet, on inclut le template et on ajoute l'info nécessaire dans la session
+    $tweets = context::getSessionAttribute("derniersTweets");
     
-	for($boucleTweet = 0 ; $boucleTweet < 10 ; $boucleTweet++) {
-		include($nameApp."/layout/tweet_template.php");
-	}
-	*/
+    if (is_null($tweets) || empty($tweets))
+        echo "Il n'y a aucun tweet récent à montrer...";
+        
+    else {
+	    foreach ($tweets as $tweet) {
+	        context::setSessionAttribute("userTweetTemplate", $tweet->getEmetteur());
+	        context::setSessionAttribute("tweetTemplate", $tweet);
+		    include($nameApp."/layout/tweet_template.php");
+	    }
+    }
 ?>

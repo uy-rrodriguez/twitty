@@ -26,7 +26,7 @@ body {
     margin: 0px;
 }
 
-div, span, table, tr, th, td, input, label {
+div, span, table, tr, th, td, input, label, a.button {
     box-sizing: border-box;
 }
 
@@ -275,6 +275,7 @@ input[type="button"], input[type="submit"], a.button {
     border: 1px solid $cPrincipal;
     border-radius: 5px;
     
+    /* http://usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
     transition-duration: 0.1s;
@@ -285,7 +286,14 @@ input[type="button"]:hover, input[type="submit"]:hover, a.button:hover {
 }
 
 a.button {
-    display: inline
+    display: inline-block;
+    line-height: 17px;
+    text-decoration: none;
+    
+    -webkit-user-select:none;
+    -moz-user-select: none;
+    -ms-user-select:none;
+    user-select: none;
 }
 
 .btn-secondaire {
@@ -304,6 +312,7 @@ a.button {
     border-radius: 5px 0px 0px 5px;
     background-color: $cSecondaire;
     
+    /* http://usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
     text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.2);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
     transition-duration: 0.1s;

@@ -24,6 +24,8 @@
 <br />
 <h1>Mes tweets</h1>
 <?php
+    // On obtient la liste des tweets qui devrait être dans la session.
+    // Pour chaque tweet, on inclut le template et on ajoute l'info nécessaire dans la session
     $tweets = context::getSessionAttribute("mesTweets");
     
     if (empty($tweets))

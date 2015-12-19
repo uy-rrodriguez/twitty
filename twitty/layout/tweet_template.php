@@ -1,20 +1,46 @@
 <?php
+    // On obtient l'information du tweet qui devrait être dans la session.
     $userTemplate = context::getSessionAttribute("userTweetTemplate");
     $tweetTemplate = context::getSessionAttribute("tweetTemplate");
-    $parentTemplate = $tweetTemplate->getParent();
-    $postTemplate = $tweetTemplate->getPost();
+    
+    if (is_null($userTemplate)) {
+        $userTemplate = new Utilisateur();
+    }
+    
+    if (is_null($tweetTemplate)) {
+        $tweetTemplate = new Tweet();
+        $parentTemplate = null;
+        $postTemplate = new Post();
+    }
+    else {
+        $parentTemplate = $tweetTemplate->getParent();
+        $postTemplate = $tweetTemplate->getPost();
+    }
+    
+    // On nettoye la session
+    context::setSessionAttribute("userTweetTemplate", null);
+    context::setSessionAttribute("tweetTemplate", null);
 ?>
 
 <div class="tweet">
 
 <?php
     if (! is_null($parentTemplate)) {
+        if ($parentTemplate->id == $moi->id) {
 ?>
-        <div class="tweet-createur">
-            Crée par: <a href="twitty.php?action=voirProfil&id=1">
-            <?php echo $parentTemplate->prenom . " " . $parentTemplate->nom; ?></a>
-        </div>
+            <div class="tweet-createur">
+                Crée par: toi
+            </div>
 <?php
+        }
+        else {
+?>
+            <div class="tweet-createur">
+                Crée par: <a href="twitty.php?action=voirProfil&id=<?php echo $parentTemplate->id; ?>">
+                <?php echo $parentTemplate->prenom . " " . $parentTemplate->nom; ?></a>
+            </div>
+<?php
+        }
     }
 ?>
 
@@ -47,6 +73,5 @@
     <div class="tweet-div-buttons">
         <a class="button" href="twitty.php?action=voterTweet&id=<?php echo $tweetTemplate->id; ?>">+1</a>
         <a class="button" href="twitty.php?action=partagerTweet&id=<?php echo $tweetTemplate->id; ?>">Partager</a>
-        <input type="button" value="Partager" />
     </div>
 </div>

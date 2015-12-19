@@ -76,8 +76,18 @@ class mainController {
 	}
 	
 	
-	public static function accueil($request,$context) {
-		return context::SUCCESS;
+	/* Action pour afficher les derniers tweets créés */
+	public static function accueil($request, $context) {
+	    try {
+	        // On cherche les tweets dans la base et on le met dans la session
+	        $tweets = tweetTable::getLastTweets(10, 5);
+		    context::setSessionAttribute("derniersTweets", $tweets);
+		    return context::SUCCESS;
+	    }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::ERROR;
+        }
 	}
 	
 	
@@ -128,6 +138,7 @@ class mainController {
 	}
 	
 	
+	/* Fonction pour partager un tweet. On obtient le post du tweet original sans en créer un autre */
 	public static function partagerTweet($request, $context) {
 	    try {
 	        $tweet = tweetTable::getTweetById($request["id"]);
@@ -146,10 +157,13 @@ class mainController {
             return context::ERROR;
         }
 	}
-	
+
+
+	/* Action pour afficher les tweets de l'utilisateur connecté */
 	public static function mesTweets($request, $context) {
 	    try {
-	        $tweets = tweetTable::getTweetsPostedBy(context::getSessionAttribute("utilisateur")->id);
+	        // On cherche les tweets dans la base et on le met dans la session
+	        $tweets = tweetTable::getTweetsPostedBy(context::getSessionAttribute("utilisateur")->id, 10);
 		    context::setSessionAttribute("mesTweets", $tweets);
 		    return context::SUCCESS;
 	    }
@@ -160,22 +174,40 @@ class mainController {
 	}
 	
 	
-	public static function reseau($request,$context)	{
+	public static function reseau($request, $context)	{
 		return context::SUCCESS;
 	}
 
-
-	public static function voirProfil($request,$context) {
-		if(!(key_exists("id",$request))  || !is_numeric($_REQUEST['id']) ) {
-			return context::ERROR;		
-		}
-		else {	
-			return context::SUCCESS;
-		}
+    
+    /* Action pour afficher le données et les tweets d'un utilisateur non connecté */
+	public static function voirProfil($request, $context) {
+	    try {
+		    // Au cas où, on controle la validité de 
+		    if(! key_exists("id", $request)  || ! is_numeric($request["id"]) ) {
+			    throw new Exception("L'utilisateur que tu cherches n'existe pas.");
+		    }
+		    else {
+    		    // On cherche le profil et les tweets dans la base, on les mets dans la session
+    		    $u = utilisateurTable::getUserById($request["id"]);
+    		    
+		        if (is_null($u))
+		            throw new Exception("L'utilisateur que tu cherches n'existe pas.");
+		        
+	            $tweets = tweetTable::getTweetsPostedBy($request["id"], 10);
+	            
+		        context::setSessionAttribute("utilisateurProfil", $u);
+		        context::setSessionAttribute("tweetsProfil", $tweets);
+			    return context::SUCCESS;
+		    }
+	    }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::ERROR;
+        }
 	}
 	
 	
-	public static function params($request,$context) {
+	public static function params($request, $context) {
 		return context::SUCCESS;
 	}
 
