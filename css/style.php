@@ -9,6 +9,7 @@ $cSecondaire = "#bacecc";
 $cFond = "#dddddd";
 $cFondClair = "#F9F9F9";
 $cTexteClair = "#FFFFFF";
+$cGris = "#E8E8E8";
 
 
 echo <<<FINCSS
@@ -470,12 +471,19 @@ th {}
     border: 1px solid $cFond;
     border-radius: 10px;
     border-color: $cSecondaire;
+    background-color: white;
 }
 
 .tweet .tweet-createur {
     position: absolute;
+    z-index: -1;
     top: -15px;
+    left: 0px;
     font-size: 11px;
+    min-width: 200px;
+    padding: 1px 10px 10px 10px;
+    border-radius: 10px 10px 0 0;
+    background-color: $cGris;
 }
 
 .tweet .tweet-createur a {
