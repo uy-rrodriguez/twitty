@@ -11,8 +11,10 @@ class mainController {
 	}
 	
 	
+	/* Action pour se connecter au système. On stocke l'utilisateur dans la session. */
 	public static function login($request,$context) {
-	
+	    // Avant tout, on controle si on a recu un identifiant. Cela signifie que quelqu'un
+	    // essaye d'accèder au système. Sinon, on affiche la page avec les champs pour se connecter.
 		if (key_exists("identifiant",$request)) {
 			try {
 				$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['password']);
@@ -33,7 +35,13 @@ class mainController {
 		else {
 			return context::SUCCESS;	
 		}
-		
+	}
+
+
+    /* Action pour se déconnecter. On supprime l'utilisateur de la session. */
+	public static function quitter($request, $context) {
+		context::setSessionAttribute("utilisateur", null);
+		context::redirect('twitty.php?action=login');
 	}
 	
 	
@@ -111,6 +119,7 @@ class mainController {
 	}
 	
 	
+	/* Action pour créer un tweet et le post associé */
 	public static function creerTweet($request, $context) {
 	    try {
 	        // On crée le post
@@ -138,7 +147,7 @@ class mainController {
 	}
 	
 	
-	/* Fonction pour partager un tweet. On obtient le post du tweet original sans en créer un autre */
+	/* Action pour partager un tweet. On obtient le post du tweet original sans en créer un autre */
 	public static function partagerTweet($request, $context) {
 	    try {
 	        $tweet = tweetTable::getTweetById($request["id"]);
@@ -174,8 +183,18 @@ class mainController {
 	}
 	
 	
+	/* Action pour afficher le réseau d'utilisateurs associé à celui connecté */
 	public static function reseau($request, $context)	{
-		return context::SUCCESS;
+	    try {
+	        // On cherche les utilisateurs dans la base et on les met dans la session
+	        $mesAmis = utilisateurTable::getUsersWithLimit(10);
+		    context::setSessionAttribute("mesAmis", $mesAmis);
+		    return context::SUCCESS;
+	    }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::ERROR;
+        }
 	}
 
     

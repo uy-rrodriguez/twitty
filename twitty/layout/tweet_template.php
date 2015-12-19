@@ -28,6 +28,7 @@
     if (! is_null($parentTemplate)) {
         if ($parentTemplate->id == $moi->id) {
 ?>
+            <div class="tweet-createur-fond"></div>
             <div class="tweet-createur">
                 Crée par: toi
             </div>
@@ -35,6 +36,7 @@
         }
         else {
 ?>
+            <div class="tweet-createur-fond"></div>
             <div class="tweet-createur">
                 Crée par: <a href="twitty.php?action=voirProfil&id=<?php echo $parentTemplate->id; ?>">
                 <?php echo $parentTemplate->prenom . " " . $parentTemplate->nom; ?></a>

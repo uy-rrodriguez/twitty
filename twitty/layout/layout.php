@@ -11,8 +11,10 @@
             <div id="div-tete-contenu">
             
 <?php
-            if (key_exists("utilisateur", $_SESSION)) {
-                $moi = context::getSessionAttribute("utilisateur");
+            // On controle qu'il existe un utilisateur connecté.
+            // S'il y en a, l'object sera stocké dans $moi.
+            if (key_exists("utilisateur", $_SESSION)
+                && ! is_null($moi = context::getSessionAttribute("utilisateur"))) {
 ?>
                 <div id="div-petit-profil">
                     <div id="div-petit-profil-image">
@@ -31,14 +33,22 @@
                         <li><a href="twitty.php?action=mesTweets">Mes tweets</a></li>
                         <li><a href="twitty.php?action=reseau">Mon réseau</a></li>
                         <li><a href="twitty.php?action=params">Paramètres</a></li>
-                        <li class="item-image"><a href="twitty.php?action=login"><img src="img/shutdown.png" /></a></li>
+                        <li class="item-image"><a href="twitty.php?action=quitter"><img src="img/shutdown.png" /></a></li>
                     </ul>
+                </div>
+                
+                <div id="div-titre-en-bas">
+                    <h1>Twitty</h1>
+                    <img src="img/tucan.png" alt="Dessin d'un tucan" />
                 </div>
 <?php
             }
             else {
 ?>
-                <div id="div-titre-login"><h1>Identification</h1></div>
+                <div id="div-titre-login">
+                    <h1>Twitty</h1>
+                    <img src="img/tucan.png" alt="Dessin d'un tucan" />
+                </div>
 <?php
             }
 ?>
@@ -52,7 +62,7 @@
 					if (key_exists("erreur", $_SESSION)
 						&& ! is_null($erreurMsg = context::getSessionAttribute("erreur"))) {
 						
-						echo "<div class='div-erreur'>" . $erreurMsg . "</div>";
+						echo "<div class='div-erreur'>" . $erreurMsg->getMessage() . "</div>";
 						
 						context::setSessionAttribute("erreur", NULL);
 					}
@@ -63,7 +73,7 @@
 ?>
             </div>
             
-            <div id="div-pied">Tweety Avignonnais v0.001</div>
+            <div id="div-pied">Twitty Avignonnais v0.001</div>
         </div>
     </body>
 

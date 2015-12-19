@@ -40,7 +40,20 @@ class utilisateurTable
 
 	public static function getUsers() {
 		$connection = new dbconnection() ;
-		$sql = "select * from jabaianb.utilisateur";
+		$sql = "SELECT * FROM jabaianb.utilisateur";
+		
+		$res = $connection->doQueryObject($sql,"utilisateur");
+
+		if ($res === false)
+			return null;
+
+		return $res;
+	}
+
+    /* Retourne tous les utilisateurs, mais avec un limit de résultats */
+	public static function getUsersWithLimit($max) {
+		$connection = new dbconnection() ;
+		$sql = "SELECT * FROM jabaianb.utilisateur LIMIT " . $max;
 		
 		$res = $connection->doQueryObject($sql,"utilisateur");
 
@@ -50,6 +63,7 @@ class utilisateurTable
 		return $res;
 	}
 	
+	/* Retourne les utilisateurs qui ont voté pour un tweet */
 	public static function getUsersWhoLikeTweetById($tweetId) {
 		$connection = new dbconnection() ;
 		$sql = "SELECT U.* FROM jabaianb.utilisateur U

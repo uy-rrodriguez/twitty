@@ -73,7 +73,38 @@ div, span, table, tr, th, td, input, label, a.button {
 }
 
 #div-titre-login h1 {
+    display: inline;
     border: none;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+
+#div-titre-login img {
+    width: 80px;
+    margin-left: -10px;
+    margin-bottom: -10px;
+}
+
+/* Div avec le nom de la pâge qui se affiche tout en bas */
+#div-titre-en-bas {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    text-align: center;
+}
+
+#div-titre-en-bas h1 {
+    display: inline;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#div-titre-en-bas img {
+    width: 40px;
+    margin-left: -8px;
+    margin-bottom: -10px;
 }
 
 
@@ -393,24 +424,30 @@ th {}
 .table-vert {
     border-collapse: collapse;
 }
+
 .table-vert th {
     min-width: 50px;
     padding: 5px 20px;
     text-align: left;
     border-bottom: 2px solid $cSecondaire;
 }
+
 .table-vert td {
     padding: 5px 20px;
 }
+
 .table-vert tr {
     border-bottom: 1px solid $cFond;
+    transition: 0.2s;
 }
 .table-vert tr:hover {
-    background-color: $cFondClair;
+    background-color: $cSecondaire;
 }
+
 .table-vert thead tr:hover {
     background: none;
 }
+
 .table-vert input[type="image"] {
     width: 25px;
     opacity: 0.8;
@@ -476,12 +513,17 @@ th {}
 
 .tweet .tweet-createur {
     position: absolute;
-    z-index: -1;
     top: -15px;
-    left: 0px;
     font-size: 11px;
+}
+
+.tweet .tweet-createur-fond {
+    position: absolute;
+    z-index: -1;
+    top: -16px;
+    left: 0px;
+    height: 30px;
     min-width: 200px;
-    padding: 1px 10px 10px 10px;
     border-radius: 10px 10px 0 0;
     background-color: $cGris;
 }
