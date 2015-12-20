@@ -48,8 +48,13 @@
 
 	<table class="tweet-info">
 		<tr>
-			<td rowspan="2"><img src="img/<?php echo $userTemplate->avatar; ?>" /></td>
-			<td><span class="nom"><?php echo $userTemplate->prenom . " " . $userTemplate->nom; ?></span></td>
+			<td rowspan="2">
+			    <img class="img-avatar" src="<?php echo mainController::REPERTOIRE_AVATAR . $userTemplate->avatar; ?>"
+			        onerror="this.src='img/default.png'" />
+			</td>
+			<td>
+			    <span class="nom"><?php echo $userTemplate->prenom . " " . $userTemplate->nom; ?></span>
+			</td>
 		</tr>
 		<tr>
 			<td><span class="date"><?php echo $postTemplate->date; ?></span></td>
@@ -66,7 +71,7 @@
     if ($postTemplate->image != "") {
 ?>
         <div class="tweet-image">
-		    <img src="<?php echo mainController::$REPERTOIRE_TWEET . $postTemplate->image; ?>" />
+		    <img src="<?php echo mainController::REPERTOIRE_TWEET . $postTemplate->image; ?>" />
 	    </div>
 <?php
     }

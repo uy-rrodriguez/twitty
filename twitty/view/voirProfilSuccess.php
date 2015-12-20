@@ -8,7 +8,8 @@
 <div id="div-grand-profil">
 	<table>
 		<tr>
-			<td><img src="img/profil/<?php echo $u->avatar; ?>" /></td>
+			<td><img class="img-avatar" src="img/profil/<?php echo $u->avatar; ?>"
+			        onerror="this.src='img/default.png'" /></td>
 			<td>
 				<span class="nom"><?php echo $u->prenom . " " . $u->nom; ?></span>
 				<br />

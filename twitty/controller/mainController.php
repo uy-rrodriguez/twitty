@@ -10,17 +10,17 @@ class mainController {
 	/*                                    CONSTANTES                                     */
 	/* ********************************************************************************* */
 	
-	static $REPERTOIRE_AVATAR = "upload/avatars/";
-	static $REPERTOIRE_TWEET = "upload/tweets/";
-	
-	
+	const REPERTOIRE_AVATAR = "upload/avatars/";
+	const REPERTOIRE_TWEET = "upload/tweets/";
 
 	/* ********************************************************************************* */
 	/*                                    AUXILIAIRES                                    */
 	/* ********************************************************************************* */
 
-	/* Fonction auxiliaire pour créer un tweet ayant déjà créé le post associé */
-	private static function creerTweetAux($post, $parent) {
+	/*
+	 *  Fonction auxiliaire pour créer un tweet ayant déjà créé le post associé
+	 */
+	private static function creerTweetAvecPost($post, $parent) {
 	    // On crée le tweet
         $dataTweet = array(
 		    "emetteur" => context::getSessionAttribute("utilisateur")->id,
@@ -35,21 +35,8 @@ class mainController {
 	    else
 	        return true;
 	}
-	
-	
-	/*
-	 *  Pour chaque tweet dans la liste, crée un attribut pour indiquer s'il a été voté
-     *  par l'utilisateur connecté.
-	 */
-	private static function marquerTweetsVotes($tweets) {
-	    $u = context::getSessionAttribute("utilisateur");
-	    
-	    foreach ($tweets as $tweet) {
-	        $vote = voteTable::getVoteByTweetAndUser($tweet->id, $u->id);
-	        $tweet->dejaVote = ! is_null($vote);
-	    }
-	}
-	
+
+
 	/*
 	 *  Cette fonction permet de mettre en ligne une image contenu dans $_FILES
 	 */
@@ -64,6 +51,55 @@ class mainController {
 		else {
 			return $nomDestin . "." . $type;
 		}
+	}
+	
+	
+	/*
+	 *  Fonction pour créer un tweet et le post associé
+	 */
+	private static function creerPostEtTweet($request, $context) {
+        // On crée le post
+        $dataPost = array(
+	        "texte" => htmlspecialchars($request["texte"], $flags = ENT_QUOTES | ENT_HTML401),
+	        "date" => date("Y/m/d H:i:s"),
+	        "image" => ""
+        );
+        $post = new post($dataPost);
+        $post->id = $post->save();
+
+        if ( is_null($post->id) )
+            throw new Exception("Il y a eu une erreur pour créer le post.");
+
+        
+        // On essaye de mettre en ligne l'image et on actualise le post
+        if (key_exists("imageTweet", $_FILES) && ($_FILES["imageTweet"]["size"] > 0)) {
+            $path = mainController::uploadImage("imageTweet", mainController::REPERTOIRE_TWEET, $post->id);
+            $post->image = $path;
+            
+            if (empty($path) || is_null($post->save())) {
+                // Si on n'arrive pas stocker l'image, on ne s'arrête pas.
+                context::setSessionAttribute("erreur", new Exception("Il y a eu une erreur pour télécharger l'image."));
+            }
+        }
+
+        
+        // On crée le tweet
+        if (! mainController::creerTweetAvecPost($post, 0))
+            throw new Exception("Il y a eu une erreur pour créer le tweet.");
+	}
+	
+	
+	/*
+	 *  Pour chaque tweet dans la liste, crée un attribut pour indiquer s'il a été voté
+     *  par l'utilisateur connecté.
+	 */
+	private static function marquerTweetsVotes($tweets) {
+	    $u = context::getSessionAttribute("utilisateur");
+	    
+	    foreach ($tweets as $tweet) {
+	        $vote = voteTable::getVoteByTweetAndUser($tweet->id, $u->id);
+	        $tweet->dejaVote = ! is_null($vote);
+	    }
 	}
 	
 	
@@ -172,45 +208,6 @@ class mainController {
 	}
 	
 	
-	/* Action pour créer un tweet et le post associé */
-	public static function creerTweet($request, $context) {
-	    try {
-	        // On crée le post
-            $dataPost = array(
-		        "texte" => htmlspecialchars($request["texte"], $flags = ENT_QUOTES | ENT_HTML401),
-		        "date" => date("Y/m/d H:i:s"),
-		        "image" => ""
-	        );
-	        $post = new post($dataPost);
-	        $post->id = $post->save();
-	
-	        if ( is_null($post->id) )
-	            throw new Exception("Il y a eu une erreur pour créer le post.");
-
-            
-	        // On essaye de mettre en ligne l'image et on actualise le post
-	        $path = mainController::uploadImage("imageTweet", mainController::$REPERTOIRE_TWEET, $post->id);
-	        $post->image = $path;
-	        
-	        if (empty($path) || is_null($post->save())) {
-	            // Si on n'arrive pas stocker l'image, on ne s'arrête pas.
-	            context::setSessionAttribute("erreur", new Exception("Il y a eu une erreur pour télécharger l'image."));
-	        }
-	        
-	        
-	        // On crée le tweet
-	        if (mainController::creerTweetAux($post, 0))
-		        return context::redirect('twitty.php?action=mesTweets');
-	        else
-	            throw new Exception("Il y a eu une erreur pour créer le tweet.");
-        }
-        catch (Exception $e) {
-            context::setSessionAttribute("erreur", $e);
-            return context::ERROR;
-        }
-	}
-	
-	
 	/* Action pour partager un tweet. On obtient le post du tweet original sans en créer un autre */
 	public static function partagerTweet($request, $context) {
 	    try {
@@ -220,7 +217,7 @@ class mainController {
 	        if ($parent == 0)
 	            $parent = $tweet->emetteur;
 	        
-	        if (mainController::creerTweetAux($post, $parent)) {
+	        if (mainController::creerTweetAvecPost($post, $parent)) {
 	            // On retourne à la page où on était
 	            $actionRetour = context::getSessionAttribute("actionRetour");
 	            context::redirect('twitty.php?action=' . $actionRetour);
@@ -271,9 +268,17 @@ class mainController {
 	}
 
 
-	/* Action pour afficher les tweets de l'utilisateur connecté */
+	/*
+	 *  Action pour afficher les tweets de l'utilisateur connecté
+	 *  S'il y a un tweet à enregistrer dans le $request, on fait ca avant de continuer avec la page
+	 */
 	public static function mesTweets($request, $context) {
 	    try {
+	        // On crée un tweet si c'est nécessaire. S'il y a des erreurs, on les gère dans le catch.
+	        if (key_exists("enregistrerTweet", $request))
+	            mainController::creerPostEtTweet($request, $context);
+	        
+	        
 	        // On cherche les tweets dans la base, on marque ceux déjà votés
 	        // et on les ajoute à la session
 	        $tweets = tweetTable::getTweetsPostedBy(context::getSessionAttribute("utilisateur")->id, 10);
@@ -340,8 +345,81 @@ class mainController {
 	}
 	
 	
+	/* Action pour afficher et enregistrer différents paramètres */
+	/*
+	 *  Il y a trois actions possibles:
+	 *      - enregistrer le profil public
+	 *      - enregistrer les paramètres de sécurité 
+	 *      - afficher la page
+	 */
 	public static function params($request, $context) {
-		return context::SUCCESS;
+		try {
+		    $u = context::getSessionAttribute("utilisateur");
+		    
+		    // Enregistrer le profil public
+		    if (key_exists("enregistrerProfil", $request)) {
+		        $u->statut = htmlspecialchars($request["statut"], $flags = ENT_QUOTES | ENT_HTML401);
+		        $u->prenom = $request["prenom"];
+		        $u->nom = $request["nom"];
+		        
+                if (key_exists("avatar", $_FILES) && ($_FILES["avatar"]["size"] > 0)) {
+                    $path = mainController::uploadImage("avatar", mainController::REPERTOIRE_AVATAR, $u->id);
+                    if (empty($path)) {
+                        // Si on n'arrive pas à stocker l'image, on ne s'arrête pas.
+                        context::setSessionAttribute("erreur", new Exception("Il y a eu une erreur pour télécharger l'avatar."));
+                    }
+                    else {
+                        $u->avatar = $path;
+                    }
+                }
+                
+                if (is_null($u->save()))
+                    throw new Exception("Il y a eu une erreur pour enregistrer le profil public.");
+                else {
+                    context::setSessionAttribute("succes", "Le profil à bien été modifié.");
+		            return context::SUCCESS;
+		        }
+		    }
+		    
+		    
+		    // Enregistrer les paramètres de sécurité 
+		    else if (key_exists("enregistrerSecurite", $request)) {
+		        // On contrôle le mot de passe actuel
+		        $returnLogin = utilisateurTable::getUserByLoginAndPass($u->identifiant, $request['passwordActuel']);
+
+		        if (is_null($returnLogin))
+		            throw new Exception("Le mot de passe actuel n'est pas correct!");
+		        
+		        
+		        // On contrôle que les nouveaux mot de passe soient égales et pas vides
+		        if (empty($request["passwordNouveau"]))
+		            throw new Exception("Le nouveau mot de passe est vide.");
+
+                if ($request["passwordNouveau"] != $request["passwordRepete"])
+		            throw new Exception("Les nouveaux mots de passe ne sont pas égales.");
+		        
+		        
+		        // Enfin, on stocke le nouveau mot de passe dans la base
+		        $u->pass = sha1($request["passwordNouveau"]);
+		        
+		        if (is_null($u->save()))
+		            throw new Exception("Il y a eu une erreur pour enregistrer les paramètres de sécurité");
+		        else {
+                    context::setSessionAttribute("succes", "Le nouveau mot de passe à bien été modifié.");
+		            return context::SUCCESS;
+		        }
+		    }
+		    
+		    
+		    // Afficher la page
+		    else {
+		        return context::SUCCESS;
+		    }
+	    }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::ERROR;
+        }
 	}
 	
 	

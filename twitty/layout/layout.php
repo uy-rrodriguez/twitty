@@ -18,11 +18,12 @@
 ?>
                 <div id="div-petit-profil">
                     <div id="div-petit-profil-image">
-                        <img src="img/profil.png" />
+                        <img class="img-avatar" src="<?php echo mainController::REPERTOIRE_AVATAR . $moi->avatar; ?>"
+                            onerror="this.src='img/default.png'" />
                     </div>
                     <div id="div-petit-profil-donnees">
 	                    <span class="nom"><?php echo $moi->prenom . " " . $moi->nom; ?></span> <br />
-	                    <span class="statut"><?php echo $moi->id . " : " . $moi->statut; ?></span>
+	                    <span class="statut"><?php echo $moi->statut; ?></span>
                     </div>
                 </div>
                 
@@ -64,7 +65,16 @@
 						
 						echo "<div class='div-erreur'>" . $erreurMsg->getMessage() . "</div>";
 						
-						context::setSessionAttribute("erreur", NULL);
+						context::setSessionAttribute("erreur", null);
+					}
+					
+					/* *** Petit morceau de code pour afficher les messages de succès *** */
+					if (key_exists("succes", $_SESSION)
+						&& ! is_null($succesMsg = context::getSessionAttribute("succes"))) {
+						
+						echo "<div class='div-succes'>" . $succesMsg . "</div>";
+						
+						context::setSessionAttribute("succes", null);
 					}
 					
 					
@@ -106,6 +116,7 @@
             
             // On cherche tous les input file de la page
             var inputsFile = document.querySelectorAll("input.input-file");
+
             for (var i = 0 ; i < inputsFile.length ; i++) {
                 var file = inputsFile[i];
                 var numero = file.id.split("input-file-")[1];

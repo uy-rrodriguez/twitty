@@ -68,6 +68,7 @@ div, span, table, tr, th, td, input, label, a.button {
     padding: 0px 20px 0px 20px;
 }
 
+/* Div avec le nom de la page qui se affiche tout en haut */
 #div-titre-login {
     text-align: center;
 }
@@ -79,14 +80,13 @@ div, span, table, tr, th, td, input, label, a.button {
     font-weight: bold;
 }
 
-
 #div-titre-login img {
     width: 80px;
     margin-left: -10px;
     margin-bottom: -10px;
 }
 
-/* Div avec le nom de la pâge qui se affiche tout en bas */
+/* Div avec le nom de la page qui se affiche tout en bas */
 #div-titre-en-bas {
     position: fixed;
     bottom: 10px;
@@ -208,16 +208,17 @@ div, span, table, tr, th, td, input, label, a.button {
     display: inline-block;
 }
 
-#div-petit-profil img {
+#div-petit-profil .img-avatar {
     width: 80px;
-    border-radius: 40px;
+    border-radius: 50%;
 }
 
 #div-petit-profil-image {
 }
 
 #div-petit-profil-donnees {
-    margin-left: 30px;
+    width: 210px;
+    margin-left: 15px;
     font-weight: bold;
     padding-bottom: 2px;
 }
@@ -236,9 +237,9 @@ div, span, table, tr, th, td, input, label, a.button {
 #div-grand-profil {
 }
 
-#div-grand-profil img {
+#div-grand-profil .img-avatar {
     width: 120px;
-    border-radius: 40px;
+    border-radius: 50%;
 }
 
 #div-grand-profil span {
@@ -458,14 +459,9 @@ th {}
     background: none;
 }
 
-.table-vert input[type="image"] {
-    width: 25px;
-    opacity: 0.8;
-}
-.table-vert input[type="image"]:hover {
-    width: 27px;
-    margin: -1px;
-    opacity: 1;
+.table-vert .img-avatar {
+    width: 40px;
+    border-radius: 50%;
 }
 
 .tr-espace {
@@ -490,19 +486,22 @@ th {}
  *         MESSAGES SUCCES ET ERREUR
  * ************************************************************************************************ */
 
-.div-erreur {
-    border: 1px solid #DB2929;
+.div-erreur, .div-succes {
+    border: 1px solid black;
     border-radius: 5px;
     margin-bottom: 20px;
     padding: 10px 20px;
     background-color: $cFondClair;
-    font-weight : bold;
-    color : red;
+}
+
+.div-erreur {
+    border-color: #DB2929;
+    color : #DB2929;
 }
 
 .div-succes {
-    font-weight:bold;
-    color : green;
+    border-color: #84BE6A;
+    color : #84BE6A;
 }
 
 /* ************************************************************************************************
@@ -567,8 +566,9 @@ th {}
 .tweet-info {
     margin:0px;
 }
-.tweet-info img {
+.tweet-info .img-avatar {
     width: 40px;
+    border-radius: 50%;
 }
 .tweet-info .nom {
     margin-left: 20px;
