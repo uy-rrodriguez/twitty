@@ -22,7 +22,7 @@
                     </div>
                     <div id="div-petit-profil-donnees">
 	                    <span class="nom"><?php echo $moi->prenom . " " . $moi->nom; ?></span> <br />
-	                    <span class="statut"><?php echo $moi->statut; ?></span>
+	                    <span class="statut"><?php echo $moi->id . " : " . $moi->statut; ?></span>
                     </div>
                 </div>
                 
@@ -78,6 +78,7 @@
     </body>
 
 
+    <!-- Script pour l'effet de l'entête -->
     <script type="text/javascript">
         window.onscroll = function() {
             var tete = document.getElementById("div-tete");
@@ -92,6 +93,29 @@
             }
         }
         window.onscroll();
+    </script>
+
+    <!-- Script pour les champs de fichier modifiés -->
+    <script type="text/javascript">
+        window.onload = function() {
+            // Noter que tous les input file doivent avoir un id de la forme: input-file-#
+            // et les input text associés: input-file-text-#
+            // # étant le numéro qui permet de les associer
+            //
+            // Noter aussi que tous les input file doivent avoir une classe: input-file
+            
+            // On cherche tous les input file de la page
+            var inputsFile = document.querySelectorAll("input.input-file");
+            for (var i = 0 ; i < inputsFile.length ; i++) {
+                var file = inputsFile[i];
+                var numero = file.id.split("input-file-")[1];
+                var text = document.getElementById("input-file-text-" + numero);
+
+                // On associe les input. Quand le file change, le text affiche le contenu
+	            file.onchange = new Function("evt",
+	                "document.getElementById('" + text.id + "').value = '../' + this.value;");
+            }
+        }
     </script>
 
 </html>

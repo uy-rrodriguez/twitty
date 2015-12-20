@@ -63,10 +63,10 @@
 	</div>
 
 <?php
-    if (! empty($postTemplate->image)) {
+    if ($postTemplate->image != "") {
 ?>
-        <div class="tweet-image">		
-		    <img src="img/<?php echo $postTemplate->image; ?>" />
+        <div class="tweet-image">
+		    <img src="<?php echo mainController::$REPERTOIRE_TWEET . $postTemplate->image; ?>" />
 	    </div>
 <?php
     }

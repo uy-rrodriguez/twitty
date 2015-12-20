@@ -18,8 +18,8 @@
 			<td>
 				<label class="input-file-container">
 					Fichiers...
-					<input type="text" id="text-file-1" class="input-file-text" disabled />
-					<input type="file" id="input-file-1" name="avatar" accept=".png,.jpg,.bmp" />
+					<input type="text" id="input-file-text-1" class="input-file-text" disabled />
+					<input type="file" id="input-file-1" class="input-file" name="avatar" accept=".png,.jpg,.bmp" />
 				</label>
 			</td>
 		</tr>

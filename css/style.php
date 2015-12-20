@@ -558,7 +558,7 @@ th {}
 .tweet-image {
     text-align: center;
     margin-bottom: 5px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .tweet-image img {
     max-height: 300px;
@@ -581,13 +581,13 @@ th {}
 
 .tweet-message {
     margin-left: 70px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     margin-top: 15px;
 }
 
 .tweet-div-buttons {
     text-align: center;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 
 

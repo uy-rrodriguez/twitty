@@ -1,18 +1,19 @@
 <div id="div-tweet-creation">
 	<h1>Nouveau tweet</h1>
-	<form action="twitty.php?action=creerTweet" method="post">
+	<form action="twitty.php?action=creerTweet" method="post" enctype="multipart/form-data">
 		<table>
 			<tr>
 				<td colspan="2">
-					<textarea name="texte" maxlength="140" placeholder="Voici le texte de mon super tweet"></textarea>
+					<textarea name="texte" maxlength="140"
+					    placeholder="Voici le texte de mon super tweet"></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td>
 					<label class="input-file-container">
 						Images...
-						<input type="text" id="text-file-1" class="input-file-text" disabled placeholder="Une image pour mon tweet" />
-						<input type="file" id="input-file-1" name="avatar" accept=".png,.jpg,.bmp" />
+						<input type="text" id="input-file-text-1" class="input-file-text" disabled placeholder="Une belle image..." />
+						<input type="file" id="input-file-1" class="input-file" name="imageTweet" accept=".png,.jpg,.bmp" />
 					</label>
 				</td>
 				<td class="td-droite"><input type="submit" value="Envoyer" /></td>

@@ -7,6 +7,15 @@
 class mainController {
 
 	/* ********************************************************************************* */
+	/*                                    CONSTANTES                                     */
+	/* ********************************************************************************* */
+	
+	static $REPERTOIRE_AVATAR = "upload/avatars/";
+	static $REPERTOIRE_TWEET = "upload/tweets/";
+	
+	
+
+	/* ********************************************************************************* */
 	/*                                    AUXILIAIRES                                    */
 	/* ********************************************************************************* */
 
@@ -20,8 +29,6 @@ class mainController {
 		    "nbVotes" => 0
 	    );
 	    $tweet = new tweet($dataTweet);
-	
-	    var_dump($tweet);
 	    
 	    if ( is_null($tweet->save()) )
 	        return false;
@@ -43,9 +50,20 @@ class mainController {
 	    }
 	}
 	
-	
-	public static function index($request,$context) {
-		return context::SUCCESS;
+	/*
+	 *  Cette fonction permet de mettre en ligne une image contenu dans $_FILES
+	 */
+	private static function uploadImage($keyImage, $repertoireDestin, $nomDestin) {
+		$fichier = $_FILES[$keyImage];
+		$type = pathinfo($fichier["name"], PATHINFO_EXTENSION);
+		$pathDestin = $repertoireDestin . $nomDestin . "." . $type;
+
+		if (! move_uploaded_file($fichier["tmp_name"], $pathDestin)) {
+			return "";
+		}
+		else {
+			return $nomDestin . "." . $type;
+		}
 	}
 	
 	
@@ -54,6 +72,11 @@ class mainController {
 	/* ********************************************************************************* */
 	/*                                      ACTIONS                                      */
 	/* ********************************************************************************* */
+	
+	public static function index($request,$context) {
+		return context::SUCCESS;
+	}
+	
 	
 	/* Action pour se connecter au système. On stocke l'utilisateur dans la session. */
 	public static function login($request,$context) {
@@ -136,6 +159,10 @@ class mainController {
 	        $tweets = tweetTable::getLastTweets(10, 5);
 	        mainController::marquerTweetsVotes($tweets);
 		    context::setSessionAttribute("derniersTweets", $tweets);
+		    
+		    // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
+		    context::setSessionAttribute("actionRetour", "accueil");
+		    
 		    return context::SUCCESS;
 	    }
         catch (Exception $e) {
@@ -150,7 +177,7 @@ class mainController {
 	    try {
 	        // On crée le post
             $dataPost = array(
-		        "texte" => $request["texte"],
+		        "texte" => htmlspecialchars($request["texte"], $flags = ENT_QUOTES | ENT_HTML401),
 		        "date" => date("Y/m/d H:i:s"),
 		        "image" => ""
 	        );
@@ -158,11 +185,22 @@ class mainController {
 	        $post->id = $post->save();
 	
 	        if ( is_null($post->id) )
-	            throw new Exception("Il y a eu une erreur pour créer le tweet.");
+	            throw new Exception("Il y a eu une erreur pour créer le post.");
 
-	            
+            
+	        // On essaye de mettre en ligne l'image et on actualise le post
+	        $path = mainController::uploadImage("imageTweet", mainController::$REPERTOIRE_TWEET, $post->id);
+	        $post->image = $path;
+	        
+	        if (empty($path) || is_null($post->save())) {
+	            // Si on n'arrive pas stocker l'image, on ne s'arrête pas.
+	            context::setSessionAttribute("erreur", new Exception("Il y a eu une erreur pour télécharger l'image."));
+	        }
+	        
+	        
+	        // On crée le tweet
 	        if (mainController::creerTweetAux($post, 0))
-		        context::redirect('twitty.php?action=mesTweets');
+		        return context::redirect('twitty.php?action=mesTweets');
 	        else
 	            throw new Exception("Il y a eu une erreur pour créer le tweet.");
         }
@@ -182,8 +220,11 @@ class mainController {
 	        if ($parent == 0)
 	            $parent = $tweet->emetteur;
 	        
-	        if (mainController::creerTweetAux($post, $parent))
-		        context::redirect('twitty.php?action=mesTweets');
+	        if (mainController::creerTweetAux($post, $parent)) {
+	            // On retourne à la page où on était
+	            $actionRetour = context::getSessionAttribute("actionRetour");
+	            context::redirect('twitty.php?action=' . $actionRetour);
+		    }
 	        else
 	            throw new Exception("Il y a eu une erreur pour partager le tweet.");
         }
@@ -219,7 +260,9 @@ class mainController {
 	        if (is_null($tweet->save()))
 	            throw new Exception("Il y a eu une erreur pour actualiser le nombre de votes.");
 	        
-	        context::redirect('twitty.php?action=mesTweets');
+	        // On retourne à la page où on était
+	        $actionRetour = context::getSessionAttribute("actionRetour");
+	        context::redirect('twitty.php?action=' . $actionRetour);
         }
         catch (Exception $e) {
             context::setSessionAttribute("erreur", $e);
@@ -236,6 +279,10 @@ class mainController {
 	        $tweets = tweetTable::getTweetsPostedBy(context::getSessionAttribute("utilisateur")->id, 10);
 	        mainController::marquerTweetsVotes($tweets);
 		    context::setSessionAttribute("mesTweets", $tweets);
+		    
+		    // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
+		    context::setSessionAttribute("actionRetour", "mesTweets");
+		    
 		    return context::SUCCESS;
 	    }
         catch (Exception $e) {
@@ -279,6 +326,10 @@ class mainController {
 	            
 		        context::setSessionAttribute("utilisateurProfil", $u);
 		        context::setSessionAttribute("tweetsProfil", $tweets);
+		    
+		        // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
+		        context::setSessionAttribute("actionRetour", "voirProfil&id=" . $u->id);
+		    
 			    return context::SUCCESS;
 		    }
 	    }
