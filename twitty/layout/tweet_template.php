@@ -73,7 +73,20 @@
 ?>
 
     <div class="tweet-div-buttons">
-        <a class="button" href="twitty.php?action=voterTweet&id=<?php echo $tweetTemplate->id; ?>">+1</a>
+    
+<?php
+        if ($tweetTemplate->getDejaVote()) {
+?>
+            <input type="button" value="T'as déjà voté" disabled />
+<?php
+        }
+        else {
+?>
+            <a class="button" href="twitty.php?action=voterTweet&id=<?php echo $tweetTemplate->id; ?>">+1</a>
+<?php
+        }
+?>
+
         <a class="button" href="twitty.php?action=partagerTweet&id=<?php echo $tweetTemplate->id; ?>">Partager</a>
     </div>
 </div>

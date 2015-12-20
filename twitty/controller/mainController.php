@@ -6,10 +6,54 @@
 
 class mainController {
 
+	/* ********************************************************************************* */
+	/*                                    AUXILIAIRES                                    */
+	/* ********************************************************************************* */
+
+	/* Fonction auxiliaire pour créer un tweet ayant déjà créé le post associé */
+	private static function creerTweetAux($post, $parent) {
+	    // On crée le tweet
+        $dataTweet = array(
+		    "emetteur" => context::getSessionAttribute("utilisateur")->id,
+		    "parent" => $parent,
+		    "post" => $post->id,
+		    "nbVotes" => 0
+	    );
+	    $tweet = new tweet($dataTweet);
+	
+	    var_dump($tweet);
+	    
+	    if ( is_null($tweet->save()) )
+	        return false;
+	    else
+	        return true;
+	}
+	
+	
+	/*
+	 *  Pour chaque tweet dans la liste, crée un attribut pour indiquer s'il a été voté
+     *  par l'utilisateur connecté.
+	 */
+	private static function marquerTweetsVotes($tweets) {
+	    $u = context::getSessionAttribute("utilisateur");
+	    
+	    foreach ($tweets as $tweet) {
+	        $vote = voteTable::getVoteByTweetAndUser($tweet->id, $u->id);
+	        $tweet->dejaVote = ! is_null($vote);
+	    }
+	}
+	
+	
 	public static function index($request,$context) {
 		return context::SUCCESS;
 	}
 	
+	
+	
+	
+	/* ********************************************************************************* */
+	/*                                      ACTIONS                                      */
+	/* ********************************************************************************* */
 	
 	/* Action pour se connecter au système. On stocke l'utilisateur dans la session. */
 	public static function login($request,$context) {
@@ -87,8 +131,10 @@ class mainController {
 	/* Action pour afficher les derniers tweets créés */
 	public static function accueil($request, $context) {
 	    try {
-	        // On cherche les tweets dans la base et on le met dans la session
+	        // On cherche les tweets dans la base, on marque ceux déjà votés
+	        // et on les ajoute à la session
 	        $tweets = tweetTable::getLastTweets(10, 5);
+	        mainController::marquerTweetsVotes($tweets);
 		    context::setSessionAttribute("derniersTweets", $tweets);
 		    return context::SUCCESS;
 	    }
@@ -96,26 +142,6 @@ class mainController {
             context::setSessionAttribute("erreur", $e);
             return context::ERROR;
         }
-	}
-	
-	
-	/* Fonction auxiliaire pour créer un tweet ayant déjà créé le post associé */
-	private static function creerTweetAux($post, $parent) {
-	    // On crée le tweet
-        $dataTweet = array(
-		    "emetteur" => context::getSessionAttribute("utilisateur")->id,
-		    "parent" => $parent,
-		    "post" => $post->id,
-		    "nbVotes" => 0
-	    );
-	    $tweet = new tweet($dataTweet);
-	
-	    var_dump($tweet);
-	    
-	    if ( is_null($tweet->save()) )
-	        return false;
-	    else
-	        return true;
 	}
 	
 	
@@ -168,14 +194,13 @@ class mainController {
 	}
 	
 	
-	/* Action pour voter un tweet. On incrément 1 au compteur de votes et on ajoute la relation tweet-utilisateur. */
+	/* Action pour voter un tweet. On ajoute la relation tweet-utilisateur. */
 	public static function voterTweet($request, $context) {
 	    try {
 	        // On cherche le tweet
 	        $tweet = tweetTable::getTweetById($request["id"]);
 	        if (is_null($tweet))
 	            throw new Exception("Erreur pour voter un tweet. Le tweet n'existe pas.");
-	        
 	        
 	        // On ajoute la relation avant de continuer
             $dataVote = array(
@@ -187,15 +212,12 @@ class mainController {
 	        if (is_null($vote->save()))
 	            throw new Exception("Il y a eu une erreur pour enregistrer le vote.");
 	        
-	        /*
-	        IL Y A DES PROBLÈMES POUR ACTUALISER. ALORS ON N'AUGMENTE PAS LES VOTES DANS LA BD
 	        
 	        // S'il ny a pas de soucis, on actualise le tweet
 	        $tweet->nbvotes++;
 	        
 	        if (is_null($tweet->save()))
 	            throw new Exception("Il y a eu une erreur pour actualiser le nombre de votes.");
-	        */
 	        
 	        context::redirect('twitty.php?action=mesTweets');
         }
@@ -209,8 +231,10 @@ class mainController {
 	/* Action pour afficher les tweets de l'utilisateur connecté */
 	public static function mesTweets($request, $context) {
 	    try {
-	        // On cherche les tweets dans la base et on le met dans la session
+	        // On cherche les tweets dans la base, on marque ceux déjà votés
+	        // et on les ajoute à la session
 	        $tweets = tweetTable::getTweetsPostedBy(context::getSessionAttribute("utilisateur")->id, 10);
+	        mainController::marquerTweetsVotes($tweets);
 		    context::setSessionAttribute("mesTweets", $tweets);
 		    return context::SUCCESS;
 	    }
@@ -251,6 +275,7 @@ class mainController {
 		            throw new Exception("L'utilisateur que tu cherches n'existe pas.");
 		        
 	            $tweets = tweetTable::getTweetsPostedBy($request["id"], 10);
+	            mainController::marquerTweetsVotes($tweets);
 	            
 		        context::setSessionAttribute("utilisateurProfil", $u);
 		        context::setSessionAttribute("tweetsProfil", $tweets);
@@ -267,10 +292,13 @@ class mainController {
 	public static function params($request, $context) {
 		return context::SUCCESS;
 	}
-
 	
 	
-	/* ********************************** TESTS ********************************** */
+	
+	
+	/* ********************************************************************************* */
+	/*                                        TESTS                                      */
+	/* ********************************************************************************* */
 
 	public static function test($request, $context) {
 		if (key_exists("nomTest", $request)) {
