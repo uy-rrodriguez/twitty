@@ -56,7 +56,7 @@
 		</tr>
 	</table>
 	
-	<div class="votes"><?php echo $tweetTemplate->nbvotes; ?> votes</div>
+	<div class="votes"><?php echo $tweetTemplate->getLikes(); ?> votes</div>
 	
 	<div class="tweet-message">
 		<pre><?php echo $postTemplate->texte; ?></pre>

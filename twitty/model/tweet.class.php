@@ -15,6 +15,7 @@ class tweet extends basemodel
 	}
 	
 	public function getLikes() {
+	    $this->nbvotes = voteTable::getCountLikesById($this->id);
 		return $this->nbvotes;
 	}
 	

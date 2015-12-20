@@ -166,6 +166,44 @@ class mainController {
             return context::ERROR;
         }
 	}
+	
+	
+	/* Action pour voter un tweet. On incrément 1 au compteur de votes et on ajoute la relation tweet-utilisateur. */
+	public static function voterTweet($request, $context) {
+	    try {
+	        // On cherche le tweet
+	        $tweet = tweetTable::getTweetById($request["id"]);
+	        if (is_null($tweet))
+	            throw new Exception("Erreur pour voter un tweet. Le tweet n'existe pas.");
+	        
+	        
+	        // On ajoute la relation avant de continuer
+            $dataVote = array(
+		        "message" => $tweet->id,
+		        "utilisateur" => context::getSessionAttribute("utilisateur")->id
+	        );
+	        $vote = new vote($dataVote);
+	        
+	        if (is_null($vote->save()))
+	            throw new Exception("Il y a eu une erreur pour enregistrer le vote.");
+	        
+	        /*
+	        IL Y A DES PROBLÈMES POUR ACTUALISER. ALORS ON N'AUGMENTE PAS LES VOTES DANS LA BD
+	        
+	        // S'il ny a pas de soucis, on actualise le tweet
+	        $tweet->nbvotes++;
+	        
+	        if (is_null($tweet->save()))
+	            throw new Exception("Il y a eu une erreur pour actualiser le nombre de votes.");
+	        */
+	        
+	        context::redirect('twitty.php?action=mesTweets');
+        }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            context::redirect('twitty.php?action=mesTweets');
+        }
+	}
 
 
 	/* Action pour afficher les tweets de l'utilisateur connecté */

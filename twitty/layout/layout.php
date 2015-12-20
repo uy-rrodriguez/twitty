@@ -73,7 +73,7 @@
 ?>
             </div>
             
-            <div id="div-pied">Twitty Avignonnais v0.001</div>
+            <div id="div-pied">Twitty Avignonnais v0.0002 - Thomas Garayt - Ricardo Rodríguez - UAPV 2015</div>
         </div>
     </body>
 
