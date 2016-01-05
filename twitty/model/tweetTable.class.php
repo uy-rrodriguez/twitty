@@ -1,7 +1,7 @@
 <?php
 
 class tweetTable
-{	
+{
 	public static function getTweets() {
 		$connection = new dbconnection();
 		$sql = "SELECT * FROM jabaianb.tweet ORDER BY id DESC" ;
@@ -13,9 +13,12 @@ class tweetTable
 		return $res;
 	}
 	
-	public static function getTweetsPostedBy($id) {
+	public static function getTweetsPostedBy($id, $max = 50) {
 		$connection = new dbconnection();
-		$sql = "SELECT * FROM jabaianb.tweet WHERE emetteur = " . $id . " ORDER BY id DESC";
+		$sql = "SELECT * FROM jabaianb.tweet
+		        WHERE emetteur = " . $id . "
+		        ORDER BY id DESC
+		        LIMIT " . $max;
 		$res = $connection->doQueryObject($sql, "tweet");
 
 		if ($res === false)
@@ -33,6 +36,24 @@ class tweetTable
 			return null;
 
 		return $res[0];
+	}
+	
+	public static function getLastTweets($max = 10, $daysDifference = 30) {
+	    $dateLimite = strtotime(date("Y-m-d H:i:s") . "-" . $daysDifference . " day");
+	    $dateLimite = date("Y-m-d H:i:s", $dateLimite);
+	    
+		$connection = new dbconnection();
+		$sql = "SELECT T.* FROM jabaianb.tweet T
+		            INNER JOIN jabaianb.post P ON (T.post = P.id)
+		        WHERE P.date >= '" . $dateLimite . "'
+		        ORDER BY T.id DESC
+		        LIMIT " . $max;
+		$res = $connection->doQueryObject($sql, "tweet");
+
+		if ($res === false)
+			return null;
+
+		return $res;
 	}
 }
 

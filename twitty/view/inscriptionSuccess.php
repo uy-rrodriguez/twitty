@@ -22,5 +22,12 @@
 		<tr>
 			<td class="td-droite" colspan="2"><input type="submit" value="Inscris-moi!" /></td>
 		</tr>
+		
+		<tr class="tr-espace"></tr>
+		<tr>
+			<td class="td-droite" colspan="2">
+				<a class="menu" href="twitty.php?action=login">Annuler</a>
+			</td>
+		</tr>
 	</table>
 </form>

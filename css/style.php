@@ -9,6 +9,7 @@ $cSecondaire = "#bacecc";
 $cFond = "#dddddd";
 $cFondClair = "#F9F9F9";
 $cTexteClair = "#FFFFFF";
+$cGris = "#E8E8E8";
 
 
 echo <<<FINCSS
@@ -26,7 +27,7 @@ body {
     margin: 0px;
 }
 
-div, span, table, tr, th, td, input, label {
+div, span, table, tr, th, td, input, label, a.button {
     box-sizing: border-box;
 }
 
@@ -67,12 +68,43 @@ div, span, table, tr, th, td, input, label {
     padding: 0px 20px 0px 20px;
 }
 
+/* Div avec le nom de la page qui se affiche tout en haut */
 #div-titre-login {
     text-align: center;
 }
 
 #div-titre-login h1 {
+    display: inline;
     border: none;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#div-titre-login img {
+    width: 80px;
+    margin-left: -10px;
+    margin-bottom: -10px;
+}
+
+/* Div avec le nom de la page qui se affiche tout en bas */
+#div-titre-en-bas {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    text-align: center;
+}
+
+#div-titre-en-bas h1 {
+    display: inline;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#div-titre-en-bas img {
+    width: 40px;
+    margin-left: -8px;
+    margin-bottom: -10px;
 }
 
 
@@ -176,16 +208,17 @@ div, span, table, tr, th, td, input, label {
     display: inline-block;
 }
 
-#div-petit-profil img {
+#div-petit-profil .img-avatar {
     width: 80px;
-    border-radius: 40px;
+    border-radius: 50%;
 }
 
 #div-petit-profil-image {
 }
 
 #div-petit-profil-donnees {
-    margin-left: 30px;
+    width: 210px;
+    margin-left: 15px;
     font-weight: bold;
     padding-bottom: 2px;
 }
@@ -204,9 +237,9 @@ div, span, table, tr, th, td, input, label {
 #div-grand-profil {
 }
 
-#div-grand-profil img {
+#div-grand-profil .img-avatar {
     width: 120px;
-    border-radius: 40px;
+    border-radius: 50%;
 }
 
 #div-grand-profil span {
@@ -251,7 +284,7 @@ div, span, table, tr, th, td, input, label {
  *         CHAMPS DE FORMULAIRES ET BOUTONS
  * ************************************************************************************************ */
 
-input {
+input, a.button {
     font-family: Verdana, sans-serif;
 }
 
@@ -264,7 +297,7 @@ input[type="text"], input[type="password"] {
     color: $cTexte;
 }
 
-input[type="button"], input[type="submit"] {
+input[type="button"], input[type="submit"], a.button {
     width: 150px;
     padding: 6px 15px;
     font-family: Verdana, sans-serif;
@@ -272,12 +305,38 @@ input[type="button"], input[type="submit"] {
     font-weight: bold;
     color: $cTexteClair;
     background-color: $cPrincipal;
-    border: none;
+    border: 1px solid $cPrincipal;
     border-radius: 5px;
+    
+    /* http://usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
+    transition-duration: 0.1s;
 }
-input[type="button"]:hover, input[type="submit"]:hover {
+input[type="button"]:hover, input[type="submit"]:hover, a.button:hover {
     opacity: 0.8;
     cursor: pointer;
+}
+
+input[type="button"]:disabled, input[type="submit"]:disabled, a.button:disabled {
+    opacity: 0.7;
+    text-shadow: none;
+    box-shadow: none;
+}
+input[type="button"]:disabled:hover, input[type="submit"]:disabled:hover, a.button:disabled:hover {
+    opacity: 0.7;
+    cursor: default;
+}
+
+a.button {
+    display: inline-block;
+    line-height: 17px;
+    text-decoration: none;
+    
+    -webkit-user-select:none;
+    -moz-user-select: none;
+    -ms-user-select:none;
+    user-select: none;
 }
 
 .btn-secondaire {
@@ -295,7 +354,16 @@ input[type="button"]:hover, input[type="submit"]:hover {
     border: 1px solid $cSecondaire;
     border-radius: 5px 0px 0px 5px;
     background-color: $cSecondaire;
+    
+    /* http://usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
+    text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
+    transition-duration: 0.1s;
 }
+.input-file-container:hover {
+    opacity: 0.85;
+}
+
 input[type="text"].input-file-text {
     position: absolute;
     top: 0px;
@@ -309,6 +377,7 @@ input[type="text"].input-file-text {
     border: none;
     background-color: $cFondClair;
 }
+
 .input-file-container input[type="file"] {
     position: absolute;
     top: 0px;
@@ -366,32 +435,33 @@ th {}
 .table-vert {
     border-collapse: collapse;
 }
+
 .table-vert th {
     min-width: 50px;
     padding: 5px 20px;
     text-align: left;
     border-bottom: 2px solid $cSecondaire;
 }
+
 .table-vert td {
     padding: 5px 20px;
 }
+
 .table-vert tr {
     border-bottom: 1px solid $cFond;
+    transition: 0.2s;
 }
 .table-vert tr:hover {
-    background-color: $cFondClair;
+    background-color: $cSecondaire;
 }
+
 .table-vert thead tr:hover {
     background: none;
 }
-.table-vert input[type="image"] {
-    width: 25px;
-    opacity: 0.8;
-}
-.table-vert input[type="image"]:hover {
-    width: 27px;
-    margin: -1px;
-    opacity: 1;
+
+.table-vert .img-avatar {
+    width: 40px;
+    border-radius: 50%;
 }
 
 .tr-espace {
@@ -416,14 +486,22 @@ th {}
  *         MESSAGES SUCCES ET ERREUR
  * ************************************************************************************************ */
 
-.messageErreur {
-    font-weight : bold;
-    color : red;
+.div-erreur, .div-succes {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    background-color: $cFondClair;
 }
 
-.messageSucces {
-    font-weight:bold;
-    color : green;
+.div-erreur {
+    border-color: #DB2929;
+    color : #DB2929;
+}
+
+.div-succes {
+    border-color: #84BE6A;
+    color : #84BE6A;
 }
 
 /* ************************************************************************************************
@@ -439,12 +517,24 @@ th {}
     border: 1px solid $cFond;
     border-radius: 10px;
     border-color: $cSecondaire;
+    background-color: white;
 }
 
 .tweet .tweet-createur {
     position: absolute;
     top: -15px;
     font-size: 11px;
+}
+
+.tweet .tweet-createur-fond {
+    position: absolute;
+    z-index: -1;
+    top: -16px;
+    left: 0px;
+    height: 30px;
+    min-width: 200px;
+    border-radius: 10px 10px 0 0;
+    background-color: $cGris;
 }
 
 .tweet .tweet-createur a {
@@ -467,7 +557,7 @@ th {}
 .tweet-image {
     text-align: center;
     margin-bottom: 5px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .tweet-image img {
     max-height: 300px;
@@ -476,8 +566,9 @@ th {}
 .tweet-info {
     margin:0px;
 }
-.tweet-info img {
+.tweet-info .img-avatar {
     width: 40px;
+    border-radius: 50%;
 }
 .tweet-info .nom {
     margin-left: 20px;
@@ -490,13 +581,13 @@ th {}
 
 .tweet-message {
     margin-left: 70px;
-    margin-bottom: 5px;
-    margin-top: 30px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
-.tweet-button {
-    text-align:center;
-    margin-top:10px;
+.tweet-div-buttons {
+    text-align: center;
+    margin-top: 20px;
 }
 
 
