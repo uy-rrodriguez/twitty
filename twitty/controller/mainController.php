@@ -26,14 +26,22 @@ class mainController {
 		    "emetteur" => context::getSessionAttribute("utilisateur")->id,
 		    "parent" => $parent,
 		    "post" => $post->id,
+<<<<<<< HEAD
 		    "nbvotes" => 0
+=======
+		    "nbVotes" => 0
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 	    );
 	    $tweet = new tweet($dataTweet);
 	    
 	    if ( is_null($tweet->save()) )
 	        return false;
 	    else
+<<<<<<< HEAD
 	        return $tweet;
+=======
+	        return true;
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 	}
 
 
@@ -55,6 +63,44 @@ class mainController {
 	
 	
 	/*
+<<<<<<< HEAD
+=======
+	 *  Fonction pour créer un tweet et le post associé
+	 */
+	private static function creerPostEtTweet($request, $context) {
+        // On crée le post
+        $dataPost = array(
+	        "texte" => htmlspecialchars($request["texte"], $flags = ENT_QUOTES | ENT_HTML401),
+	        "date" => date("Y/m/d H:i:s"),
+	        "image" => ""
+        );
+        $post = new post($dataPost);
+        $post->id = $post->save();
+
+        if ( is_null($post->id) )
+            throw new Exception("Il y a eu une erreur pour créer le post.");
+
+        
+        // On essaye de mettre en ligne l'image et on actualise le post
+        if (key_exists("imageTweet", $_FILES) && ($_FILES["imageTweet"]["size"] > 0)) {
+            $path = mainController::uploadImage("imageTweet", mainController::REPERTOIRE_TWEET, $post->id);
+            $post->image = $path;
+            
+            if (empty($path) || is_null($post->save())) {
+                // Si on n'arrive pas stocker l'image, on ne s'arrête pas.
+                context::setSessionAttribute("erreur", new Exception("Il y a eu une erreur pour télécharger l'image."));
+            }
+        }
+
+        
+        // On crée le tweet
+        if (! mainController::creerTweetAvecPost($post, 0))
+            throw new Exception("Il y a eu une erreur pour créer le tweet.");
+	}
+	
+	
+	/*
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 	 *  Pour chaque tweet dans la liste, crée un attribut pour indiquer s'il a été voté
      *  par l'utilisateur connecté.
 	 */
@@ -149,6 +195,7 @@ class mainController {
             context::setSessionAttribute("erreur", $e);
             return context::ERROR;
         }
+<<<<<<< HEAD
 	}
 	
 	
@@ -212,6 +259,23 @@ class mainController {
 			// Il faut stocker le tweet dans la session pour que le template des tweets puisse l'afficher
 			context::setSessionAttribute("userTweetTemplate", context::getSessionAttribute("utilisateur"));
 	        context::setSessionAttribute("tweetTemplate", $tweet);
+=======
+	}
+	
+	
+	/* Action pour afficher les derniers tweets créés */
+	public static function accueil($request, $context) {
+	    try {
+	        // On cherche les tweets dans la base, on marque ceux déjà votés
+	        // et on les ajoute à la session
+	        $tweets = tweetTable::getLastTweets(10, 5);
+	        mainController::marquerTweetsVotes($tweets);
+		    context::setSessionAttribute("derniersTweets", $tweets);
+		    
+		    // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
+		    context::setSessionAttribute("actionRetour", "accueil");
+		    
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 		    return context::SUCCESS;
 	    }
         catch (Exception $e) {
@@ -222,7 +286,11 @@ class mainController {
 	
 	
 	/* Action pour partager un tweet. On obtient le post du tweet original sans en créer un autre */
+<<<<<<< HEAD
 	public static function ajaxPartagerTweet($request, $context) {
+=======
+	public static function partagerTweet($request, $context) {
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 	    try {
 	        $tweet = tweetTable::getTweetById($request["id"]);
 	        $post = $tweet->getPost();
@@ -230,6 +298,7 @@ class mainController {
 	        if ($parent == 0)
 	            $parent = $tweet->emetteur;
 	        
+<<<<<<< HEAD
 	        if (mainController::creerTweetAvecPost($post, $parent) === false) {
 	            throw new Exception("Il y a eu une erreur pour partager le tweet.");
 		    }
@@ -240,6 +309,15 @@ class mainController {
 				context::setSessionAttribute("tweetTemplate", $tweet);
 	            return context::SUCCESS;
 			}   
+=======
+	        if (mainController::creerTweetAvecPost($post, $parent)) {
+	            // On retourne à la page où on était
+	            $actionRetour = context::getSessionAttribute("actionRetour");
+	            context::redirect('twitty.php?action=' . $actionRetour);
+		    }
+	        else
+	            throw new Exception("Il y a eu une erreur pour partager le tweet.");
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
         }
         catch (Exception $e) {
             context::setSessionAttribute("erreur", $e);
@@ -249,7 +327,11 @@ class mainController {
 	
 	
 	/* Action pour voter un tweet. On ajoute la relation tweet-utilisateur. */
+<<<<<<< HEAD
 	public static function ajaxVoterTweet($request, $context) {
+=======
+	public static function voterTweet($request, $context) {
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 	    try {
 	        // On cherche le tweet
 	        $tweet = tweetTable::getTweetById($request["id"]);
@@ -273,9 +355,15 @@ class mainController {
 	        if (is_null($tweet->save()))
 	            throw new Exception("Il y a eu une erreur pour actualiser le nombre de votes.");
 	        
+<<<<<<< HEAD
 	        // On affiche la nouvelle quantité de votes
 			context::setSessionAttribute("tweetTemplate", $tweet);
 			return context::SUCCESS;
+=======
+	        // On retourne à la page où on était
+	        $actionRetour = context::getSessionAttribute("actionRetour");
+	        context::redirect('twitty.php?action=' . $actionRetour);
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
         }
         catch (Exception $e) {
             context::setSessionAttribute("erreur", $e);

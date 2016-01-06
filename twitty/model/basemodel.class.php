@@ -59,10 +59,19 @@ abstract class basemodel
 		 *  Sans cette modiffication, on recevait une erreur après un UPDATE:
 		 *      Object not in prerequisite state: 7 ERROR: currval of sequence "post_id_seq" is not yet defined in this session
 		 */
+<<<<<<< HEAD
 		if (! $this->id)
     		$this->id = $connection->getLastInsertId("jabaianb.".get_class($this)) ;
         
 		return $this->id == false ? NULL : $this->id ; 
+=======
+		if ($this->id)
+		    $id = $this->id;
+		else
+    		$id = $connection->getLastInsertId("jabaianb.".get_class($this)) ;
+        
+		return $id == false ? NULL : $id ; 
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 	}
 
 }

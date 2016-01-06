@@ -2,7 +2,10 @@
     // On obtient l'information du tweet qui devrait être dans la session.
     $userTemplate = context::getSessionAttribute("userTweetTemplate");
     $tweetTemplate = context::getSessionAttribute("tweetTemplate");
+<<<<<<< HEAD
 	$moi = context::getSessionAttribute("utilisateur");
+=======
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
     
     if (is_null($userTemplate)) {
         $userTemplate = new Utilisateur();
@@ -88,11 +91,19 @@
         }
         else {
 ?>
+<<<<<<< HEAD
             <a class="button" onclick="ajaxVoterTweet(<?php echo $tweetTemplate->id; ?>)">+1</a>
+=======
+            <a class="button" href="twitty.php?action=voterTweet&id=<?php echo $tweetTemplate->id; ?>">+1</a>
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 <?php
         }
 ?>
 
+<<<<<<< HEAD
         <a class="button" onclick="ajaxPartagerTweet(<?php echo $tweetTemplate->id; ?>)">Partager</a>
+=======
+        <a class="button" href="twitty.php?action=partagerTweet&id=<?php echo $tweetTemplate->id; ?>">Partager</a>
+>>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
     </div>
 </div>
