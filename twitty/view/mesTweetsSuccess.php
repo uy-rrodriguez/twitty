@@ -1,10 +1,6 @@
 <div id="div-tweet-creation">
 	<h1>Nouveau tweet</h1>
-<<<<<<< HEAD
 	<form id="form-nouveau-tweet">
-=======
-	<form action="twitty.php?action=mesTweets&enregistrerTweet" method="post" enctype="multipart/form-data">
->>>>>>> 2238aabb3b1a3e76b04cfb8dee756b83425839fa
 		<table>
 			<tr>
 				<td colspan="2">
