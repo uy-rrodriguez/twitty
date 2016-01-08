@@ -34,9 +34,7 @@ function ajaxPartagerTweet(idTweet) {
 	});
 }
 
-function ajaxVoterTweet(idTweet) {
-	alert(idTweet);
-	
+function ajaxVoterTweet(idTweet) {	
 	// Création et envoie de l'objet AJAX
 	$.ajax({
 		url: "twittyAjax.php?action=ajaxVoterTweet",
@@ -46,6 +44,7 @@ function ajaxVoterTweet(idTweet) {
 			// On modifie la quantité de votes dans le div associé a ce tweet
 			// On obtient le div, et après on obtient le seul enfant avec la classe "votes"
 			$("#div-tweet-" + idTweet).children(".votes").html(returnData);
+			
 		}
 	});
 }

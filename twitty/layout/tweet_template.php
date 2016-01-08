@@ -83,7 +83,7 @@
 <?php
         if ($tweetTemplate->getDejaVote()) {
 ?>
-            <input type="button" value="T'as déjà voté" disabled />
+            <a class="button disabled">T'as déjà voté</a>
 <?php
         }
         else {

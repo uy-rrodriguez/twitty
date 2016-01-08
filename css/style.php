@@ -318,12 +318,12 @@ input[type="button"]:hover, input[type="submit"]:hover, a.button:hover {
     cursor: pointer;
 }
 
-input[type="button"]:disabled, input[type="submit"]:disabled, a.button:disabled {
+input[type="button"]:disabled, input[type="submit"]:disabled, a.button.disabled {
     opacity: 0.7;
     text-shadow: none;
     box-shadow: none;
 }
-input[type="button"]:disabled:hover, input[type="submit"]:disabled:hover, a.button:disabled:hover {
+input[type="button"]:disabled:hover, input[type="submit"]:disabled:hover, a.button.disabled:hover {
     opacity: 0.7;
     cursor: default;
 }
