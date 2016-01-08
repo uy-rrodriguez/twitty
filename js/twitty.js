@@ -1,5 +1,19 @@
 ﻿/* Tout le code lié à AJAX */
 
+function ajaxAfficherMessages() {
+	alert("tata");
+	// Affichage des messages d'erreur et de succès
+	$.ajax({
+		url: "twittyAjax.php?action=ajaxMessages",
+		type: "POST",
+		data: {},
+		success: function (returnData) {
+			// On obtient le div et on change le contenu
+			$("#div-messages").html(returnData);
+		}
+	});
+}
+
 function ajaxNouveauTweet() {
 	// Obtention des données du formulaire
 	var formData = new FormData($("#form-nouveau-tweet")[0]);
@@ -17,6 +31,9 @@ function ajaxNouveauTweet() {
 			// Fonction qui s'exécute lors d'une réponse de succès
 			// On ajoute le code du tweet au début du div parent
 			$("#div-liste-tweets").prepend(returnData);
+			
+			// On affiche les possibles messages
+			ajaxAfficherMessages();
 		}
 	});
 }
@@ -30,6 +47,9 @@ function ajaxPartagerTweet(idTweet) {
 		success: function (returnData) {
 			// On ajoute le code du tweet au début du div parent
 			$("#div-liste-tweets").prepend(returnData);
+			
+			// On affiche les possibles messages
+			ajaxAfficherMessages();
 		}
 	});
 }
@@ -49,6 +69,28 @@ function ajaxVoterTweet(idTweet) {
 			var btnVoter = $("#btn-voter-" + idTweet);
 			btnVoter.html("T'as déjà voté");
 			btnVoter.addClass("disabled");
+			
+			// On affiche les possibles messages
+			ajaxAfficherMessages();
 		}
 	});
 }
+
+function ajaxInfos() {
+	// Affichage des messages d'information
+	$.ajax({
+		url: "twittyAjax.php?action=ajaxInfos",
+		type: "POST",
+		data: {},
+		success: function (returnData) {
+			// On obtient le div et on change le contenu
+			$("#div-infos").html(returnData);
+		}
+	});
+}
+
+
+// On crée un timer qui affichera les messages tous les n minutes
+$(document).ready( function() {
+	setInterval(function() {ajaxInfos();}, 3000);
+});

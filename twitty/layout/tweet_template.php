@@ -25,6 +25,8 @@
 
 <div id="div-tweet-<?php echo $tweetTemplate->id; ?>" class="tweet">
 
+
+<!-- ---------- Affichage du parent d'un tweet, s'il existe ---------- -->
 <?php
     if (! is_null($parentTemplate)) {
         if ($parentTemplate->id == $moi->id) {
@@ -39,14 +41,17 @@
 ?>
             <div class="tweet-createur-fond"></div>
             <div class="tweet-createur">
-                Crée par: <a href="twitty.php?action=voirProfil&id=<?php echo $parentTemplate->id; ?>">
-                <?php echo $parentTemplate->prenom . " " . $parentTemplate->nom; ?></a>
+                Crée par:
+				<a class="link-profil" href="twitty.php?action=voirProfil&id=<?php echo $parentTemplate->id; ?>">
+					<?php echo $parentTemplate->prenom . " " . $parentTemplate->nom; ?>
+				</a>
             </div>
 <?php
         }
     }
 ?>
 
+<!-- ---------- Affichage du contenu d'un tweet ---------- -->
 	<table class="tweet-info">
 		<tr>
 			<td rowspan="2">
@@ -54,11 +59,24 @@
 			        onerror="this.src='img/default.png'" />
 			</td>
 			<td>
-			    <span class="nom"><?php echo $userTemplate->prenom . " " . $userTemplate->nom; ?></span>
+			    <span class="nom">
+<?php
+				if ($userTemplate->id != $moi->id) {
+?>
+					<a class="link-profil" href="twitty.php?action=voirProfil&id=<?php echo $userTemplate->id; ?>">
+						<?php echo $userTemplate->prenom . " " . $userTemplate->nom; ?>
+					</a>
+<?php
+				}
+				else {
+					echo $userTemplate->prenom . " " . $userTemplate->nom;
+				}
+?>
+				</span>
 			</td>
 		</tr>
 		<tr>
-			<td><span class="date"><?php echo $postTemplate->date; ?></span></td>
+			<td><span class="date"><?php echo date("d/m/Y H:i:s", strtotime($postTemplate->date) ); ?></span></td>
 		</tr>
 	</table>
 	
@@ -77,6 +95,8 @@
 <?php
     }
 ?>
+
+<!-- ---------- Boutons de vote et de partage ---------- -->
 
     <div class="tweet-div-buttons">
     

@@ -55,6 +55,22 @@ class tweetTable
 
 		return $res;
 	}
+	
+	public static function getCountTweetsLastMinutes($minutesDifference) {
+	    $dateLimite = strtotime(date("Y-m-d H:i:s") . "-" . $minutesDifference . " minute");
+	    $dateLimite = date("Y-m-d H:i:s", $dateLimite);
+	    
+		$connection = new dbconnection();
+		$sql = "SELECT COUNT(*) FROM jabaianb.tweet T
+		            INNER JOIN jabaianb.post P ON (T.post = P.id)
+		        WHERE P.date >= '" . $dateLimite . "'";
+		$res = $connection->doQuery($sql);
+
+		if ($res === false)
+			return null;
+
+		return $res[0]["count"];
+	}
 }
 
 ?>

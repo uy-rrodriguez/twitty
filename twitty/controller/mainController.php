@@ -68,111 +68,10 @@ class mainController {
 	}
 	
 	
-	
-	
 	/* ********************************************************************************* */
-	/*                                      ACTIONS                                      */
+	/*                                   ACTIONS AJAX                                    */
 	/* ********************************************************************************* */
 	
-	public static function index($request,$context) {
-		return context::SUCCESS;
-	}
-	
-	
-	/* Action pour se connecter au système. On stocke l'utilisateur dans la session. */
-	public static function login($request,$context) {
-	    // Avant tout, on controle si on a recu un identifiant. Cela signifie que quelqu'un
-	    // essaye d'accèder au système. Sinon, on affiche la page avec les champs pour se connecter.
-		if (key_exists("identifiant",$request)) {
-			try {
-				$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['password']);
-			
-				if (is_null($returnLogin)) { // Identification qui a échouée
-					throw new Exception("L'identifiant et le mot de passe ne sont pas corrects !");
-				}
-				else { // Identification réussie
-					context::setSessionAttribute("utilisateur", $returnLogin);
-					context::redirect('twitty.php?action=accueil');
-				}
-			}
-			catch (Exception $e) {
-				context::setSessionAttribute("erreur", $e);
-				return context::ERROR;	
-			}
-		}
-		else {
-			return context::SUCCESS;	
-		}
-	}
-
-
-    /* Action pour se déconnecter. On supprime l'utilisateur de la session. */
-	public static function quitter($request, $context) {
-		context::setSessionAttribute("utilisateur", null);
-		context::redirect('twitty.php?action=login');
-	}
-	
-	
-	public static function inscription($request, $context) {
-		return context::SUCCESS;
-	}
-	
-	
-	public static function finInscription($request, $context) {
-		try {
-	        // On cherche l'utilisateur par son identifiant
-	        if ( is_null(utilisateurTable::getUserByLogin($request["identifiant"])) ) {
-	        
-	            // Si l'identifiant n'existe pas, on continue
-	            $data = array(
-			        "identifiant" => $request["identifiant"],
-			        "pass" => sha1($request["pass"]),
-			        "nom" => $request["nom"],
-			        "prenom" => $request["prenom"],
-			        "statut" => "",
-			        "avatar" => ""
-		        );
-		
-		        $u = new utilisateur($data);
-	            $u->id = $u->save();
-	
-	            if (is_null($u->id))
-	                throw new Exception("Il y a eu une erreur pour inscrire l'utilisateur. Désolé.");
-	            else
-	                context::redirect('twitty.php');
-	        }
-	        else {
-	            throw new Exception("Il existe déjà un utilisateur avec le même identifiant.");
-	        }
-        }
-        catch(Exception $e) {
-            context::setSessionAttribute("erreur", $e);
-            return context::ERROR;
-        }
-	}
-	
-	
-	/* Action pour afficher les derniers tweets créés */
-	public static function accueil($request, $context) {
-	    try {
-	        // On cherche les tweets dans la base, on marque ceux déjà votés
-	        // et on les ajoute à la session
-	        $tweets = tweetTable::getLastTweets(10, 5);
-	        mainController::marquerTweetsVotes($tweets);
-		    context::setSessionAttribute("derniersTweets", $tweets);
-		    
-		    // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
-		    context::setSessionAttribute("actionRetour", "accueil");
-		    
-		    return context::SUCCESS;
-	    }
-        catch (Exception $e) {
-            context::setSessionAttribute("erreur", $e);
-            return context::ERROR;
-        }
-	}
-
-
 	/*
 	 *  Action pour créer un nouveau tweet (et post) associé à l'utilisateur connecté
 	 */
@@ -281,7 +180,141 @@ class mainController {
         }
         catch (Exception $e) {
             context::setSessionAttribute("erreur", $e);
-            context::redirect('twitty.php?action=mesTweets');
+            return context::ERROR;
+        }
+	}
+	
+	
+	/*
+	 *  Action pour afficher les messages d'erreur et de succès
+	 */
+	public static function ajaxMessages($request, $context) {
+		return context::SUCCESS;
+	}
+	
+	
+	/*
+	 *  Action pour afficher les messages d'information
+	 */
+	public static function ajaxInfos($request, $context) {
+		try {
+			$count = tweetTable::getCountTweetsLastMinutes(60);
+			if (is_null($count)) {
+				context::setSessionAttribute("info", "Erreur inconnue de la base de données.");
+			}
+			else {
+				context::setSessionAttribute("info", $count);
+			}
+			
+			return context::SUCCESS;
+        }
+        catch (Exception $e) {
+            context::setSessionAttribute("info", $e);
+			return context::ERROR;
+        }
+	}
+	
+	
+	
+	/* ********************************************************************************* */
+	/*                                      ACTIONS                                      */
+	/* ********************************************************************************* */
+	
+	public static function index($request,$context) {
+		return context::SUCCESS;
+	}
+	
+	
+	/* Action pour se connecter au système. On stocke l'utilisateur dans la session. */
+	public static function login($request,$context) {
+	    // Avant tout, on controle si on a recu un identifiant. Cela signifie que quelqu'un
+	    // essaye d'accèder au système. Sinon, on affiche la page avec les champs pour se connecter.
+		if (key_exists("identifiant",$request)) {
+			try {
+				$returnLogin = utilisateurTable::getUserByLoginAndPass($request['identifiant'], $request['password']);
+			
+				if (is_null($returnLogin)) { // Identification qui a échouée
+					throw new Exception("L'identifiant et le mot de passe ne sont pas corrects !");
+				}
+				else { // Identification réussie
+					context::setSessionAttribute("utilisateur", $returnLogin);
+					context::redirect('twitty.php?action=accueil');
+				}
+			}
+			catch (Exception $e) {
+				context::setSessionAttribute("erreur", $e);
+				return context::ERROR;	
+			}
+		}
+		else {
+			return context::SUCCESS;	
+		}
+	}
+
+
+    /* Action pour se déconnecter. On supprime l'utilisateur de la session. */
+	public static function quitter($request, $context) {
+		context::setSessionAttribute("utilisateur", null);
+		context::redirect('twitty.php?action=login');
+	}
+	
+	
+	public static function inscription($request, $context) {
+		return context::SUCCESS;
+	}
+	
+	
+	public static function finInscription($request, $context) {
+		try {
+	        // On cherche l'utilisateur par son identifiant
+	        if ( is_null(utilisateurTable::getUserByLogin($request["identifiant"])) ) {
+	        
+	            // Si l'identifiant n'existe pas, on continue
+	            $data = array(
+			        "identifiant" => $request["identifiant"],
+			        "pass" => sha1($request["pass"]),
+			        "nom" => $request["nom"],
+			        "prenom" => $request["prenom"],
+			        "statut" => "",
+			        "avatar" => ""
+		        );
+		
+		        $u = new utilisateur($data);
+	            $u->id = $u->save();
+	
+	            if (is_null($u->id))
+	                throw new Exception("Il y a eu une erreur pour inscrire l'utilisateur. Désolé.");
+	            else
+	                context::redirect('twitty.php');
+	        }
+	        else {
+	            throw new Exception("Il existe déjà un utilisateur avec le même identifiant.");
+	        }
+        }
+        catch(Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::ERROR;
+        }
+	}
+	
+	
+	/* Action pour afficher les derniers tweets créés */
+	public static function accueil($request, $context) {
+	    try {
+	        // On cherche les tweets dans la base, on marque ceux déjà votés
+	        // et on les ajoute à la session
+	        $tweets = tweetTable::getLastTweets(10, 5);
+	        mainController::marquerTweetsVotes($tweets);
+		    context::setSessionAttribute("derniersTweets", $tweets);
+		    
+		    // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
+		    context::setSessionAttribute("actionRetour", "accueil");
+		    
+		    return context::SUCCESS;
+	    }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::ERROR;
         }
 	}
 

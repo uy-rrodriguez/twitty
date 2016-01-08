@@ -520,6 +520,15 @@ th {}
     background-color: white;
 }
 
+.tweet a.link-profil {
+    color: $cPrincipal;
+    text-decoration: none;
+}
+
+.tweet a.link-profil:visited {
+    color: $cPrincipal;
+}
+
 .tweet .tweet-createur {
     position: absolute;
     top: -15px;
@@ -535,15 +544,6 @@ th {}
     min-width: 200px;
     border-radius: 10px 10px 0 0;
     background-color: $cGris;
-}
-
-.tweet .tweet-createur a {
-    color: $cPrincipal;
-    text-decoration: none;
-}
-
-.tweet .tweet-createur a:visited {
-    color: $cPrincipal;
 }
 
 .tweet .votes {
