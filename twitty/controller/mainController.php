@@ -230,7 +230,8 @@ class mainController {
 	        if ($parent == 0)
 	            $parent = $tweet->emetteur;
 			
-	        if (mainController::creerTweetAvecPost($post, $parent) === false) {
+			$tweet = mainController::creerTweetAvecPost($post, $parent);
+	        if ($tweet === false) {
 	            throw new Exception("Il y a eu une erreur pour partager le tweet.");
 		    }
 	        else {

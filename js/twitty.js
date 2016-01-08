@@ -1,10 +1,10 @@
-/* Tout le code liÈ ‡ AJAX */
+Ôªø/* Tout le code li√© √† AJAX */
 
 function ajaxNouveauTweet() {
-	// Obtention des donnÈes du formulaire
+	// Obtention des donn√©es du formulaire
 	var formData = new FormData($("#form-nouveau-tweet")[0]);
 	
-	// CrÈation et envoie de l'objet AJAX. Dans ce cas, on envoie le form obtenu, avec l'image dÈdans.
+	// Cr√©ation et envoie de l'objet AJAX. Dans ce cas, on envoie le form obtenu, avec l'image d√©dans.
 	$.ajax({
 		url: "twittyAjax.php?action=ajaxNouveauTweet",
 		type: "POST",
@@ -14,37 +14,41 @@ function ajaxNouveauTweet() {
 		contentType: false,
 		processData: false,
 		success: function (returnData) {
-			// Fonction qui s'exÈcute lors d'une rÈponse de succËs
-			// On ajoute le code du tweet au dÈbut du div parent
-			$("#div-mes-tweets").prepend(returnData);
+			// Fonction qui s'ex√©cute lors d'une r√©ponse de succ√®s
+			// On ajoute le code du tweet au d√©but du div parent
+			$("#div-liste-tweets").prepend(returnData);
 		}
 	});
 }
 
 function ajaxPartagerTweet(idTweet) {
-	// CrÈation et envoie de l'objet AJAX
+	// Cr√©ation et envoie de l'objet AJAX
 	$.ajax({
 		url: "twittyAjax.php?action=ajaxPartagerTweet",
 		type: "POST",
 		data: {id: idTweet},
 		success: function (returnData) {
-			// On ajoute le code du tweet au dÈbut du div parent
-			$("#div-mes-tweets").prepend(returnData);
+			// On ajoute le code du tweet au d√©but du div parent
+			$("#div-liste-tweets").prepend(returnData);
 		}
 	});
 }
 
 function ajaxVoterTweet(idTweet) {	
-	// CrÈation et envoie de l'objet AJAX
+	// Cr√©ation et envoie de l'objet AJAX
 	$.ajax({
 		url: "twittyAjax.php?action=ajaxVoterTweet",
 		type: "POST",
 		data: {id: idTweet},
 		success: function (returnData) {
-			// On modifie la quantitÈ de votes dans le div associÈ a ce tweet
-			// On obtient le div, et aprËs on obtient le seul enfant avec la classe "votes"
+			// On modifie la quantit√© de votes dans le div associ√© a ce tweet
+			// On obtient le div, et apr√®s on obtient le seul enfant avec la classe "votes"
 			$("#div-tweet-" + idTweet).children(".votes").html(returnData);
 			
+			//var btnVoter = $("#div-tweet-" + idTweet).children(".btn-voter");
+			var btnVoter = $("#btn-voter-" + idTweet);
+			btnVoter.html("T'as d√©j√† vot√©");
+			btnVoter.addClass("disabled");
 		}
 	});
 }

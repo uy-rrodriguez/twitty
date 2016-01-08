@@ -24,7 +24,7 @@
 
 <br />
 <h1>Mes tweets</h1>
-<div id="div-mes-tweets">
+<div id="div-liste-tweets">
 <?php
     // On obtient la liste des tweets qui devrait être dans la session.
     // Pour chaque tweet, on inclut le template et on ajoute l'info nécessaire dans la session

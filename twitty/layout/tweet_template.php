@@ -83,12 +83,12 @@
 <?php
         if ($tweetTemplate->getDejaVote()) {
 ?>
-            <a class="button disabled">T'as déjà voté</a>
+            <a class="btn-voter button disabled">T'as déjà voté</a>
 <?php
         }
         else {
 ?>
-            <a class="button" onclick="ajaxVoterTweet(<?php echo $tweetTemplate->id; ?>)">+1</a>
+            <a id="btn-voter-<?php echo $tweetTemplate->id; ?>" class="btn-voter button" onclick="ajaxVoterTweet(<?php echo $tweetTemplate->id; ?>)">+1</a>
 <?php
         }
 ?>
