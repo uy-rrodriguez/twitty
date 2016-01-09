@@ -1,3 +1,4 @@
 *.php~
+*.zip
 upload/avatars/*
 upload/tweets/*
