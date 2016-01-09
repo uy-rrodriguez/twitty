@@ -1,6 +1,6 @@
 <div id="div-tweet-creation">
 	<h1>Nouveau tweet</h1>
-	<form action="twitty.php?action=mesTweets&enregistrerTweet" method="post" enctype="multipart/form-data">
+	<form id="form-nouveau-tweet">
 		<table>
 			<tr>
 				<td colspan="2">
@@ -16,7 +16,7 @@
 						<input type="file" id="input-file-1" class="input-file" name="imageTweet" accept=".png,.jpg,.bmp" />
 					</label>
 				</td>
-				<td class="td-droite"><input type="submit" value="Envoyer" /></td>
+				<td class="td-droite"><input type="button" value="Envoyer" onclick="ajaxNouveauTweet()" /></td>
 			</tr>
 		</table>
 	</form>
@@ -24,6 +24,7 @@
 
 <br />
 <h1>Mes tweets</h1>
+<div id="div-liste-tweets">
 <?php
     // On obtient la liste des tweets qui devrait être dans la session.
     // Pour chaque tweet, on inclut le template et on ajoute l'info nécessaire dans la session
@@ -39,3 +40,4 @@
 		    include($nameApp."/layout/tweet_template.php");
 	    }
 ?>
+</div>

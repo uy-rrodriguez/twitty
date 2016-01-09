@@ -318,12 +318,12 @@ input[type="button"]:hover, input[type="submit"]:hover, a.button:hover {
     cursor: pointer;
 }
 
-input[type="button"]:disabled, input[type="submit"]:disabled, a.button:disabled {
+input[type="button"]:disabled, input[type="submit"]:disabled, a.button.disabled {
     opacity: 0.7;
     text-shadow: none;
     box-shadow: none;
 }
-input[type="button"]:disabled:hover, input[type="submit"]:disabled:hover, a.button:disabled:hover {
+input[type="button"]:disabled:hover, input[type="submit"]:disabled:hover, a.button.disabled:hover {
     opacity: 0.7;
     cursor: default;
 }
@@ -520,6 +520,15 @@ th {}
     background-color: white;
 }
 
+.tweet a.link-profil {
+    color: $cPrincipal;
+    text-decoration: none;
+}
+
+.tweet a.link-profil:visited {
+    color: $cPrincipal;
+}
+
 .tweet .tweet-createur {
     position: absolute;
     top: -15px;
@@ -535,15 +544,6 @@ th {}
     min-width: 200px;
     border-radius: 10px 10px 0 0;
     background-color: $cGris;
-}
-
-.tweet .tweet-createur a {
-    color: $cPrincipal;
-    text-decoration: none;
-}
-
-.tweet .tweet-createur a:visited {
-    color: $cPrincipal;
 }
 
 .tweet .votes {

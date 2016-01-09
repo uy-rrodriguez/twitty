@@ -2,8 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Tweety Avignonnais</title>
+        <title>Twitty Avignonnais</title>
         <link type="text/css" rel="stylesheet" href="css/style.php" />
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="js/twitty.js"></script>
     </head>
 
     <body>
@@ -29,7 +31,6 @@
                 
                 <div id="div-menu">
                     <ul id="menu">
-                        <li><a href="twitty.php?action=test"><strong>TESTS</strong></a></li>
                         <li><a href="twitty.php?action=accueil">Accueil</a></li>
                         <li><a href="twitty.php?action=mesTweets">Mes tweets</a></li>
                         <li><a href="twitty.php?action=reseau">Mon réseau</a></li>
@@ -58,29 +59,18 @@
             
         <div id="div-centre">
             <div id="div-corps">
+			
+				<div id='div-infos'></div>
+				
+				<div id='div-messages'>
+					<?php include($nameApp."/view/ajaxMessagesSuccess.php"); ?>
+				</div>
+				
 <?php
-            		/* *** Petit morceau de code pour afficher les erreurs *** */
-					if (key_exists("erreur", $_SESSION)
-						&& ! is_null($erreurMsg = context::getSessionAttribute("erreur"))) {
-						
-						echo "<div class='div-erreur'>" . $erreurMsg->getMessage() . "</div>";
-						
-						context::setSessionAttribute("erreur", null);
-					}
-					
-					/* *** Petit morceau de code pour afficher les messages de succès *** */
-					if (key_exists("succes", $_SESSION)
-						&& ! is_null($succesMsg = context::getSessionAttribute("succes"))) {
-						
-						echo "<div class='div-succes'>" . $succesMsg . "</div>";
-						
-						context::setSessionAttribute("succes", null);
-					}
-					
-					
-					/* *** Et après le code de la page actuelle *** */
-					include($template_view);
+				// Le code de la page actuelle
+				include($template_view);
 ?>
+
             </div>
             
             <div id="div-pied">Twitty Avignonnais v0.0002 - Thomas Garayt - Ricardo Rodríguez - UAPV 2015</div>

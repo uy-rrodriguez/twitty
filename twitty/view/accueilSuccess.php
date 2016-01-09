@@ -1,4 +1,5 @@
 <h1>Actualité</h1>
+<div id="div-liste-tweets">
 <?php
     // On obtient la liste des tweets qui devrait être dans la session.
     // Pour chaque tweet, on inclut le template et on ajoute l'info nécessaire dans la session
@@ -15,3 +16,4 @@
 	    }
     }
 ?>
+</div>
