@@ -5,7 +5,6 @@
         <title>Twitty Avignonnais</title>
         <link type="text/css" rel="stylesheet" href="css/style.php" />
 		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
-		<script type="text/javascript" src="js/twitty.js"></script>
     </head>
 
     <body>
@@ -42,6 +41,7 @@
                 <div id="div-titre-en-bas">
                     <h1>Twitty</h1>
                     <img src="img/tucan.png" alt="Dessin d'un tucan" />
+                    <div id='div-bulle-infos-container'></div>
                 </div>
 <?php
             }
@@ -59,9 +59,6 @@
             
         <div id="div-centre">
             <div id="div-corps">
-			
-				<div id='div-infos'></div>
-				
 				<div id='div-messages'>
 					<?php include($nameApp."/view/ajaxMessagesSuccess.php"); ?>
 				</div>
@@ -76,47 +73,8 @@
             <div id="div-pied">Twitty Avignonnais v0.0002 - Thomas Garayt - Ricardo Rodríguez - UAPV 2015</div>
         </div>
     </body>
-
-
-    <!-- Script pour l'effet de l'entête -->
-    <script type="text/javascript">
-        window.onscroll = function() {
-            var tete = document.getElementById("div-tete");
-            var centre = document.getElementById("div-centre");
-            if (window.pageYOffset > 50) {
-                tete.className = "on-scroll";
-                centre.className = "on-scroll";
-            }
-            else {
-                tete.className = "";
-                centre.className = "";
-            }
-        }
-        window.onscroll();
-    </script>
-
-    <!-- Script pour les champs de fichier modifiés -->
-    <script type="text/javascript">
-        window.onload = function() {
-            // Noter que tous les input file doivent avoir un id de la forme: input-file-#
-            // et les input text associés: input-file-text-#
-            // # étant le numéro qui permet de les associer
-            //
-            // Noter aussi que tous les input file doivent avoir une classe: input-file
-            
-            // On cherche tous les input file de la page
-            var inputsFile = document.querySelectorAll("input.input-file");
-
-            for (var i = 0 ; i < inputsFile.length ; i++) {
-                var file = inputsFile[i];
-                var numero = file.id.split("input-file-")[1];
-                var text = document.getElementById("input-file-text-" + numero);
-
-                // On associe les input. Quand le file change, le text affiche le contenu
-	            file.onchange = new Function("evt",
-	                "document.getElementById('" + text.id + "').value = '../' + this.value;");
-            }
-        }
-    </script>
-
+    
+    
+    <!-- Script chargé à la fin pour éviter des erreurs -->
+    <script type="text/javascript" src="js/twitty.js"></script>
 </html>

@@ -37,6 +37,7 @@
 	    foreach ($tweets as $tweet) {
 	        context::setSessionAttribute("userTweetTemplate", $moi); // $moi a été défini dans le layout
 	        context::setSessionAttribute("tweetTemplate", $tweet);
+            context::setSessionAttribute("marquerNonLu", false);
 		    include($nameApp."/layout/tweet_template.php");
 	    }
 ?>

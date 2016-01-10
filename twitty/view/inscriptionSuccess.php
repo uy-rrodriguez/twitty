@@ -10,12 +10,12 @@
 			<td><input type="password" name="pass" /></td>
 		</tr>
 		<tr>
-			<th>Nom : </th>
-			<td><input type="text" name="nom" /></td>
-		</tr>
-		<tr>
 			<th>Prénom : </th>
 			<td><input type="text" name="prenom" /></td>
+		</tr>
+		<tr>
+			<th>Nom : </th>
+			<td><input type="text" name="nom" /></td>
 		</tr>
 		
 		<tr class="tr-espace"></tr>

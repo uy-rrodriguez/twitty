@@ -504,6 +504,31 @@ th {}
     color : #84BE6A;
 }
 
+#div-bulle-infos {
+    position: absolute;
+    bottom: 37px;
+    right: 32px;
+    width: 130px;
+    padding: 2px 5px;
+    border: 3px solid $cPrincipal;
+    border-radius: 10px;
+    background-color: #FFF;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+    color : #214852;
+}
+
+#div-bulle-infos:before {
+    content: ' ';
+    position: absolute;
+	width: 0;
+	height: 0;
+	right: 5px;
+	bottom: -11px;
+	border: 4px solid;
+	border-color: $cPrincipal $cPrincipal transparent transparent;
+}
+
+
 /* ************************************************************************************************
  *         TWEETS
  * ************************************************************************************************ */
@@ -518,6 +543,23 @@ th {}
     border-radius: 10px;
     border-color: $cSecondaire;
     background-color: white;
+}
+
+.tweet .img-non-lu {
+    display: none;
+}
+
+.tweet-non-lu {
+}
+
+.tweet-non-lu .img-non-lu {
+    z-index: 50000;
+    display: block;
+    position: absolute;
+    top: -15px;
+    right: -30px;
+    width: 50px;
+    height: 50px;
 }
 
 .tweet a.link-profil {

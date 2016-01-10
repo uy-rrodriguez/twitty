@@ -194,13 +194,15 @@ class mainController {
 	
 	
 	/*
-	 *  Action pour afficher les messages d'information
+	 *  Action pour afficher le petit message d'information, avec le nombre des tweets sans lire
 	 */
 	public static function ajaxInfos($request, $context) {
 		try {
-			$count = tweetTable::getCountTweetsLastMinutes(60);
+		    // On cherche la quantité de tweets publiés après la date de dernier accès
+			$count = tweetTable::getCountLastTweets(context::getSessionAttribute("dateAccesAccueil"));
+			
 			if (is_null($count)) {
-				context::setSessionAttribute("info", "Erreur inconnue de la base de données.");
+				throw new Exception("Erreur inconnue.");
 			}
 			else {
 				context::setSessionAttribute("info", $count);
@@ -210,7 +212,7 @@ class mainController {
         }
         catch (Exception $e) {
             context::setSessionAttribute("info", $e);
-			return context::ERROR;
+			return context::SUCCESS;
         }
 	}
 	
@@ -307,8 +309,25 @@ class mainController {
 	        mainController::marquerTweetsVotes($tweets);
 		    context::setSessionAttribute("derniersTweets", $tweets);
 		    
-		    // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
-		    context::setSessionAttribute("actionRetour", "accueil");
+		    
+		    // Pour implémenter la petite bulle en bas, qui affiche les messages sans voir
+		    // on s'est basé sur l'accès de l'utilisateur à la page d'accueil.
+		    // Chaque fois qu'il accède, on actualise une variable en session qui stocke
+            // la dernière date et heure d'accès.
+            //
+            // Puis, toutes les N secondes (on a mis 5 pour ne pas devoir attendre beaucoup)
+            // on exécute une fonction javascript qui va chercher, à travers AJAX, la quantité des
+            // tweets qui ont été publiés depuis cette dernière date d'accès jusqu'à maintenant.
+            //
+            // Lors de l'affichage de l'accueil, on va aussi identifier les messages qui n'ont
+            // pas été lus. Pour faire ¢a, avant d'actualiser la date dans la session, on va
+            // la copier dans une autre variable de session. La view devra donc afficher
+            // différemment les tweets aui ont été créés entre ces deux dates.
+            $dernierAcces = ( key_exists("dateAccesAccueil", $_SESSION)
+                                ? context::getSessionAttribute("dateAccesAccueil")
+                                : date("Y-m-d H:i:s") );
+            context::setSessionAttribute("preDateAccesAccueil", $dernierAcces); // "pre" de précédente
+            context::setSessionAttribute("dateAccesAccueil", date("Y-m-d H:i:s"));
 		    
 		    return context::SUCCESS;
 	    }
@@ -335,9 +354,6 @@ class mainController {
 	        $tweets = tweetTable::getTweetsPostedBy(context::getSessionAttribute("utilisateur")->id, 10);
 	        mainController::marquerTweetsVotes($tweets);
 		    context::setSessionAttribute("mesTweets", $tweets);
-		    
-		    // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
-		    context::setSessionAttribute("actionRetour", "mesTweets");
 		    
 		    return context::SUCCESS;
 	    }
@@ -382,9 +398,6 @@ class mainController {
 	            
 		        context::setSessionAttribute("utilisateurProfil", $u);
 		        context::setSessionAttribute("tweetsProfil", $tweets);
-		    
-		        // Cet attribut permet de retourner à la même page après de voter ou partager un tweet
-		        context::setSessionAttribute("actionRetour", "voirProfil&id=" . $u->id);
 		    
 			    return context::SUCCESS;
 		    }

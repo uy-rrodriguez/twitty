@@ -12,6 +12,10 @@
 	    foreach ($tweets as $tweet) {
 	        context::setSessionAttribute("userTweetTemplate", $tweet->getEmetteur());
 	        context::setSessionAttribute("tweetTemplate", $tweet);
+	        
+            // Cette variable permet d'afficher les nouveaux tweets différemment
+            context::setSessionAttribute("marquerNonLu", true);
+            
 		    include($nameApp."/layout/tweet_template.php");
 	    }
     }

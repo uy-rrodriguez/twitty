@@ -1,13 +1,17 @@
 <?php
-	// On affiche les messages d'information sur des nouveaux tweets créés.
+	// On affiche le nombre de nouveaux tweets.
 	
-	if (key_exists("info", $_SESSION)
-		&& ! is_null($info = context::getSessionAttribute("info"))) {
-			
-		echo $info;
-		context::setSessionAttribute("info", null);
+	$info = null;
+	if (key_exists("info", $_SESSION)) {
+	    $info = context::getSessionAttribute("info");
+	    context::setSessionAttribute("info", null);
+	}
+	
+	if (!is_null($info) && $info > 0) {
+?>
+        <div id='div-bulle-infos'>
+            <?php echo $info; ?> tweets <br/> sans lire !
+        </div>
+<?php
 	}
 ?>
-
-
-ON VA AFFICHER LES TWEETS QU ON N A PAS VU. QUAND ON VA A L'ACUEIL ON RESETE UNE VARIABLE DE SESSION

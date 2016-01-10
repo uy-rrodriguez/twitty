@@ -3,6 +3,10 @@
     $userTemplate = context::getSessionAttribute("userTweetTemplate");
     $tweetTemplate = context::getSessionAttribute("tweetTemplate");
 	$moi = context::getSessionAttribute("utilisateur");
+	
+	// On obtient aussi un boolean qui indique si le tweet doit être affiché différemment
+	// en fonction de sa date de création (pour identifier les tweets non lus)
+	$marquerNonLu = context::getSessionAttribute("marquerNonLu");
 
     if (is_null($userTemplate)) {
         $userTemplate = new Utilisateur();
@@ -21,9 +25,21 @@
     // On nettoye la session
     context::setSessionAttribute("userTweetTemplate", null);
     context::setSessionAttribute("tweetTemplate", null);
+    context::setSessionAttribute("marquerNonLu", null);
+    
+    
+    // Normalement, dans l'accueil on va identifier les messages qui n'ont pas été lus.
+    $classeNonLu = "";
+    if ($marquerNonLu) {
+        $diffDates = strtotime($postTemplate->date) - strtotime(context::getSessionAttribute("preDateAccesAccueil"));
+        $classeNonLu = ($diffDates > 0 ? "tweet-non-lu" : "");
+    }
 ?>
 
-<div id="div-tweet-<?php echo $tweetTemplate->id; ?>" class="tweet">
+<div id="div-tweet-<?php echo $tweetTemplate->id; ?>" class="tweet <?php echo $classeNonLu; ?>">
+
+<!-- ---------- Image pour les tweets non lus ---------- -->
+    <img class="img-non-lu" src="img/new_g.png" />
 
 
 <!-- ---------- Affichage du parent d'un tweet, s'il existe ---------- -->
