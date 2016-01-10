@@ -1,9 +1,3 @@
 *.php~
 *.zip
-upload/avatars/*.png
-upload/avatars/*.jpg
-upload/avatars/*.jpeg
-upload/tweets/*.png
-upload/tweets/*.jpg
-upload/tweets/*.jpeg
 
