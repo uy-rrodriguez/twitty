@@ -10,7 +10,7 @@
 	if (!is_null($info) && $info > 0) {
 ?>
         <div id='div-bulle-infos'>
-            <?php echo $info; ?> tweets <br/> sans lire !
+            <?php echo $info; ?> nouveaux tweets !
         </div>
 <?php
 	}
