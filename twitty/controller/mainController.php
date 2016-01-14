@@ -111,6 +111,8 @@ class mainController {
 			// Il faut stocker le tweet dans la session pour que le template des tweets puisse l'afficher
 			context::setSessionAttribute("userTweetTemplate", context::getSessionAttribute("utilisateur"));
 	        context::setSessionAttribute("tweetTemplate", $tweet);
+
+            context::setSessionAttribute("succes", "Le tweet a bien été crée");
 		    return context::SUCCESS;
 	    }
         catch (Exception $e) {
@@ -138,6 +140,8 @@ class mainController {
 				// Il faut stocker le tweet dans la session pour que le template des tweets puisse l'afficher
 				context::setSessionAttribute("userTweetTemplate", context::getSessionAttribute("utilisateur"));
 				context::setSessionAttribute("tweetTemplate", $tweet);
+
+                context::setSessionAttribute("succes", "Le tweet a été partagé");
 	            return context::SUCCESS;
 			}
 
@@ -176,6 +180,8 @@ class mainController {
 
 	        // On affiche la nouvelle quantité de votes
 			context::setSessionAttribute("tweetTemplate", $tweet);
+
+            context::setSessionAttribute("succes", "On a bien enregistré ton vote");
 			return context::SUCCESS;
         }
         catch (Exception $e) {
