@@ -3,17 +3,35 @@
 class tweet extends basemodel
 {
 	public function getPost() {
-		return postTable::getPostById($this->post);
+        try {
+		    return postTable::getPostById($this->post);
+	    }
+        catch (Exception $e) {
+            //context::setSessionAttribute("erreur", $e);
+            return new post();
+        }
 	}
-	
+
 	public function getParent() {
-		return utilisateurTable::getUserById($this->parent);
+        try {
+		    return utilisateurTable::getUserById($this->parent);
+	    }
+        catch (Exception $e) {
+            //context::setSessionAttribute("erreur", $e);
+            return new utilisateur();
+        }
 	}
-	
+
 	public function getEmetteur() {
-		return utilisateurTable::getUserById($this->emetteur);
+        try {
+		    return utilisateurTable::getUserById($this->emetteur);
+	    }
+        catch (Exception $e) {
+            //context::setSessionAttribute("erreur", $e);
+            return new utilisateur();
+        }
 	}
-	
+
 	public function getLikes() {
 	    //$this->nbvotes = voteTable::getCountLikesById($this->id);
 		if ($this->nbvotes == null || $this->nbvotes == "")
@@ -21,12 +39,12 @@ class tweet extends basemodel
 		else
 			return $this->nbvotes;
 	}
-	
+
 	/* Retourne les utilisateurs qui ont voté pour le tweet */
 	public function getUsersWhoLikeMe() {
 		return utilisateurTable::getUsersWhoLikeTweetById($this->id);
 	}
-	
+
 	/* Retourne true si l'utilisateur connecté a déjà voté le tweet */
 	public function getDejaVote() {
 		return $this->dejaVote;

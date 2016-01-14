@@ -3,26 +3,26 @@
 	<table class="table-horiz">
 		<tr>
 			<th>Identifiant : </th>
-			<td><input type="text" name="identifiant" /></td>
+			<td><input type="text" name="identifiantInscrip" /></td>
 		</tr>
 		<tr>
 			<th>Password : </th>
-			<td><input type="password" name="pass" /></td>
+			<td><input type="password" name="passInscrip" /></td>
 		</tr>
 		<tr>
 			<th>Prénom : </th>
-			<td><input type="text" name="prenom" /></td>
+			<td><input type="text" name="prenomInscrip" /></td>
 		</tr>
 		<tr>
 			<th>Nom : </th>
-			<td><input type="text" name="nom" /></td>
+			<td><input type="text" name="nomInscrip" /></td>
 		</tr>
-		
+
 		<tr class="tr-espace"></tr>
 		<tr>
 			<td class="td-droite" colspan="2"><input type="submit" value="Inscris-moi!" /></td>
 		</tr>
-		
+
 		<tr class="tr-espace"></tr>
 		<tr>
 			<td class="td-droite" colspan="2">

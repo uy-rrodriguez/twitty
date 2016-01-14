@@ -3,7 +3,7 @@
 /* ********************************************************************************* */
 
 
-﻿/* ************************************* AJAX ************************************** */
+/* ************************************* AJAX ************************************** */
 
 // Wrapper pour les fonctions qui envoyent des requêtes AJAX
 function ajaxCall(pUrl, pData, successCallback,
@@ -12,23 +12,23 @@ function ajaxCall(pUrl, pData, successCallback,
 
     // On change le pointeur pour montrer qu'on est en train d'envoyer une requête
     $("body").css("cursor", "wait");
-    
+
     // Création et envoie de l'objet AJAX.
     $.ajax({
 		url: pUrl,
 		type: "POST",
 		data: pData,
-		
+
 		contentType: pContentType,
 		async: pAsync,
 		processData: pProcessData,
-		
+
 		success: function (returnData) {
             // Fonction qui s'exécute lors d'une réponse de succès
 			successCallback(returnData);
-			
+
 			$("body").css("cursor", "default");
-			
+
 			// On affiche les possibles messages
 			ajaxAfficherMessages();
 		}
@@ -65,7 +65,7 @@ function ajaxInfos() {
 function ajaxNouveauTweet() {
 	// Obtention des données du formulaire
 	var formData = new FormData($("#form-nouveau-tweet")[0]);
-	
+
 	// Dans ce cas, on envoie le form obtenu, avec l'image dédans.
 	ajaxCall("twittyAjax.php?action=ajaxNouveauTweet",
 	            formData,
@@ -95,7 +95,7 @@ function ajaxVoterTweet(idTweet) {
 			        // On modifie la quantité de votes dans le div associé a ce tweet
 			        // On obtient le div, et après on obtient le seul enfant avec la classe "votes"
 			        $("#div-tweet-" + idTweet).children(".votes").html(returnData);
-			
+
 			        //var btnVoter = $("#div-tweet-" + idTweet).children(".btn-voter");
 			        var btnVoter = $("#btn-voter-" + idTweet);
 			        btnVoter.html("T'as déjà voté");
@@ -103,9 +103,35 @@ function ajaxVoterTweet(idTweet) {
 			    });
 }
 
+// Fonction pour modifier le profil
+function ajaxModifierProfil() {
+	// Obtention des données du formulaire
+	var formData = new FormData($("#form-profil")[0]);
+
+    ajaxCall("twittyAjax.php?action=ajaxModifierProfil",
+                formData,
+                function (returnData) {
+                    // On modifie le div avec le profil
+			        $("#div-petit-profil").html(returnData);
+			    });
+}
+
+// Fonction pour modifier les paramètres de sécurité
+function ajaxModifierSecurite() {
+	// Obtention des données du formulaire
+	var formData = new FormData($("#form-securite")[0]);
+
+    ajaxCall("twittyAjax.php?action=ajaxModifierProfil",
+                formData,
+                function (returnData) {
+                    // On modifie le div avec le profil
+			        $("#div-petit-profil").html(returnData);
+			    });
+}
 
 
-﻿/* ********************************* Autres fonctions utilisées ******************** */
+
+/* ********************************* Autres fonctions utilisées ******************** */
 
 // On crée un timer qui affichera les messages tous les 5 secondes
 $(document).ready( function() {
@@ -120,7 +146,7 @@ $(document).ready( function() {
     // # étant le numéro qui permet de les associer
     //
     // Noter aussi que tous les input file doivent avoir une classe: input-file
-    
+
     // On cherche tous les input file de la page
     var inputsFile = document.querySelectorAll("input.input-file");
 

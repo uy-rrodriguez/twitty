@@ -10,7 +10,7 @@
     <body>
         <div id="div-tete">
             <div id="div-tete-contenu">
-            
+
 <?php
             // On controle qu'il existe un utilisateur connecté.
             // S'il y en a, l'object sera stocké dans $moi.
@@ -18,16 +18,9 @@
                 && ! is_null($moi = context::getSessionAttribute("utilisateur"))) {
 ?>
                 <div id="div-petit-profil">
-                    <div id="div-petit-profil-image">
-                        <img class="img-avatar" src="<?php echo mainController::REPERTOIRE_AVATAR . $moi->avatar; ?>"
-                            onerror="this.src='img/default.png'" />
-                    </div>
-                    <div id="div-petit-profil-donnees">
-	                    <span class="nom"><?php echo $moi->prenom . " " . $moi->nom; ?></span> <br />
-	                    <span class="statut"><?php echo $moi->statut; ?></span>
-                    </div>
+                    <?php include($nameApp."/view/ajaxPetitProfil.php"); ?>
                 </div>
-                
+
                 <div id="div-menu">
                     <ul id="menu">
                         <li><a href="twitty.php?action=accueil">Accueil</a></li>
@@ -37,7 +30,7 @@
                         <li class="item-image"><a href="twitty.php?action=quitter"><img src="img/shutdown.png" /></a></li>
                     </ul>
                 </div>
-                
+
                 <div id="div-titre-en-bas">
                     <h1>Twitty</h1>
                     <img src="img/tucan.png" alt="Dessin d'un tucan" />
@@ -56,25 +49,25 @@
 ?>
             </div>
         </div>
-            
+
         <div id="div-centre">
             <div id="div-corps">
 				<div id='div-messages'>
 					<?php include($nameApp."/view/ajaxMessagesSuccess.php"); ?>
 				</div>
-				
+
 <?php
 				// Le code de la page actuelle
 				include($template_view);
 ?>
 
             </div>
-            
-            <div id="div-pied">Twitty Avignonnais v0.0002 - Thomas Garayt - Ricardo Rodríguez - UAPV 2015</div>
+
+            <div id="div-pied">Twitty Avignonnais v1 - Thomas Garayt - Ricardo Rodríguez - UAPV 2015</div>
         </div>
     </body>
-    
-    
+
+
     <!-- Script chargé à la fin pour éviter des erreurs -->
     <script type="text/javascript" src="js/twitty.js"></script>
 </html>

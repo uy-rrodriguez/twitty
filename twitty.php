@@ -14,13 +14,38 @@ $context->init($nameApp);
 
 
 // Contrôle de l'utilisateur connecté
-if (key_exists("action", $_REQUEST)
-    && key_exists("utilisateur", $_SESSION)
+if (key_exists("utilisateur", $_SESSION)
     && ! is_null(context::getSessionAttribute("utilisateur"))) {
-    
-    $action =  $_REQUEST['action'];
+
+    // Cas d'un utilisateur dans la session
+
+    if (! key_exists("action", $_REQUEST)
+        || $_REQUEST['action'] == "login"
+        || $_REQUEST['action'] == "inscription"
+        || $_REQUEST['action'] == "finInscription") {
+
+        $action = "accueil";
+    }
+    else {
+        $action =  $_REQUEST['action'];
+    }
 }
-    
+else {
+    // Cas utilisateur non connecté
+    if (! key_exists("action", $_REQUEST)
+        || ( $_REQUEST['action'] != "login"
+            && $_REQUEST['action'] != "inscription"
+            && $_REQUEST['action'] != "finInscription" )) {
+
+        $action = "login";
+    }
+    else {
+        $action =  $_REQUEST['action'];
+    }
+}
+
+
+
 $view = $context->executeAction($action, $_REQUEST);
 
 //traitement des erreurs de bases, reste a traiter les erreurs d'inclusion

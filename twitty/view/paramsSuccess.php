@@ -1,13 +1,13 @@
 <h1>Mon profil public</h1>
-<form method="post" action="twitty.php?action=params&enregistrerProfil" enctype="multipart/form-data">
+<form id="form-profil" method="post" action="twitty.php?action=params&enregistrerProfil" enctype="multipart/form-data">
 	<table class="table-horiz">
 		<tr>
-			<th>Statut : </th>
+			<th>Statut :</th>
 			<td><input type="text" name="statut" value="<?php echo $moi->statut; ?>"
 			        placeholder="Ajouter un statut, c'est malin!" /></td>
 		</tr>
 		<tr>
-			<th>Prénom : </th>
+			<th>Prénom :</th>
 			<td><input type="text" name="prenom" value="<?php echo $moi->prenom; ?>" /></td>
 		</tr>
 		<tr>
@@ -15,7 +15,7 @@
 			<td><input type="text" name="nom" value="<?php echo $moi->nom; ?>"/></td>
 		</tr>
 		<tr>
-			<th>Avatar : </th>
+			<th>Avatar :</th>
 			<td>
 				<label class="input-file-container">
 					Avatar...
@@ -32,19 +32,19 @@
 	</table>
 </form>
 
-<form method="POST" action="twitty.php?action=params&enregistrerSecurite" enctype="multipart/form-data">
+<form id="form-securite" method="POST" action="twitty.php?action=params&enregistrerSecurite" enctype="multipart/form-data">
 	<h1>Mes paramètres de sécurité</h1>
 	<table class="table-horiz">
 		<tr>
-			<th>Mot de passe actuel:</th>
+			<th>Mot de passe actuel :</th>
 			<td><input id="passwordActuel" type="password" name="passwordActuel" /></td>
 		</tr>
 		<tr>
-			<th>Nouveau mot de passe:</th>
+			<th>Nouveau mot de passe :</th>
 			<td><input id="passwordNouveau" type="password" name="passwordNouveau" /></td>
 		</tr>
 		<tr>
-			<th>Répéter mot de passe:</th>
+			<th>Répéter mot de passe :</th>
 			<td><input id="passwordRepete" type="password" name="passwordRepete" /></td>
 		</tr>
 		<tr class="tr-espace"></tr>
