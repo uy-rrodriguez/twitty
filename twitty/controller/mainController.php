@@ -217,6 +217,77 @@ class mainController {
 	}
 
 
+	/* Action pour modifier le profil */
+	public static function ajaxEnregistrerProfil($request, $context) {
+		try {
+		    $u = context::getSessionAttribute("utilisateur");
+
+		    // Enregistrer le profil public
+            $u->statut = htmlspecialchars($request["statut"], $flags = ENT_QUOTES | ENT_HTML401);
+            $u->prenom = $request["prenom"];
+            $u->nom = $request["nom"];
+
+            if (key_exists("avatar", $_FILES) && ($_FILES["avatar"]["size"] > 0)) {
+                $path = mainController::uploadImage("avatar", mainController::REPERTOIRE_AVATAR, $u->id);
+                if (empty($path)) {
+                    // Si on n'arrive pas à stocker l'image, on ne s'arrête pas.
+                    context::setSessionAttribute("erreur", new Exception("Il y a eu une erreur pour télécharger l'avatar."));
+                }
+                else {
+                    $u->avatar = $path;
+                }
+            }
+
+            if (is_null($u->save()))
+                throw new Exception("Il y a eu une erreur pour enregistrer le profil public.");
+            else {
+                context::setSessionAttribute("succes", "Le profil à bien été modifié.");
+                return context::SUCCESS;
+            }
+	    }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::SUCCESS;
+        }
+	}
+
+
+	/* Action pour modifier le paramètres de sécurité */
+	public static function ajaxEnregistrerSecurite($request, $context) {
+		try {
+		    $u = context::getSessionAttribute("utilisateur");
+
+		    // Enregistrer les paramètres de sécurité
+            // On contrôle le mot de passe actuel
+            $returnLogin = utilisateurTable::getUserByLoginAndPass($u->identifiant, $request['passwordActuel']);
+
+            if (is_null($returnLogin))
+                throw new Exception("Le mot de passe actuel n'est pas correct!");
+
+            // On contrôle que les nouveaux mot de passe soient égales et pas vides
+            if (empty($request["passwordNouveau"]))
+                throw new Exception("Le nouveau mot de passe est vide.");
+
+            if ($request["passwordNouveau"] != $request["passwordRepete"])
+                throw new Exception("Les nouveaux mots de passe ne sont pas égales.");
+
+            // Enfin, on stocke le nouveau mot de passe dans la base
+            $u->pass = sha1($request["passwordNouveau"]);
+
+            if (is_null($u->save()))
+                throw new Exception("Il y a eu une erreur pour enregistrer les paramètres de sécurité");
+            else {
+                context::setSessionAttribute("succes", "Le nouveau mot de passe à bien été modifié.");
+                return context::SUCCESS;
+            }
+	    }
+        catch (Exception $e) {
+            context::setSessionAttribute("erreur", $e);
+            return context::SUCCESS;
+        }
+	}
+
+
 
 	/* ********************************************************************************* */
 	/*                                      ACTIONS                                      */
@@ -307,7 +378,7 @@ class mainController {
 	    try {
 	        // On cherche les tweets dans la base, on marque ceux déjà votés
 	        // et on les ajoute à la session
-	        $tweets = tweetTable::getLastTweets(10, 5);
+	        $tweets = tweetTable::getLastTweets(100, 30);
 	        mainController::marquerTweetsVotes($tweets);
 		    context::setSessionAttribute("derniersTweets", $tweets);
 
@@ -370,7 +441,8 @@ class mainController {
 	public static function reseau($request, $context)	{
 	    try {
 	        // On cherche les utilisateurs dans la base et on les met dans la session
-	        $mesAmis = utilisateurTable::getUsersWithLimit(10);
+	        // $mesAmis = utilisateurTable::getUsersWithLimit(10);
+            $mesAmis = utilisateurTable::getUsers();
 		    context::setSessionAttribute("mesAmis", $mesAmis);
 		    return context::SUCCESS;
 	    }

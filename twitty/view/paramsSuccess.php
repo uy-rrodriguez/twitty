@@ -27,7 +27,9 @@
 		</tr>
 		<tr class="tr-espace"></tr>
 		<tr>
-			<td class="td-droite" colspan="2"><input type="submit" value="Sauvegarder" /></td>
+			<td class="td-droite" colspan="2">
+                <input type="button" value="Sauvegarder" onclick="ajaxEnregistrerProfil()" />
+            </td>
 		</tr>
 	</table>
 </form>
@@ -49,7 +51,9 @@
 		</tr>
 		<tr class="tr-espace"></tr>
 		<tr>
-			<td class="td-droite" colspan="2"><input type="submit" value="Sauvegarder" /></td>
+			<td class="td-droite" colspan="2">
+                <input type="button" value="Sauvegarder" onclick="ajaxEnregistrerSecurite()" />
+            </td>
 		</tr>
 	</table>
 </form>

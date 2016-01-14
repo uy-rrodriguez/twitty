@@ -104,29 +104,32 @@ function ajaxVoterTweet(idTweet) {
 }
 
 // Fonction pour modifier le profil
-function ajaxModifierProfil() {
+function ajaxEnregistrerProfil() {
 	// Obtention des données du formulaire
 	var formData = new FormData($("#form-profil")[0]);
 
-    ajaxCall("twittyAjax.php?action=ajaxModifierProfil",
+    ajaxCall("twittyAjax.php?action=ajaxEnregistrerProfil",
                 formData,
                 function (returnData) {
                     // On modifie le div avec le profil
 			        $("#div-petit-profil").html(returnData);
-			    });
+			    },
+                pContentType = false,
+                pProcessData = false);
 }
 
 // Fonction pour modifier les paramètres de sécurité
-function ajaxModifierSecurite() {
+function ajaxEnregistrerSecurite() {
 	// Obtention des données du formulaire
 	var formData = new FormData($("#form-securite")[0]);
 
-    ajaxCall("twittyAjax.php?action=ajaxModifierProfil",
+    ajaxCall("twittyAjax.php?action=ajaxEnregistrerSecurite",
                 formData,
                 function (returnData) {
-                    // On modifie le div avec le profil
-			        $("#div-petit-profil").html(returnData);
-			    });
+                    // On ne fait rien. Un message devrait s'afficher en bas de l'entête
+			    },
+                pContentType = false,
+                pProcessData = false);
 }
 
 

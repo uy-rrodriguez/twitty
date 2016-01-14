@@ -18,7 +18,7 @@
                 && ! is_null($moi = context::getSessionAttribute("utilisateur"))) {
 ?>
                 <div id="div-petit-profil">
-                    <?php include($nameApp."/view/ajaxPetitProfil.php"); ?>
+                    <?php include($nameApp."/layout/petitProfil.php"); ?>
                 </div>
 
                 <div id="div-menu">

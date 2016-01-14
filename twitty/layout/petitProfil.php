@@ -3,7 +3,7 @@
 ?>
 
 <div id="div-petit-profil-image">
-    <img class="img-avatar" src="<?php echo mainController::REPERTOIRE_AVATAR . $moi->avatar; ?>"
+    <img class="img-avatar" src="<?php echo mainController::REPERTOIRE_AVATAR . $moi->avatar . '?t=' . time(); ?>"
         onerror="this.src='img/default.png'" />
 </div>
 

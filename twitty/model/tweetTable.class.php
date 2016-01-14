@@ -12,13 +12,13 @@ class tweetTable
 
 		return $res;
 	}
-	
+
 	public static function getTweetsPostedBy($id, $max = 50) {
 		$connection = new dbconnection();
 		$sql = "SELECT * FROM jabaianb.tweet
 		        WHERE emetteur = " . $id . "
-		        ORDER BY id DESC
-		        LIMIT " . $max;
+		        ORDER BY id DESC";
+		        // LIMIT " . $max;
 		$res = $connection->doQueryObject($sql, "tweet");
 
 		if ($res === false)
@@ -26,7 +26,7 @@ class tweetTable
 
 		return $res;
 	}
-	
+
 	public static function getTweetById($idTweet) {
 		$connection = new dbconnection();
 		$sql = "SELECT * FROM jabaianb.tweet WHERE id = " . $idTweet;
@@ -37,11 +37,11 @@ class tweetTable
 
 		return $res[0];
 	}
-	
+
 	public static function getLastTweets($max = 10, $daysDifference = 30) {
 	    $dateLimite = strtotime(date("Y-m-d H:i:s") . "-" . $daysDifference . " day");
 	    $dateLimite = date("Y-m-d H:i:s", $dateLimite);
-	    
+
 		$connection = new dbconnection();
 		$sql = "SELECT T.* FROM jabaianb.tweet T
 		            INNER JOIN jabaianb.post P ON (T.post = P.id)
@@ -55,7 +55,7 @@ class tweetTable
 
 		return $res;
 	}
-	
+
 	public static function getCountLastTweets($startDate) {
 		$connection = new dbconnection();
 		$sql = "SELECT COUNT(*) FROM jabaianb.tweet T
