@@ -51,7 +51,6 @@ URL:
       Autres fonctionnalités implementées
 -------------------------------------------------------------------------------------------
 
-
  Bulle en bas, tweets non lus
 ------------------------------
 Pour implémenter la petite bulle en bas, qui affiche le nombre de messages sans lire, on
@@ -73,4 +72,39 @@ comme "non lus" par lui même. Par contre, on l'a implementé de cette manière 
 un test simplifié de la fonctionnalité.
 
 
+
+-------------------------------------------------------------------------------------------
+      Commentaires sur l'implémentation
+-------------------------------------------------------------------------------------------
+
+ Liste de tweets limitée
+-------------------------
+Pour éviter une attente de chargement trop longue dans la page d'accueil, la liste des
+tweets affichée est limitée aux 100 derniers tweets.
+
+
+ Contrôles d'accès aux pages
+-----------------------------
+Dans twitty.php il y a une méthode pour contrôler l'accès aux pages.
+S'il existe un utilisateur connecté (enregistré dans la session), et l'action à exécuter
+correspond à la page de login ou aux actions pour enregistrer un utilisateur, on rédirige
+le flux vers la page d'accueil.
+Dans le cas opposé, s'il n'y a pas un utilisateur connecté et on essaie d'exécuter une action
+différente du login ou des actions permettant l'inscription, on rédirige le flux vers le login.
+
+
+ Attribut parent d'un tweet
+----------------------------
+En regardant la structure de la base de données, l'attribut parent n'est pas obligatoire lors
+de la création d'un tweet. Nous avons interprété cette caractéristique de la manière suivante :
+    - La première fois qu'un tweet est publié, le parent est le même que l'emetteur. Il n'est donc
+      pas nécessaire de répéter cette information en la stockant dans la base.
+    - Quand un tweet est partagé, il est nécéssaire indiquer qui est le parent, l'emetteur initial
+      du message.
+
+En discutant avec nos collègues, nous avons réalisé que beaucoup d'entre eux stockent le parent
+lors de la création du tweet. Nous estimons, par contre, que faire ainsi ajoute une donnée dans
+la base qui n'est pas nécéssaire. En plus, notre choix d'implémentation nous permet d'identifier
+facilement quand un tweet a été partagé, ou si c'est le premièr publié. Ce dernier point affecte
+notamment l'affichage du tweet.
 
