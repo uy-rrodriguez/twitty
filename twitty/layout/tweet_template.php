@@ -2,16 +2,16 @@
     // On obtient l'information du tweet qui devrait être dans la session.
     $userTemplate = context::getSessionAttribute("userTweetTemplate");
     $tweetTemplate = context::getSessionAttribute("tweetTemplate");
-	$moi = context::getSessionAttribute("utilisateur");
-	
-	// On obtient aussi un boolean qui indique si le tweet doit être affiché différemment
-	// en fonction de sa date de création (pour identifier les tweets non lus)
-	$marquerNonLu = context::getSessionAttribute("marquerNonLu");
+    $moi = context::getSessionAttribute("utilisateur");
+
+    // On obtient aussi un boolean qui indique si le tweet doit être affiché différemment
+    // en fonction de sa date de création (pour identifier les tweets non lus)
+    $marquerNonLu = context::getSessionAttribute("marquerNonLu");
 
     if (is_null($userTemplate)) {
         $userTemplate = new Utilisateur();
     }
-    
+
     if (is_null($tweetTemplate)) {
         $tweetTemplate = new Tweet();
         $parentTemplate = null;
@@ -21,13 +21,13 @@
         $parentTemplate = $tweetTemplate->getParent();
         $postTemplate = $tweetTemplate->getPost();
     }
-    
+
     // On nettoye la session
     context::setSessionAttribute("userTweetTemplate", null);
     context::setSessionAttribute("tweetTemplate", null);
     context::setSessionAttribute("marquerNonLu", null);
-    
-    
+
+
     // Normalement, dans l'accueil on va identifier les messages qui n'ont pas été lus.
     $classeNonLu = "";
     if ($marquerNonLu) {
@@ -71,7 +71,7 @@
 	<table class="tweet-info">
 		<tr>
 			<td rowspan="2">
-			    <img class="img-avatar" src="<?php echo mainController::REPERTOIRE_AVATAR . $userTemplate->avatar; ?>"
+			    <img class="img-avatar" src="<?php echo $userTemplate->avatar; ?>"
 			        onerror="this.src='img/default.png'" />
 			</td>
 			<td>
@@ -95,9 +95,9 @@
 			<td><span class="date"><?php echo date("d/m/Y H:i:s", strtotime($postTemplate->date) ); ?></span></td>
 		</tr>
 	</table>
-	
+
 	<div class="votes"><?php echo $tweetTemplate->getLikes(); ?> votes</div>
-	
+
 	<div class="tweet-message">
 		<pre><?php echo $postTemplate->texte; ?></pre>
 	</div>
@@ -106,7 +106,7 @@
     if ($postTemplate->image != "") {
 ?>
         <div class="tweet-image">
-		    <img src="<?php echo mainController::REPERTOIRE_TWEET . $postTemplate->image; ?>" />
+		    <img src="<?php echo $postTemplate->image; ?>" onerror="this.src='img/erreur_image.png'" />
 	    </div>
 <?php
     }
@@ -115,7 +115,7 @@
 <!-- ---------- Boutons de vote et de partage ---------- -->
 
     <div class="tweet-div-buttons">
-    
+
 <?php
         if ($tweetTemplate->getDejaVote()) {
 ?>

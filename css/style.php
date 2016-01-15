@@ -48,7 +48,7 @@ div, span, table, tr, th, td, input, label, a.button {
 
 #div-tete {
     width: /*900px*/ 100%;
-    
+
     /* Effet de menu statique */
     position: relative;
     z-index: 1000000;
@@ -121,6 +121,7 @@ div, span, table, tr, th, td, input, label, a.button {
 
 #div-tete.on-scroll #div-petit-profil img {
     width: 40px;
+    height: 40px;
     border-radius: 20px;
 }
 
@@ -210,10 +211,9 @@ div, span, table, tr, th, td, input, label, a.button {
 
 #div-petit-profil .img-avatar {
     width: 80px;
+    height: 80px;
     border-radius: 50%;
-}
-
-#div-petit-profil-image {
+    object-fit: cover;
 }
 
 #div-petit-profil-donnees {
@@ -239,7 +239,9 @@ div, span, table, tr, th, td, input, label, a.button {
 
 #div-grand-profil .img-avatar {
     width: 120px;
+    height: 120px;
     border-radius: 50%;
+    object-fit: cover;
 }
 
 #div-grand-profil span {
@@ -270,7 +272,7 @@ div, span, table, tr, th, td, input, label, a.button {
     margin-bottom: -1px;
     padding: 5px 10px;
     height: 25px;
-    
+
     font-size: 9px;
     text-align: center;
     color: $cPrincipal;
@@ -307,7 +309,7 @@ input[type="button"], input[type="submit"], a.button {
     background-color: $cPrincipal;
     border: 1px solid $cPrincipal;
     border-radius: 5px;
-    
+
     /* http://usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.2);
@@ -332,7 +334,7 @@ a.button {
     display: inline-block;
     line-height: 17px;
     text-decoration: none;
-    
+
     -webkit-user-select:none;
     -moz-user-select: none;
     -ms-user-select:none;
@@ -354,7 +356,7 @@ a.button {
     border: 1px solid $cSecondaire;
     border-radius: 5px 0px 0px 5px;
     background-color: $cSecondaire;
-    
+
     /* http://usabilitypost.com/2012/01/10/pressed-button-state-with-css3 */
     text-shadow: 0 -1px 0 rgba(255, 255, 255, 0.2);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -401,7 +403,7 @@ textarea {
 /* ************************************************************************************************
  *         TITRES, SOUS-TITRES
  * ************************************************************************************************ */
- 
+
 h1, h2 {
     color: $cPrincipal;
 }
@@ -594,7 +596,7 @@ th {}
     right: 15px;
     font-weight: bold;
     color : $cPrincipal;
-}    
+}
 
 .tweet-image {
     text-align: center;
@@ -610,7 +612,9 @@ th {}
 }
 .tweet-info .img-avatar {
     width: 40px;
+    height: 40px;
     border-radius: 50%;
+    object-fit: cover;
 }
 .tweet-info .nom {
     margin-left: 20px;

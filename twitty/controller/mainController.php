@@ -44,12 +44,13 @@ class mainController {
 		$fichier = $_FILES[$keyImage];
 		$type = pathinfo($fichier["name"], PATHINFO_EXTENSION);
 		$pathDestin = $repertoireDestin . $nomDestin . "." . $type;
+        $urlFinale = "https://pedago02a.univ-avignon.fr/~uapv1601663/twitty/" . $pathDestin;
 
 		if (! move_uploaded_file($fichier["tmp_name"], $pathDestin)) {
 			return "";
 		}
 		else {
-			return $nomDestin . "." . $type;
+			return $urlFinale;
 		}
 	}
 
@@ -333,7 +334,8 @@ class mainController {
 
     /* Action pour se déconnecter. On supprime l'utilisateur de la session. */
 	public static function quitter($request, $context) {
-		context::setSessionAttribute("utilisateur", null);
+		//context::setSessionAttribute("utilisateur", null);
+        session_destroy();
 		context::redirect('twitty.php?action=login');
 	}
 

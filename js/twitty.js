@@ -84,6 +84,7 @@ function ajaxPartagerTweet(idTweet) {
                 function (returnData) {
 			        // On ajoute le code du tweet au début du div parent
 			        $("#div-liste-tweets").prepend(returnData);
+                    alert("Tweet partagé !");
 			    });
 }
 
