@@ -82,6 +82,7 @@ un test simplifié de la fonctionnalité.
 Pour éviter une attente de chargement trop longue dans la page d'accueil, la liste des
 tweets affichée est limitée aux 100 derniers tweets.
 
+
  URL des images stockés dans la base de données
 ------------------------------------------------
 Afin de voir correctement les images des autres utilisateurs, nous nous sommes mis d'accord

@@ -1,6 +1,10 @@
 <?php
     // On récupère l'utilisateur qui devrait être dans la session.
     $u = context::getSessionAttribute("utilisateurProfil");
+
+    if ($u->avatar == "") {
+        $u->avatar = "none";
+    }
 ?>
 
 <h1>Profil de <?php echo $u->prenom . " " . $u->nom; ?></h1>

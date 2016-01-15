@@ -34,6 +34,10 @@
         $diffDates = strtotime($postTemplate->date) - strtotime(context::getSessionAttribute("preDateAccesAccueil"));
         $classeNonLu = ($diffDates > 0 ? "tweet-non-lu" : "");
     }
+
+    if ($userTemplate->avatar == "") {
+        $userTemplate->avatar = "none";
+    }
 ?>
 
 <div id="div-tweet-<?php echo $tweetTemplate->id; ?>" class="tweet <?php echo $classeNonLu; ?>">

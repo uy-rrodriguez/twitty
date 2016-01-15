@@ -16,9 +16,9 @@
 
     else
 	    foreach ($mesAmis as $u) {
-        if ($u->avatar == "") {
-            $u->avatar = "none";
-        }
+            if ($u->avatar == "") {
+                $u->avatar = "none";
+            }
 ?>
 		    <tr class="tr-link" onClick="document.location.href='twitty.php?action=voirProfil&id=<?php echo $u->id; ?>'">
 			    <td><img class="img-avatar" src="<?php echo $u->avatar; ?>"
