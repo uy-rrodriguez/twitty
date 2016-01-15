@@ -39,7 +39,7 @@ URL:
     sur cette fonctionnalité sont décrits dans la prochaine section de ce document.
 
 > Modification de profil et du mot de passe
-    Le profil d'un utilisateur contient une image (avatar), un petit message come statut, ainsi
+    Le profil d'un utilisateur contient une image (avatar), un petit message comme statut, ainsi
     que son nom et prénom. Ces données et le mot de passe pour se connecter peuvent être modifiés
     accédant à la partie Paramètres du menu. La modification se réalise en envoyant une requête
     AJAX. Dans le cas de la modification du profil, les changements sont affichés tout de suite
@@ -54,7 +54,7 @@ URL:
  Bulle en bas, tweets non lus
 ------------------------------
 Pour implémenter la petite bulle en bas, qui affiche le nombre de messages sans lire, on
-s'est basé sur l'accès de l'utilisateur à la page d'accueil. Chaque fois qu'il accède, on
+s'est basé sur l'accès de l'utilisateur à la page d'accueil. Chaque fois qu'il y accède, on
 actualise une variable en session qui stocke la dernière date et heure d'accès.
 
 Puis, toutes les N secondes (on a mis 5 pour ne pas devoir attendre beaucoup) on exécute
@@ -62,7 +62,7 @@ une fonction javascript qui va chercher, à travers AJAX, la quantité des tweet
 publiés à partir cette dernière date d'accès jusqu'à maintenant.
 
 Lors de l'affichage de l'accueil, on va aussi identifier les messages qui n'ont pas été lus.
-Pour faire ¢a, avant d'actualiser la date dans la session, on réalise une copie dans une
+Pour faire ca, avant d'actualiser la date dans la session, on réalise une copie dans une
 autre variable de session. La view se chargera donc d'afficher différemment les tweets qui
 ont été créés entre ces deux dates.
 
@@ -81,6 +81,12 @@ un test simplifié de la fonctionnalité.
 -------------------------
 Pour éviter une attente de chargement trop longue dans la page d'accueil, la liste des
 tweets affichée est limitée aux 100 derniers tweets.
+
+ URL des images stockés dans la base de données
+------------------------------------------------
+Afin de voir correctement les images des autres utilisateurs, nous nous sommes mis d'accord
+avec d'autres camarades pour stocker l'url complète de l'image, même si cela ne se ferait
+pas pour un système réel.
 
 
  Contrôles d'accès aux pages
@@ -107,4 +113,3 @@ lors de la création du tweet. Nous estimons, par contre, que faire ainsi ajoute
 la base qui n'est pas nécéssaire. En plus, notre choix d'implémentation nous permet d'identifier
 facilement quand un tweet a été partagé, ou si c'est le premièr publié. Ce dernier point affecte
 notamment l'affichage du tweet.
-
