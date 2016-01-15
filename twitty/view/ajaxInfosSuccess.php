@@ -10,7 +10,10 @@
 	if (!is_null($info) && $info > 0) {
 ?>
         <div id='div-bulle-infos'>
-            <?php echo $info; ?> nouveaux tweets !
+            <?php
+                echo $info;
+                echo ($info == 1) ? ' nouveau <br/> tweet !' : ' nouveaux <br/> tweets !';
+            ?>
         </div>
 <?php
 	}
