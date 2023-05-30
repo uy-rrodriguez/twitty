@@ -4,7 +4,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Twitty Avignonnais</title>
         <link type="text/css" rel="stylesheet" href="css/style.php" />
-		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
     </head>
 
     <body>
